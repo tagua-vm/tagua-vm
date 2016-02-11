@@ -1,0 +1,20 @@
+[package]
+name = "tagua-vm"
+version = "0.0.1"
+authors = ["Ivan Enderlin <ivan.enderlin@hoa-project.net>"]
+repository = "https://github.com/tagua-vm/tagua-vm"
+description = "Tagua VM is an experimental PHP Virtual Machine written with the Rust language and the LLVM Compiler Infrastructure."
+readme = "README.md"
+keywords = ["php", "virtual machine"]
+license = "BSD-3-Clause"
+
+[[bin]]
+name = "tvm"
+path = "source/main.rs"
+test = true
+doctest = true
+bench = true
+doc = true
+harness = true
+
+[dependencies]
