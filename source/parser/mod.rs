@@ -31,19 +31,72 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#[macro_use]
-extern crate nom;
+use nom::digit;
 
-mod bin;
-mod parser;
-mod shared;
+use std::str;
+use std::str::FromStr;
 
-use std::env;
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Term {
+    t: i64
+}
 
-fn main() {
-    let arguments: Vec<String> = env::args().collect();
+#[derive(Debug)]
+#[derive(PartialEq)]
+struct Addition {
+    a: Term,
+    b: Term
+}
 
-    bin::process_options(arguments);
+named!(
+    i64_digit<i64>,
+    map_res!(
+        map_res!(
+            digit,
+            str::from_utf8
+        ),
+        FromStr::from_str
+    )
+);
 
-    parser::foo();
+named!(
+    expr<Addition>,
+    chain!(
+        left: i64_digit ~
+        tag!("+") ~
+        right: i64_digit,
+        || { Addition { a: Term { t: left }, b: Term { t: right } } }
+    )
+);
+
+pub fn foo() {
+    println!("foo");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Addition;
+    use super::Term;
+    use nom::IResult::Done;
+    use super::i64_digit;
+    use super::expr;
+
+    #[test]
+    fn case_i64_digit() {
+        assert_eq!(
+            i64_digit(b"42"),
+            Done(&b""[..], 42)
+        );
+    }
+
+    #[test]
+    fn case_expr() {
+        assert_eq!(
+            expr(b"1+2"),
+            Done(
+                &b""[..], Addition { a: Term { t: 1 }, b: Term { t: 2 } }
+            )
+        );
+    }
 }

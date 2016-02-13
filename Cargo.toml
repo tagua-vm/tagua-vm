@@ -17,4 +17,6 @@ bench = true
 doc = true
 harness = true
 
-[dependencies]
+[dependencies.nom]
+version = "~1.2.0"
+features = ["regexp"]
