@@ -32,3 +32,13 @@
  */
 
 pub const VERSION: &'static str = "0.0.1";
+
+#[cfg(test)]
+mod tests {
+    use super::VERSION;
+
+    #[test]
+    fn case_version() {
+        assert_eq!("0.0.1", VERSION);
+    }
+}
