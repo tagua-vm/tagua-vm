@@ -31,13 +31,4 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-mod bin;
-mod shared;
-
-use std::env;
-
-fn main() {
-    let arguments: Vec<String> = env::args().collect();
-
-    bin::process_options(arguments);
-}
+pub const VERSION: &'static str = "0.0.1";

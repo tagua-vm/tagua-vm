@@ -31,13 +31,58 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-mod bin;
-mod shared;
+use shared::VERSION;
+use std::process::exit;
 
-use std::env;
+enum ExitCode {
+    Ok,
+    InvalidOption,
+    MissingFile,
+    Panic
+}
 
-fn main() {
-    let arguments: Vec<String> = env::args().collect();
+fn usage(exit_code: ExitCode) {
+    println!("Usage: tvm [options] [file]");
+    println!("Options:");
+    println!("    -v, --version    Print version.");
+    println!("    -h, --help       This help.");
 
-    bin::process_options(arguments);
+    exit(exit_code as i32);
+}
+
+pub fn process_options(arguments: Vec<String>) {
+    let mut input = "";
+
+    for argument in &arguments[1..] {
+        match argument.chars().next() {
+            Some('-') =>
+                match argument.as_ref() {
+                    "-v" | "--version" => {
+                        println!("Tagua VM v{}", VERSION);
+                        exit(0)
+                    }
+
+                    "-h" | "--help" =>
+                        usage(ExitCode::Ok),
+
+                    _ => {
+                        println!("Invalid option “{}”.\n", argument);
+                        usage(ExitCode::InvalidOption)
+                    }
+                },
+
+            Some(_) =>
+                input = argument,
+
+            None =>
+                usage(ExitCode::Panic)
+        }
+    }
+
+    if input.is_empty() {
+        println!("No file provided.\n");
+        usage(ExitCode::MissingFile);
+    }
+
+    println!("File to run is {}", input);
 }
