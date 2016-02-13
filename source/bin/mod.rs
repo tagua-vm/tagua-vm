@@ -32,7 +32,7 @@
  */
 
 use shared::VERSION;
-use std::process::exit;
+use std::process;
 
 enum ExitCode {
     Ok,
@@ -41,13 +41,19 @@ enum ExitCode {
     Panic
 }
 
-fn usage(exit_code: ExitCode) {
-    println!("Usage: tvm [options] [file]");
-    println!("Options:");
-    println!("    -v, --version    Print version.");
-    println!("    -h, --help       This help.");
+fn usage() -> String {
+    "Usage: tvm [options] [file]\n".to_string() +
+    "Options:\n" +
+    "    -v, --version    Print version.\n" +
+    "    -h, --help       This help."
+}
 
-    exit(exit_code as i32);
+fn version() -> String {
+    format!("Tagua VM v{}", VERSION)
+}
+
+fn exit(code: ExitCode) {
+    process::exit(code as i32);
 }
 
 pub fn process_options(arguments: Vec<String>) {
@@ -58,31 +64,63 @@ pub fn process_options(arguments: Vec<String>) {
             Some('-') =>
                 match argument.as_ref() {
                     "-v" | "--version" => {
-                        println!("Tagua VM v{}", VERSION);
-                        exit(0)
-                    }
+                        println!("{}", version());
+                        exit(ExitCode::Ok);
+                    },
 
-                    "-h" | "--help" =>
-                        usage(ExitCode::Ok),
+                    "-h" | "--help" => {
+                        println!("{}", usage());
+                        exit(ExitCode::Ok);
+                    },
 
                     _ => {
                         println!("Invalid option “{}”.\n", argument);
-                        usage(ExitCode::InvalidOption)
+                        println!("{}", usage());
+                        exit(ExitCode::InvalidOption);
                     }
                 },
 
             Some(_) =>
                 input = argument,
 
-            None =>
-                usage(ExitCode::Panic)
+            None => {
+                println!("{}", usage());
+                exit(ExitCode::Panic);
+            }
         }
     }
 
     if input.is_empty() {
         println!("No file provided.\n");
-        usage(ExitCode::MissingFile);
+        println!("{}", usage());
+        exit(ExitCode::MissingFile);
     }
 
     println!("File to run is {}", input);
+}
+
+#[cfg(test)]
+mod tests {
+    use shared::VERSION;
+    use super::usage;
+    use super::version;
+
+    #[test]
+    fn case_usage() {
+        assert_eq!(
+            "Usage: tvm [options] [file]\n".to_string() +
+            "Options:\n" +
+            "    -v, --version    Print version.\n" +
+            "    -h, --help       This help.",
+            usage()
+        );
+    }
+
+    #[test]
+    fn case_version() {
+        assert_eq!(
+            format!("Tagua VM v{}", VERSION),
+            version()
+        );
+    }
 }
