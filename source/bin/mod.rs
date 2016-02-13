@@ -31,13 +31,17 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+use parser::parse;
 use shared::VERSION;
+use std::fs::File;
+use std::io::prelude::*;
 use std::process;
 
 enum ExitCode {
     Ok,
     InvalidOption,
     MissingFile,
+    InvalidFile,
     Panic
 }
 
@@ -50,6 +54,37 @@ fn usage() -> String {
 
 fn version() -> String {
     format!("Tagua VM v{}", VERSION)
+}
+
+fn file(filename: &str) {
+    match File::open(filename) {
+        Ok(mut file) => {
+            let mut buffer = Vec::new();
+
+            match file.read_to_end(&mut buffer) {
+                Ok(_) =>
+                    parse(&buffer[..]),
+
+                Err(error) => {
+                    println!(
+                        "Error while reading file {}: {:?}.",
+                        filename,
+                        error
+                    );
+                    exit(ExitCode::Panic);
+                }
+            }
+        },
+
+        Err(error) => {
+            println!(
+                "Could not open input file {}; reason: {}.",
+                filename,
+                error
+            );
+            exit(ExitCode::InvalidFile);
+        }
+    };
 }
 
 fn exit(code: ExitCode) {
@@ -96,7 +131,7 @@ pub fn process_options(arguments: Vec<String>) {
         exit(ExitCode::MissingFile);
     }
 
-    println!("File to run is {}", input);
+    file(input);
 }
 
 #[cfg(test)]

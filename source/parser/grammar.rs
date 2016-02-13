@@ -31,8 +31,76 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-mod grammar;
+use nom::digit;
+use nom::IResult::Done;
 
-pub fn parse(input: &[u8]) {
-    println!("{:?}", grammar::root(input));
+use std::str;
+use std::str::FromStr;
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+pub struct Term {
+    t: i64
+}
+
+#[derive(Debug)]
+#[derive(PartialEq)]
+pub struct Addition {
+    a: Term,
+    b: Term
+}
+
+named!(
+    i64_digit<i64>,
+    map_res!(
+        map_res!(
+            digit,
+            str::from_utf8
+        ),
+        FromStr::from_str
+    )
+);
+
+named!(
+    expr<Addition>,
+    chain!(
+        left: i64_digit ~
+        tag!("+") ~
+        right: i64_digit,
+        || { Addition { a: Term { t: left }, b: Term { t: right } } }
+    )
+);
+
+pub fn root(input: &[u8]) -> Addition {
+    match expr(input) {
+        Done(_, ast) => ast,
+        _ => panic!("Youhouuu")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Addition;
+    use super::Term;
+    use nom::IResult::Done;
+    use super::i64_digit;
+    use super::expr;
+
+    #[test]
+    fn case_i64_digit() {
+        assert_eq!(
+            i64_digit(b"42"),
+            Done(&b""[..], 42)
+        );
+    }
+
+    #[test]
+    fn case_expr() {
+        assert_eq!(
+            expr(b"1+2"),
+            Done(
+                &b""[..], Addition { a: Term { t: 1 }, b: Term { t: 2 } }
+            )
+        );
+    }
 }

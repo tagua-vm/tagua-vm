@@ -44,6 +44,4 @@ fn main() {
     let arguments: Vec<String> = env::args().collect();
 
     bin::process_options(arguments);
-
-    parser::foo();
 }
