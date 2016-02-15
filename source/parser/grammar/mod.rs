@@ -31,24 +31,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+mod ast;
+
 use nom::digit;
 use nom::IResult::Done;
-
 use std::str;
 use std::str::FromStr;
-
-#[derive(Debug)]
-#[derive(PartialEq)]
-pub struct Term {
-    t: i64
-}
-
-#[derive(Debug)]
-#[derive(PartialEq)]
-pub struct Addition {
-    a: Term,
-    b: Term
-}
 
 named!(
     i64_digit<i64>,
@@ -62,16 +50,16 @@ named!(
 );
 
 named!(
-    expr<Addition>,
+    expr<ast::Addition>,
     chain!(
         left: i64_digit ~
         tag!("+") ~
         right: i64_digit,
-        || { Addition { a: Term { t: left }, b: Term { t: right } } }
+        || { ast::Addition { a: ast::Term { t: left }, b: ast::Term { t: right } } }
     )
 );
 
-pub fn root(input: &[u8]) -> Addition {
+pub fn root(input: &[u8]) -> ast::Addition {
     match expr(input) {
         Done(_, ast) => ast,
         _ => panic!("Youhouuu")
@@ -80,8 +68,8 @@ pub fn root(input: &[u8]) -> Addition {
 
 #[cfg(test)]
 mod tests {
-    use super::Addition;
-    use super::Term;
+    use super::ast::Addition;
+    use super::ast::Term;
     use nom::IResult::Done;
     use super::i64_digit;
     use super::expr;
