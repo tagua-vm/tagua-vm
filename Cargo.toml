@@ -8,9 +8,18 @@ readme = "README.md"
 keywords = ["php", "virtual machine"]
 license = "BSD-3-Clause"
 
+[lib]
+name = "tagua_vm"
+path = "source/lib/lib.rs"
+test = true
+doctest = true
+bench = true
+doc = true
+harness = true
+
 [[bin]]
 name = "tvm"
-path = "source/main.rs"
+path = "source/bin/tvm.rs"
 test = true
 doctest = true
 bench = true

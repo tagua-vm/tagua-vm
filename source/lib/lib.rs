@@ -1,3 +1,5 @@
+#![crate_type = "lib"]
+
 /**
  * Tagua VM
  *
@@ -34,14 +36,6 @@
 #[macro_use]
 extern crate nom;
 
-mod bin;
-mod parser;
-mod shared;
-
-use std::env;
-
-fn main() {
-    let arguments: Vec<String> = env::args().collect();
-
-    bin::process_options(arguments);
-}
+pub mod bin;
+pub mod parser;
+pub mod shared;
