@@ -36,6 +36,5 @@
 #[macro_use]
 extern crate nom;
 
-pub mod bin;
 pub mod parser;
 pub mod shared;

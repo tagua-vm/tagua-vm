@@ -1,55 +1,55 @@
 [package]
-name = "tagua-vm"
-version = "0.0.1"
-authors = ["Ivan Enderlin <ivan.enderlin@hoa-project.net>"]
-repository = "https://github.com/tagua-vm/tagua-vm"
+name        = "tagua-vm"
+version     = "0.0.1"
+authors     = ["Ivan Enderlin <ivan.enderlin@hoa-project.net>"]
+repository  = "https://github.com/tagua-vm/tagua-vm"
 description = "Tagua VM is an experimental PHP Virtual Machine written with the Rust language and the LLVM Compiler Infrastructure."
-readme = "README.md"
-keywords = ["php", "virtual machine"]
-license = "BSD-3-Clause"
+readme      = "README.md"
+keywords    = ["php", "virtual machine"]
+license     = "BSD-3-Clause"
 
 [lib]
-name = "tagua_vm"
-path = "source/lib/lib.rs"
-test = true
+name    = "tagua_vm"
+path    = "source/lib.rs"
+test    = true
 doctest = true
-bench = true
-doc = true
+bench   = true
+doc     = true
 harness = true
 
 [[bin]]
-name = "tvm"
-path = "source/bin/tvm.rs"
-test = true
+name    = "tvm"
+path    = "source/bin/tvm.rs"
+test    = true
 doctest = true
-bench = true
-doc = true
+bench   = true
+doc     = true
 harness = true
 
 [profile.dev]
-opt-level = 0
-debug = true
-rpath = false
-lto = false
+opt-level        = 0
+debug            = true
+rpath            = false
+lto              = false
 debug-assertions = true
-codegen-units = 1
+codegen-units    = 1
 
 [profile.release]
-opt-level = 3
-debug = false
-rpath = false
-lto = false
+opt-level        = 3
+debug            = false
+rpath            = false
+lto              = true
 debug-assertions = false
-codegen-units = 1
+codegen-units    = 1
 
 [profile.test]
-opt-level = 0
-debug = true
-rpath = false
-lto = false
+opt-level        = 0
+debug            = true
+rpath            = false
+lto              = false
 debug-assertions = true
-codegen-units = 1
+codegen-units    = 1
 
 [dependencies.nom]
-version = "~1.2.0"
+version  = "~1.2.0"
 features = ["regexp"]

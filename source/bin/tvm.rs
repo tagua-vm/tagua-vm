@@ -33,10 +33,138 @@
 
 extern crate tagua_vm;
 
+use tagua_vm::parser::parse;
+use tagua_vm::shared::VERSION;
 use std::env;
+use std::fs::File;
+use std::io::prelude::*;
+use std::process;
+
+enum ExitCode {
+    Ok,
+    InvalidOption,
+    MissingFile,
+    InvalidFile,
+    Panic
+}
+
+fn usage() -> String {
+    "Usage: tvm [options] [file]\n".to_string() +
+    "Options:\n" +
+    "    -v, --version    Print version.\n" +
+    "    -h, --help       This help."
+}
+
+fn version() -> String {
+    format!("Tagua VM v{}", VERSION)
+}
+
+fn file(filename: &str) {
+    match File::open(filename) {
+        Ok(mut file) => {
+            let mut buffer = Vec::new();
+
+            match file.read_to_end(&mut buffer) {
+                Ok(_) =>
+                    parse(&buffer[..]),
+
+                Err(error) => {
+                    println!(
+                        "Error while reading file {}: {:?}.",
+                        filename,
+                        error
+                    );
+                    exit(ExitCode::Panic);
+                }
+            }
+        },
+
+        Err(error) => {
+            println!(
+                "Could not open input file {}; reason: {}.",
+                filename,
+                error
+            );
+            exit(ExitCode::InvalidFile);
+        }
+    };
+}
+
+fn exit(code: ExitCode) {
+    process::exit(code as i32);
+}
+
+pub fn process_options(arguments: Vec<String>) {
+    let mut input = "";
+
+    for argument in &arguments[1..] {
+        match argument.chars().next() {
+            Some('-') =>
+                match argument.as_ref() {
+                    "-v" | "--version" => {
+                        println!("{}", version());
+                        exit(ExitCode::Ok);
+                    },
+
+                    "-h" | "--help" => {
+                        println!("{}", usage());
+                        exit(ExitCode::Ok);
+                    },
+
+                    _ => {
+                        println!("Invalid option “{}”.\n", argument);
+                        println!("{}", usage());
+                        exit(ExitCode::InvalidOption);
+                    }
+                },
+
+            Some(_) =>
+                input = argument,
+
+            None => {
+                println!("{}", usage());
+                exit(ExitCode::Panic);
+            }
+        }
+    }
+
+    if input.is_empty() {
+        println!("No file provided.\n");
+        println!("{}", usage());
+        exit(ExitCode::MissingFile);
+    }
+
+    file(input);
+}
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
 
-    tagua_vm::bin::process_options(arguments);
+    process_options(arguments);
+}
+
+#[cfg(test)]
+mod tests {
+    use tagua_vm::shared::VERSION;
+    use super::usage;
+    use super::version;
+
+    #[test]
+    fn case_usage() {
+        assert_eq!(
+            "Usage: tvm [options] [file]\n".to_string() +
+            "Options:\n" +
+            "    -v, --version    Print version.\n" +
+            "    -h, --help       This help.",
+            usage()
+        );
+    }
+
+    #[test]
+    fn case_version() {
+        assert_eq!(
+            format!("Tagua VM v{}", VERSION),
+            version()
+        );
+    }
 }
