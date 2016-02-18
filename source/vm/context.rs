@@ -33,8 +33,10 @@
 
 use super::LLVMRef;
 
-use llvm::core::LLVMContextCreate;
-use llvm::core::LLVMContextDispose;
+use llvm::core::{
+    LLVMContextCreate,
+    LLVMContextDispose
+};
 use llvm::prelude::LLVMContextRef;
 
 #[derive(Debug)]
