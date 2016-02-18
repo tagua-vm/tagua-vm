@@ -10,3 +10,17 @@ os:
 matrix:
   allow_failures:
     - rust: nightly
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo sh -c "add-apt-repository -y ppa:ubuntu-toolchain-r/test"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main' >> /etc/apt/sources.list"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -; fi
+install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq llvm-3.6 libllvm3.6 libllvm3.6-dbg cmake libedit-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export PATH="/usr/lib/llvm-3.6/bin:$PATH"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew rm -f llvm && brew install llvm; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/llvm/lib $LDFLAGS"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CPPFLAGS="-I/usr/local/opt/llvm/include $CPPFLAGS"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/llvm/bin:$PATH"; fi
+
