@@ -31,9 +31,57 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-pub mod context;
-pub mod module;
+use super::LLVMRef;
+use super::context::Context;
 
-pub trait LLVMRef<R> {
-    fn to_ref(&self) -> R;
+use libc::c_char;
+use llvm::core::LLVMDisposeModule;
+use llvm::core::LLVMModuleCreateWithNameInContext;
+use llvm::prelude::LLVMModuleRef;
+use std::ffi::CString;
+
+#[derive(Debug)]
+pub struct Module {
+    module: LLVMModuleRef,
+    owned : bool
+}
+
+impl Module {
+    pub fn new(module_id: &str, context: &Context) -> Module {
+        let module_id = CString::new(module_id).unwrap();
+
+        Module {
+            module: unsafe {
+                LLVMModuleCreateWithNameInContext(
+                    module_id.as_ptr() as *const c_char,
+                    context.to_ref()
+                )
+            },
+            owned: true
+        }
+    }
+}
+
+impl Drop for Module {
+    fn drop(&mut self) {
+        if self.owned {
+            unsafe {
+                LLVMDisposeModule(self.module);
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Module;
+    use super::super::context::Context;
+
+    #[test]
+    fn case_ownership() {
+        let context = Context::new();
+        let module  = Module::new("foobar", &context);
+
+        assert!(module.owned);
+    }
 }

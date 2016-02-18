@@ -31,6 +31,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+use super::LLVMRef;
+
 use llvm::core::LLVMContextCreate;
 use llvm::core::LLVMContextDispose;
 use llvm::prelude::LLVMContextRef;
@@ -59,6 +61,12 @@ impl Drop for Context {
                 LLVMContextDispose(self.context);
             }
         }
+    }
+}
+
+impl LLVMRef<LLVMContextRef> for Context {
+    fn to_ref(&self) -> LLVMContextRef {
+        self.context
     }
 }
 
