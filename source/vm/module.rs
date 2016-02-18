@@ -35,12 +35,15 @@ use super::LLVMRef;
 use super::context::Context;
 
 use libc::c_char;
-use llvm::core::LLVMDisposeModule;
-use llvm::core::LLVMModuleCreateWithNameInContext;
+use llvm::core::{
+    LLVMDisposeModule,
+    LLVMModuleCreateWithNameInContext,
+    LLVMPrintModuleToString
+};
 use llvm::prelude::LLVMModuleRef;
-use std::ffi::CString;
+use std::ffi::{CStr, CString};
+use std::{fmt, str};
 
-#[derive(Debug)]
 pub struct Module {
     module: LLVMModuleRef,
     owned : bool
@@ -72,6 +75,28 @@ impl Drop for Module {
     }
 }
 
+impl LLVMRef<LLVMModuleRef> for Module {
+    fn to_ref(&self) -> LLVMModuleRef {
+        self.module
+    }
+}
+
+impl fmt::Display for Module {
+    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            formatter,
+            "{}",
+            unsafe {
+                let module_as_c_string = LLVMPrintModuleToString(self.to_ref());
+                let module_as_c_str    = CStr::from_ptr(module_as_c_string);
+
+                str::from_utf8_unchecked(module_as_c_str.to_bytes())
+            }
+        )
+    }
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::Module;
@@ -83,5 +108,16 @@ mod tests {
         let module  = Module::new("foobar", &context);
 
         assert!(module.owned);
+    }
+
+    #[test]
+    fn case_format_display() {
+        let context = Context::new();
+        let module  = Module::new("foobar", &context);
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n",
+            format!("{}", module)
+        );
     }
 }
