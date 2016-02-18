@@ -1,5 +1,3 @@
-#![crate_type = "lib"]
-
 /**
  * Tagua VM
  *
@@ -33,11 +31,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#[macro_use]
-extern crate nom;
-extern crate libc;
-extern crate llvm_sys as llvm;
+use llvm::core::LLVMContextCreate;
+use llvm::core::LLVMContextDispose;
+use llvm::prelude::LLVMContextRef;
 
-pub mod parser;
-pub mod shared;
-pub mod vm;
+#[derive(Debug)]
+pub struct Context {
+    context: LLVMContextRef,
+    owned  : bool
+}
+
+impl Context {
+    pub fn new() -> Context {
+        Context {
+            context: unsafe {
+                LLVMContextCreate()
+            },
+            owned: true
+        }
+    }
+}
+
+impl Drop for Context {
+    fn drop(&mut self) {
+        if self.owned {
+            unsafe {
+                LLVMContextDispose(self.context);
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::Context;
+
+    #[test]
+    fn case_ownership() {
+        let context = Context::new();
+
+        assert!(context.owned);
+    }
+}

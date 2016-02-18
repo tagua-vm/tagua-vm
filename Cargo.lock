@@ -2,6 +2,8 @@
 name = "tagua-vm"
 version = "0.0.1"
 dependencies = [
+ "libc 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "llvm-sys 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "nom 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -14,9 +16,35 @@ dependencies = [
 ]
 
 [[package]]
+name = "bitflags"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "gcc"
+version = "0.3.24"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "libc"
+version = "0.1.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "libc"
 version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "llvm-sys"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "bitflags 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gcc 0.3.24 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.1.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "semver 0.1.20 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "memchr"
@@ -48,6 +76,11 @@ dependencies = [
 [[package]]
 name = "regex-syntax"
 version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "semver"
+version = "0.1.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
