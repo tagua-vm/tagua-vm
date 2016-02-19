@@ -114,7 +114,7 @@ mod tests {
     }
 
     #[test]
-    fn case_format_display() {
+    fn case_intermediate_representation() {
         let context = Context::new();
         let module  = Module::new("foobar", &context);
 
