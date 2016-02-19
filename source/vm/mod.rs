@@ -32,7 +32,9 @@
  */
 
 pub mod context;
+pub mod function;
 pub mod module;
+pub mod native_type;
 
 pub trait LLVMRef<R> {
     fn to_ref(&self) -> R;
