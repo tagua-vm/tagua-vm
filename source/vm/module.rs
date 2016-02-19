@@ -43,7 +43,7 @@ use llvm::core::{
 };
 use llvm::prelude::LLVMModuleRef;
 use std::ffi::{CStr, CString};
-use std::{fmt, str};
+use std::fmt;
 
 pub struct Module {
     module: LLVMModuleRef,
@@ -88,12 +88,12 @@ impl fmt::Display for Module {
             formatter,
             "{}",
             unsafe {
-                let module_as_c_string = LLVMPrintModuleToString(self.to_ref());
-                let module_as_c_str    = CStr::from_ptr(module_as_c_string);
+                let ir_as_c_string = LLVMPrintModuleToString(self.to_ref());
+                let ir             = CStr::from_ptr(ir_as_c_string).to_string_lossy().into_owned();
 
-                LLVMDisposeMessage(module_as_c_string);
+                LLVMDisposeMessage(ir_as_c_string);
 
-                str::from_utf8_unchecked(module_as_c_str.to_bytes())
+                ir
             }
         )
     }
