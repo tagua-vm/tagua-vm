@@ -99,7 +99,13 @@ mod tests {
     use super::Function;
     use super::super::context::Context;
     use super::super::module::Module;
-    use super::super::native_type::void_type;
+    use super::super::native_type::{
+        void_type,
+        int1_type,
+        int8_type,
+        double_type,
+        array_type
+    };
 
     #[test]
     fn case_ownership() {
@@ -116,7 +122,7 @@ mod tests {
     }
 
     #[test]
-    fn case_intermediate_representation() {
+    fn case_intermediate_representation_void_void() {
         let context   = Context::new();
         let module    = Module::new("foobar", &context);
         let _function = Function::new(
@@ -130,6 +136,25 @@ mod tests {
             "; ModuleID = 'foobar'\n".to_string() +
             "\n" +
             "declare void @f()\n",
+            format!("{}", module)
+        );
+    }
+
+    #[test]
+    fn case_intermediate_representation_int8_array_double() {
+        let context   = Context::new();
+        let module    = Module::new("foobar", &context);
+        let _function = Function::new(
+            &module,
+            "f",
+            &mut [int8_type(), array_type(int1_type(), 7)],
+            double_type()
+        );
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n".to_string() +
+            "\n" +
+            "declare double @f(i8, [7 x i1])\n",
             format!("{}", module)
         );
     }
