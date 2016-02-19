@@ -1,9 +1,29 @@
+environment:
+  matrix:
+  - ARCH: "i686"
+  - ARCH: "x86_64"
+
+init:
+  - git config --global core.autocrlf input
+
 install:
+  - ps: $env:PATH = 'C:\MinGW\bin;C:\MinGW\mingw32\bin;C:\MinGW\msys\1.0\bin;' + $env:PATH
+  - cmd: copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
+  - cinst wget
+
   - ps: Start-FileDownload 'https://static.rust-lang.org/dist/rust-1.6.0-i686-pc-windows-gnu.exe'
   - rust-1.6.0-i686-pc-windows-gnu.exe /VERYSILENT /NORESTART /DIR="C:\Program Files (x86)\Rust"
   - SET PATH=%PATH%;C:\Program Files (x86)\Rust\bin
   - rustc -V
   - cargo -V
+
+  - cmd: mkdir LLVM_download
+  - cmd: cd LLVM_download
+  - cmd: wget "http://llvm.org/releases/3.6.0/LLVM-3.6.0-win32.exe"
+  - cmd: 7z x LLVM-3.6.0-win32.exe
+  - cmd: ren $_OUTDIR LLVM-3.6.0
+  - cmd: move LLVM-3.6.0 C:\
+  - ps: $env:PATH = 'C:\LLVM-3.6.0\bin;' + $env:PATH
 
 build: false
 
