@@ -36,6 +36,7 @@ use super::context::Context;
 
 use libc::c_char;
 use llvm::core::{
+    LLVMDisposeMessage,
     LLVMDisposeModule,
     LLVMModuleCreateWithNameInContext,
     LLVMPrintModuleToString
@@ -89,6 +90,8 @@ impl fmt::Display for Module {
             unsafe {
                 let module_as_c_string = LLVMPrintModuleToString(self.to_ref());
                 let module_as_c_str    = CStr::from_ptr(module_as_c_string);
+
+                LLVMDisposeMessage(module_as_c_string);
 
                 str::from_utf8_unchecked(module_as_c_str.to_bytes())
             }
