@@ -31,12 +31,56 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-pub mod constant;
-pub mod context;
-pub mod function;
-pub mod module;
-pub mod native_type;
+use super::LLVMRef;
+use super::context::Context;
 
-pub trait LLVMRef<R> {
-    fn to_ref(&self) -> R;
+use libc::c_ulonglong;
+use llvm::core::{
+    LLVMConstInt,
+    LLVMInt1TypeInContext,
+    LLVMInt8TypeInContext
+};
+use llvm::prelude::{
+    LLVMBool,
+    LLVMValueRef
+};
+
+pub trait Constant {
+    fn as_vm_constant(self, context: &Context) -> LLVMValueRef;
+}
+
+impl Constant for bool {
+    fn as_vm_constant(self, context: &Context) -> LLVMValueRef {
+        unsafe {
+            LLVMConstInt(
+                LLVMInt1TypeInContext(context.to_ref()),
+                self as c_ulonglong,
+                0 as LLVMBool
+            )
+        }
+    }
+}
+
+impl Constant for u8 {
+    fn as_vm_constant(self, context: &Context) -> LLVMValueRef {
+        unsafe {
+            LLVMConstInt(
+                LLVMInt8TypeInContext(context.to_ref()),
+                self as c_ulonglong,
+                0 as LLVMBool
+            )
+        }
+    }
+}
+
+impl Constant for i8 {
+    fn as_vm_constant(self, context: &Context) -> LLVMValueRef {
+        unsafe {
+            LLVMConstInt(
+                LLVMInt8TypeInContext(context.to_ref()),
+                self as c_ulonglong,
+                0 as LLVMBool
+            )
+        }
+    }
 }
