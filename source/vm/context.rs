@@ -39,7 +39,6 @@ use llvm::core::{
 };
 use llvm::prelude::LLVMContextRef;
 
-#[derive(Debug)]
 pub struct Context {
     context: LLVMContextRef,
     owned  : bool
