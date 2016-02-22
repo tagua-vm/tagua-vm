@@ -31,14 +31,64 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-pub mod builder;
-pub mod constant;
-pub mod context;
-pub mod function;
-pub mod module;
-pub mod native_type;
-pub mod value;
+use super::LLVMRef;
 
-pub trait LLVMRef<R> {
-    fn to_ref(&self) -> R;
+use llvm::core::{
+    LLVMDisposeMessage,
+    LLVMPrintValueToString
+};
+use llvm::prelude::LLVMValueRef;
+use std::ffi::CStr;
+use std::fmt;
+
+pub struct Value {
+    value: LLVMValueRef
+}
+
+impl Value {
+    pub fn from_ref(value: LLVMValueRef) -> Value {
+        Value {
+            value: value
+        }
+    }
+}
+
+impl LLVMRef<LLVMValueRef> for Value {
+    fn to_ref(&self) -> LLVMValueRef {
+        self.value
+    }
+}
+
+impl fmt::Display for Value {
+    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            formatter,
+            "{}",
+            unsafe {
+                let ir_as_c_string = LLVMPrintValueToString(self.to_ref());
+                let ir             = CStr::from_ptr(ir_as_c_string).to_string_lossy().into_owned();
+
+                LLVMDisposeMessage(ir_as_c_string);
+
+                ir
+            }
+        )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::super::context::Context;
+    use super::super::constant::Constant;
+
+    #[test]
+    fn case_display() {
+        let context = Context::new();
+        let value   = true.as_vm_constant(&context);
+
+        assert_eq!(
+            "i1 true",
+            format!("{}", value)
+        );
+    }
 }

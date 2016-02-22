@@ -33,6 +33,7 @@
 
 use super::LLVMRef;
 use super::context::Context;
+use super::value::Value;
 
 use libc::c_char;
 use llvm::core::{
@@ -45,8 +46,7 @@ use llvm::core::{
 };
 use llvm::prelude::{
     LLVMBasicBlockRef,
-    LLVMBuilderRef,
-    LLVMValueRef
+    LLVMBuilderRef
 };
 use std::ffi::CString;
 
@@ -72,24 +72,35 @@ impl Builder {
         }
     }
 
-    pub fn return_void(&mut self) -> LLVMValueRef {
-        unsafe {
-            LLVMBuildRetVoid(self.to_ref())
-        }
+    pub fn return_void(&mut self) -> Value {
+        Value::from_ref(
+            unsafe {
+                LLVMBuildRetVoid(self.to_ref())
+            }
+        )
     }
 
-    pub fn return_value(&mut self, value: LLVMValueRef) -> LLVMValueRef {
-        unsafe {
-            LLVMBuildRet(self.to_ref(), value)
-        }
+    pub fn return_value(&mut self, value: Value) -> Value {
+        Value::from_ref(
+            unsafe {
+                LLVMBuildRet(self.to_ref(), value.to_ref())
+            }
+        )
     }
 
-    pub fn add(&mut self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+    pub fn add(&mut self, lhs: Value, rhs: Value, name: &str) -> Value {
         let name = CString::new(name).unwrap();
 
-        unsafe {
-            LLVMBuildAdd(self.to_ref(), lhs, rhs, name.as_ptr() as *const c_char)
-        }
+        Value::from_ref(
+            unsafe {
+                LLVMBuildAdd(
+                    self.to_ref(),
+                    lhs.to_ref(),
+                    rhs.to_ref(),
+                    name.as_ptr() as *const c_char
+                )
+            }
+        )
     }
 }
 
