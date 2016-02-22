@@ -37,10 +37,14 @@ use super::module::Module;
 use libc::c_char;
 use llvm::core::{
     LLVMAddFunction,
+    LLVMAppendBasicBlockInContext,
     LLVMDeleteFunction,
-    LLVMFunctionType
+    LLVMFunctionType,
+    LLVMGetTypeContext,
+    LLVMTypeOf
 };
 use llvm::prelude::{
+    LLVMBasicBlockRef,
     LLVMBool,
     LLVMTypeRef,
     LLVMValueRef
@@ -73,6 +77,22 @@ impl Function {
                 )
             },
             owned: true
+        }
+    }
+
+    pub fn append(&self, basic_block_name: &str) -> LLVMBasicBlockRef {
+        let basic_block_name = CString::new(basic_block_name).unwrap();
+
+        unsafe {
+            LLVMAppendBasicBlockInContext(
+                LLVMGetTypeContext(
+                    LLVMTypeOf(
+                        self.to_ref()
+                    )
+                ),
+                self.to_ref(),
+                basic_block_name.as_ptr() as *const c_char
+            )
         }
     }
 }
@@ -155,6 +175,28 @@ mod tests {
             "; ModuleID = 'foobar'\n".to_string() +
             "\n" +
             "declare double @f(i8, [7 x i1])\n",
+            format!("{}", module)
+        );
+    }
+
+    #[test]
+    fn case_intermediate_representation_append_basic_block() {
+        let context   = Context::new();
+        let module    = Module::new("foobar", &context);
+        let function = Function::new(
+            &module,
+            "f",
+            &mut [],
+            void_type()
+        );
+        function.append("entry");
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n".to_string() +
+            "\n" +
+            "define void @f() {\n" +
+            "entry:\n" +
+            "}\n",
             format!("{}", module)
         );
     }
