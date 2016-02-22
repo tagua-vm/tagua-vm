@@ -31,6 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+pub mod builder;
 pub mod constant;
 pub mod context;
 pub mod function;

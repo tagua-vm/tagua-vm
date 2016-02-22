@@ -34,11 +34,21 @@
 use super::LLVMRef;
 use super::context::Context;
 
+use libc::c_char;
 use llvm::core::{
+    LLVMBuildAdd,
+    LLVMBuildRet,
+    LLVMBuildRetVoid,
     LLVMCreateBuilderInContext,
-    LLVMDisposeBuilder
+    LLVMDisposeBuilder,
+    LLVMPositionBuilderAtEnd
 };
-use llvm::prelude::LLVMBuilderRef;
+use llvm::prelude::{
+    LLVMBasicBlockRef,
+    LLVMBuilderRef,
+    LLVMValueRef
+};
+use std::ffi::CString;
 
 #[derive(Debug)]
 pub struct Builder {
@@ -53,6 +63,32 @@ impl Builder {
                 LLVMCreateBuilderInContext(context.to_ref())
             },
             owned: true
+        }
+    }
+
+    pub fn move_to_end(&mut self, basic_block: BasicBlock) {
+        unsafe {
+            LLVMPositionBuilderAtEnd(self.to_ref(), basic_block.to_ref());
+        }
+    }
+
+    pub fn return_void(&mut self) -> LLVMValueRef {
+        unsafe {
+            LLVMBuildRetVoid(self.to_ref())
+        }
+    }
+
+    pub fn return_value(&mut self, value: LLVMValueRef) -> LLVMValueRef {
+        unsafe {
+            LLVMBuildRet(self.to_ref(), value)
+        }
+    }
+
+    pub fn add(&mut self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let name = CString::new(name).unwrap();
+
+        unsafe {
+            LLVMBuildAdd(self.to_ref(), lhs, rhs, name.as_ptr() as *const c_char)
         }
     }
 }
@@ -73,10 +109,32 @@ impl LLVMRef<LLVMBuilderRef> for Builder {
     }
 }
 
+pub struct BasicBlock {
+    block: LLVMBasicBlockRef
+}
+
+impl BasicBlock {
+    pub fn from_ref(basic_block_ref: LLVMBasicBlockRef) -> BasicBlock {
+        BasicBlock {
+            block: basic_block_ref
+        }
+    }
+}
+
+impl LLVMRef<LLVMBasicBlockRef> for BasicBlock {
+    fn to_ref(&self) -> LLVMBasicBlockRef {
+        self.block
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::Builder;
+    use super::super::constant::Constant;
     use super::super::context::Context;
+    use super::super::function::Function;
+    use super::super::module::Module;
+    use super::super::native_type::{int1_type, int8_type, void_type};
 
     #[test]
     fn case_ownership() {
@@ -84,5 +142,94 @@ mod tests {
         let builder = Builder::new(&context);
 
         assert!(builder.owned);
+    }
+
+    #[test]
+    fn case_return_void() {
+        let context     = Context::new();
+        let module      = Module::new("foobar", &context);
+        let mut builder = Builder::new(&context);
+        let function    = Function::new(&module, "f", &mut [], void_type());
+        let basic_block = function.new_basic_block("entry");
+        builder.move_to_end(basic_block);
+        builder.return_void();
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n".to_string() +
+            "\n" +
+            "define void @f() {\n" +
+            "entry:\n" +
+            "  ret void\n" +
+            "}\n",
+            format!("{}", module)
+        );
+    }
+
+    #[test]
+    fn case_return_bool() {
+        let context     = Context::new();
+        let module      = Module::new("foobar", &context);
+        let mut builder = Builder::new(&context);
+        let function    = Function::new(&module, "f", &mut [], int1_type());
+        let basic_block = function.new_basic_block("entry");
+        builder.move_to_end(basic_block);
+        builder.return_value(true.as_vm_constant(&context));
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n".to_string() +
+            "\n" +
+            "define i1 @f() {\n" +
+            "entry:\n" +
+            "  ret i1 true\n" +
+            "}\n",
+            format!("{}", module)
+        );
+    }
+
+    #[test]
+    fn case_return_integer() {
+        let context     = Context::new();
+        let module      = Module::new("foobar", &context);
+        let mut builder = Builder::new(&context);
+        let function    = Function::new(&module, "f", &mut [], int8_type());
+        let basic_block = function.new_basic_block("entry");
+        builder.move_to_end(basic_block);
+        builder.return_value(42u8.as_vm_constant(&context));
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n".to_string() +
+            "\n" +
+            "define i8 @f() {\n" +
+            "entry:\n" +
+            "  ret i8 42\n" +
+            "}\n",
+            format!("{}", module)
+        );
+    }
+
+    #[test]
+    fn case_add_constants() {
+        let context     = Context::new();
+        let module      = Module::new("foobar", &context);
+        let mut builder = Builder::new(&context);
+        let function    = Function::new(&module, "f", &mut [], int8_type());
+        let basic_block = function.new_basic_block("entry");
+        builder.move_to_end(basic_block);
+        let addition = builder.add(
+            7u8.as_vm_constant(&context),
+            42u8.as_vm_constant(&context),
+            "addition"
+        );
+        builder.return_value(addition);
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n".to_string() +
+            "\n" +
+            "define i8 @f() {\n" +
+            "entry:\n" +
+            "  ret i8 49\n" +
+            "}\n",
+            format!("{}", module)
+        );
     }
 }

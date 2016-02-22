@@ -33,6 +33,7 @@
 
 use super::LLVMRef;
 use super::module::Module;
+use super::builder::BasicBlock;
 
 use libc::c_char;
 use llvm::core::{
@@ -44,7 +45,6 @@ use llvm::core::{
     LLVMTypeOf
 };
 use llvm::prelude::{
-    LLVMBasicBlockRef,
     LLVMBool,
     LLVMTypeRef,
     LLVMValueRef
@@ -80,20 +80,22 @@ impl Function {
         }
     }
 
-    pub fn append(&self, basic_block_name: &str) -> LLVMBasicBlockRef {
+    pub fn new_basic_block(&self, basic_block_name: &str) -> BasicBlock {
         let basic_block_name = CString::new(basic_block_name).unwrap();
 
-        unsafe {
-            LLVMAppendBasicBlockInContext(
-                LLVMGetTypeContext(
-                    LLVMTypeOf(
-                        self.to_ref()
-                    )
-                ),
-                self.to_ref(),
-                basic_block_name.as_ptr() as *const c_char
-            )
-        }
+        BasicBlock::from_ref(
+            unsafe {
+                LLVMAppendBasicBlockInContext(
+                    LLVMGetTypeContext(
+                        LLVMTypeOf(
+                            self.to_ref()
+                        )
+                    ),
+                    self.to_ref(),
+                    basic_block_name.as_ptr() as *const c_char
+                )
+            }
+        )
     }
 }
 
@@ -180,16 +182,16 @@ mod tests {
     }
 
     #[test]
-    fn case_intermediate_representation_append_basic_block() {
-        let context   = Context::new();
-        let module    = Module::new("foobar", &context);
+    fn case_define_void_void() {
+        let context  = Context::new();
+        let module   = Module::new("foobar", &context);
         let function = Function::new(
             &module,
             "f",
             &mut [],
             void_type()
         );
-        function.append("entry");
+        function.new_basic_block("entry");
 
         assert_eq!(
             "; ModuleID = 'foobar'\n".to_string() +
