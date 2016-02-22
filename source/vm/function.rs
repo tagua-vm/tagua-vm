@@ -142,7 +142,7 @@ mod tests {
     }
 
     #[test]
-    fn case_intermediate_representation_void_void() {
+    fn case_declare_void_void() {
         let context   = Context::new();
         let module    = Module::new("foobar", &context);
         let _function = Function::new(
@@ -161,7 +161,7 @@ mod tests {
     }
 
     #[test]
-    fn case_intermediate_representation_int8_array_double() {
+    fn case_declare_int8_array_double() {
         let context   = Context::new();
         let module    = Module::new("foobar", &context);
         let _function = Function::new(
