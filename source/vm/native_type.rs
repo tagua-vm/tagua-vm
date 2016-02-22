@@ -35,7 +35,7 @@ use libc::c_uint;
 use llvm::prelude::LLVMTypeRef;
 
 macro_rules! bind_type {
-    ($LLVMName:ident, $name:ident) => (
+    ($LLVMName:ident => $name:ident) => (
         pub fn $name() -> LLVMTypeRef {
             use llvm::core::$LLVMName;
 
@@ -46,18 +46,18 @@ macro_rules! bind_type {
     )
 }
 
-bind_type!(LLVMInt1Type,     int1_type);
-bind_type!(LLVMInt8Type,     int8_type);
-bind_type!(LLVMInt16Type,    int16_type);
-bind_type!(LLVMInt32Type,    int32_type);
-bind_type!(LLVMInt64Type,    int64_type);
-bind_type!(LLVMDoubleType,   double_type);
-bind_type!(LLVMFloatType,    float_type);
-bind_type!(LLVMFP128Type,    fp128_type);
-bind_type!(LLVMPPCFP128Type, ppcfp128_type);
-bind_type!(LLVMVoidType,     void_type);
-bind_type!(LLVMX86FP80Type,  x86fp80_type);
-bind_type!(LLVMX86MMXType,   x86mmx_type);
+bind_type!(LLVMInt1Type     => int1_type);
+bind_type!(LLVMInt8Type     => int8_type);
+bind_type!(LLVMInt16Type    => int16_type);
+bind_type!(LLVMInt32Type    => int32_type);
+bind_type!(LLVMInt64Type    => int64_type);
+bind_type!(LLVMDoubleType   => double_type);
+bind_type!(LLVMFloatType    => float_type);
+bind_type!(LLVMFP128Type    => fp128_type);
+bind_type!(LLVMPPCFP128Type => ppcfp128_type);
+bind_type!(LLVMVoidType     => void_type);
+bind_type!(LLVMX86FP80Type  => x86fp80_type);
+bind_type!(LLVMX86MMXType   => x86mmx_type);
 
 pub fn int_type(size: u32) -> LLVMTypeRef {
     use llvm::core::LLVMIntType;
