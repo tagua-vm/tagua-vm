@@ -194,8 +194,8 @@ mod tests {
     use super::super::context::Context;
     use super::VMRepresentation;
 
-    macro_rules! test {
-        ($test_case_name:ident: [$value:expr, $expect:expr]) => (
+    macro_rules! test_vm_representation {
+        ($test_case_name:ident: ($value:expr, $expect:expr)) => (
             #[test]
             fn $test_case_name() {
                 let context = Context::new();
@@ -209,21 +209,21 @@ mod tests {
         )
     }
 
-    test!(case_boolean_true : [true,   "i1 true"]);
-    test!(case_boolean_false: [false,  "i1 false"]);
-    test!(case_u8           : [7u8,    "i8 7"]);
-    test!(case_i8           : [7i8,    "i8 7"]);
-    test!(case_u16          : [7u16,   "i16 7"]);
-    test!(case_i16          : [7i16,   "i16 7"]);
-    test!(case_u32          : [7u32,   "i32 7"]);
-    test!(case_i32          : [7i32,   "i32 7"]);
-    test!(case_u64          : [7u64,   "i64 7"]);
-    test!(case_i64          : [7i64,   "i64 7"]);
-    test!(case_usize        : [7usize, "i64 7"]);
-    test!(case_isize        : [7isize, "i64 7"]);
-    test!(case_char         : ['*',    "i32 42"]);
-    test!(case_f32          : [4.2f32, "float 0x4010CCCCC0000000"]);
-    test!(case_f64          : [4.2f64, "double 4.200000e+00"]);
-    test!(case_str          : ["foo",  "[3 x i8] c\"foo\""]);
-    test!(case_u8_slice     : [b"bar", "[3 x i8] c\"bar\""]);
+    test_vm_representation!(case_boolean_true : (true,   "i1 true"));
+    test_vm_representation!(case_boolean_false: (false,  "i1 false"));
+    test_vm_representation!(case_u8           : (7u8,    "i8 7"));
+    test_vm_representation!(case_i8           : (7i8,    "i8 7"));
+    test_vm_representation!(case_u16          : (7u16,   "i16 7"));
+    test_vm_representation!(case_i16          : (7i16,   "i16 7"));
+    test_vm_representation!(case_u32          : (7u32,   "i32 7"));
+    test_vm_representation!(case_i32          : (7i32,   "i32 7"));
+    test_vm_representation!(case_u64          : (7u64,   "i64 7"));
+    test_vm_representation!(case_i64          : (7i64,   "i64 7"));
+    test_vm_representation!(case_usize        : (7usize, "i64 7"));
+    test_vm_representation!(case_isize        : (7isize, "i64 7"));
+    test_vm_representation!(case_char         : ('*',    "i32 42"));
+    test_vm_representation!(case_f32          : (4.2f32, "float 0x4010CCCCC0000000"));
+    test_vm_representation!(case_f64          : (4.2f64, "double 4.200000e+00"));
+    test_vm_representation!(case_str          : ("foo",  "[3 x i8] c\"foo\""));
+    test_vm_representation!(case_u8_slice     : (b"bar", "[3 x i8] c\"bar\""));
 }
