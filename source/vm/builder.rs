@@ -138,6 +138,7 @@ impl LLVMRef<LLVMBasicBlockRef> for BasicBlock {
     }
 }
 
+
 #[cfg(test)]
 mod tests {
     use super::Builder;

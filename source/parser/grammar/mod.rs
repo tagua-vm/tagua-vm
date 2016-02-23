@@ -66,6 +66,7 @@ pub fn root(input: &[u8]) -> ast::Addition {
     }
 }
 
+
 #[cfg(test)]
 mod tests {
     use super::ast::Addition;
