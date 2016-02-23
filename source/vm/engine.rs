@@ -145,6 +145,17 @@ impl Engine {
             )
         }
     }
+
+    pub fn run_function(&self, function: &Function, arguments: &mut [LLVMGenericValueRef]) -> LLVMGenericValueRef {
+        unsafe {
+            LLVMRunFunction(
+                self.engine,
+                function.to_ref(),
+                arguments.len() as c_uint,
+                arguments.as_mut_ptr()
+            )
+        }
+    }
 }
 
 impl Drop for Engine {
@@ -170,8 +181,16 @@ mod tests {
     use super::Engine;
     use super::OptimizationLevel;
     use super::Options;
+    use super::super::builder::Builder;
     use super::super::context::Context;
+    use super::super::function::Function;
     use super::super::module::Module;
+    use super::super::native_type::{
+        VMRepresentation,
+        int8_type
+    };
+
+    use llvm::execution_engine::LLVMGenericValueToInt;
 
     #[test]
     fn case_ownership() {
@@ -188,6 +207,57 @@ mod tests {
         match result {
             Ok(engine) =>
                 assert!(engine.owned),
+
+            Err(_) =>
+                assert!(false)
+        }
+    }
+
+    #[test]
+    fn case_run_function() {
+        let context     = Context::new();
+        let mut module  = Module::new("foobar", &context);
+        let mut builder = Builder::new(&context);
+        let function    = Function::new(&module, "f", &mut [], int8_type(&context));
+        let basic_block = function.new_basic_block("entry");
+        builder.move_to_end(basic_block);
+        builder.return_value(7u8.to_vm_representation(&context));
+
+        assert_eq!(
+            "; ModuleID = 'foobar'\n".to_string() +
+            "\n" +
+            "define i8 @f() {\n" +
+            "entry:\n" +
+            "  ret i8 7\n" +
+            "}\n",
+            format!("{}", module)
+        );
+
+        let result = Engine::new(
+            &mut module,
+            &Options {
+                level     : OptimizationLevel::NoOptimizations,
+                code_model: CodeModel::Default
+            }
+        );
+
+        match result {
+            Ok(engine) => {
+                let returned_value = engine.run_function(
+                    &function,
+                    &mut []
+                );
+
+                assert_eq!(
+                    7,
+                    unsafe {
+                        LLVMGenericValueToInt(
+                            returned_value,
+                            0
+                        )
+                    }
+                );
+            }
 
             Err(_) =>
                 assert!(false)
