@@ -35,6 +35,10 @@ use super::LLVMRef;
 use super::context::Context;
 
 use libc::c_char;
+use llvm::analysis::{
+    LLVMVerifierFailureAction,
+    LLVMVerifyModule
+};
 use llvm::core::{
     LLVMDisposeMessage,
     LLVMDisposeModule,
@@ -67,6 +71,33 @@ impl Module {
 
     pub unsafe fn unown(&mut self) {
         self.owned = false;
+    }
+
+    pub fn verify(&self) -> Result<(), String> {
+        let mut verify_error = 0 as *mut c_char;
+        let status;
+
+        unsafe {
+            status = LLVMVerifyModule(
+                self.to_ref(),
+                LLVMVerifierFailureAction::LLVMReturnStatusAction,
+                &mut verify_error
+            )
+        }
+
+        if 1 == status {
+            let error;
+
+            unsafe {
+                let error_buffer = CStr::from_ptr(verify_error);
+                error = String::from_utf8_lossy(error_buffer.to_bytes()).into_owned();
+                LLVMDisposeMessage(verify_error);
+            }
+
+            Err(error)
+        } else {
+            Ok(())
+        }
     }
 }
 
@@ -126,5 +157,19 @@ mod tests {
             "; ModuleID = 'foobar'\n",
             format!("{}", module)
         );
+    }
+
+    #[test]
+    fn case_verify() {
+        let context = Context::new();
+        let module  = Module::new("foobar", &context);
+
+        match module.verify() {
+            Ok(_) =>
+                assert!(true),
+
+            Err(error) =>
+                assert!(false)
+        }
     }
 }
