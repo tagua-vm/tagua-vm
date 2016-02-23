@@ -64,6 +64,10 @@ impl Module {
             owned: true
         }
     }
+
+    pub unsafe fn unown(&mut self) {
+        self.owned = false;
+    }
 }
 
 impl Drop for Module {
