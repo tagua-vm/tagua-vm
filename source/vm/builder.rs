@@ -141,11 +141,15 @@ impl LLVMRef<LLVMBasicBlockRef> for BasicBlock {
 #[cfg(test)]
 mod tests {
     use super::Builder;
-    use super::super::constant::Constant;
     use super::super::context::Context;
     use super::super::function::Function;
     use super::super::module::Module;
-    use super::super::native_type::{int1_type, int8_type, void_type};
+    use super::super::native_type::{
+        VMRepresentation,
+        int1_type,
+        int8_type,
+        void_type
+    };
 
     #[test]
     fn case_ownership() {
@@ -184,7 +188,7 @@ mod tests {
         let function    = Function::new(&module, "f", &mut [], int1_type());
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
-        builder.return_value(true.as_vm_constant(&context));
+        builder.return_value(true.to_vm_representation(&context));
 
         assert_eq!(
             "; ModuleID = 'foobar'\n".to_string() +
@@ -205,7 +209,7 @@ mod tests {
         let function    = Function::new(&module, "f", &mut [], int8_type());
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
-        builder.return_value(42u8.as_vm_constant(&context));
+        builder.return_value(42u8.to_vm_representation(&context));
 
         assert_eq!(
             "; ModuleID = 'foobar'\n".to_string() +
@@ -227,8 +231,8 @@ mod tests {
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
         let addition = builder.add(
-            7u8.as_vm_constant(&context),
-            42u8.as_vm_constant(&context),
+            7u8.to_vm_representation(&context),
+            42u8.to_vm_representation(&context),
             "addition"
         );
         builder.return_value(addition);

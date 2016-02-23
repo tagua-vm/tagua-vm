@@ -31,8 +31,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-use libc::c_uint;
-use llvm::prelude::LLVMTypeRef;
+use super::LLVMRef;
+use super::context::Context;
+use super::value::Value;
+
+use libc::{c_char, c_uint, c_ulonglong};
+use llvm::core::{
+    LLVMConstInt,
+    LLVMConstReal,
+    LLVMConstStringInContext
+};
+use llvm::prelude::{
+    LLVMBool,
+    LLVMTypeRef
+};
+use std::mem;
 
 macro_rules! bind_type {
     ($LLVMName:ident => $name:ident) => (
@@ -89,4 +102,128 @@ pub fn vector_type(elements_type: LLVMTypeRef, size: u32) -> LLVMTypeRef {
     unsafe {
         LLVMVectorType(elements_type, size as c_uint)
     }
+}
+
+pub trait VMRepresentation {
+    fn to_vm_representation(self, context: &Context) -> Value;
+}
+
+macro_rules! to_integer {
+    ($type_name:ty as $($alias:ty)as+ => $LLVMType:ident($($LLVMTypeArgument:expr),*)) => (
+        impl VMRepresentation for $type_name {
+            fn to_vm_representation(self, context: &Context) -> Value {
+                use llvm::core::$LLVMType;
+
+                Value::from_ref(
+                    unsafe {
+                        LLVMConstInt(
+                            $LLVMType(context.to_ref(), $($LLVMTypeArgument),*),
+                            self as $($alias)as+,
+                            0 as LLVMBool
+                        )
+                    }
+                )
+            }
+        }
+    );
+
+    ($type_name:ty as $($alias:ty)as+ => $LLVMType:ident) => (
+        to_integer!{$type_name as $($alias)as+ => $LLVMType()}
+    )
+}
+
+macro_rules! to_float {
+    ($type_name:ty as $alias:ty => $LLVMType:ident) => (
+        impl VMRepresentation for $type_name {
+            fn to_vm_representation(self, context: &Context) -> Value {
+                use llvm::core::$LLVMType;
+
+                Value::from_ref(
+                    unsafe {
+                        LLVMConstReal(
+                            $LLVMType(context.to_ref()),
+                            self as $alias
+                        )
+                    }
+                )
+            }
+        }
+    )
+}
+
+to_integer!(bool  as c_ulonglong        => LLVMInt1TypeInContext);
+to_integer!(u8    as c_ulonglong        => LLVMInt8TypeInContext);
+to_integer!(i8    as c_ulonglong        => LLVMInt8TypeInContext);
+to_integer!(u16   as c_ulonglong        => LLVMInt16TypeInContext);
+to_integer!(i16   as c_ulonglong        => LLVMInt16TypeInContext);
+to_integer!(u32   as c_ulonglong        => LLVMInt32TypeInContext);
+to_integer!(i32   as c_ulonglong        => LLVMInt32TypeInContext);
+to_integer!(u64   as c_ulonglong        => LLVMInt64TypeInContext);
+to_integer!(i64   as c_ulonglong        => LLVMInt64TypeInContext);
+to_integer!(usize as c_ulonglong        => LLVMIntTypeInContext(mem::size_of::<isize>() as c_uint * 8));
+to_integer!(isize as c_ulonglong        => LLVMIntTypeInContext(mem::size_of::<isize>() as c_uint * 8));
+to_integer!(char  as u32 as c_ulonglong => LLVMInt32TypeInContext);
+
+to_float!(f32 as f64 => LLVMFloatTypeInContext);
+to_float!(f64 as f64 => LLVMDoubleTypeInContext);
+
+impl<'a> VMRepresentation for &'a str {
+    fn to_vm_representation(self, context: &Context) -> Value {
+        self.as_bytes().to_vm_representation(context)
+    }
+}
+
+impl<'a> VMRepresentation for &'a [u8] {
+    fn to_vm_representation(self, context: &Context) -> Value {
+        Value::from_ref(
+            unsafe {
+                LLVMConstStringInContext(
+                    context.to_ref(),
+                    self.as_ptr() as *const c_char,
+                    self.len() as c_uint,
+                    1 as LLVMBool
+                )
+            }
+        )
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::super::context::Context;
+    use super::VMRepresentation;
+
+    macro_rules! test {
+        ($test_case_name:ident: [$value:expr, $expect:expr]) => (
+            #[test]
+            fn $test_case_name() {
+                let context = Context::new();
+                let value   = $value.to_vm_representation(&context);
+
+                assert_eq!(
+                    $expect,
+                    format!("{}", value)
+                );
+            }
+        )
+    }
+
+    test!(case_boolean_true : [true,   "i1 true"]);
+    test!(case_boolean_false: [false,  "i1 false"]);
+    test!(case_u8           : [7u8,    "i8 7"]);
+    test!(case_i8           : [7i8,    "i8 7"]);
+    test!(case_u16          : [7u16,   "i16 7"]);
+    test!(case_i16          : [7i16,   "i16 7"]);
+    test!(case_u32          : [7u32,   "i32 7"]);
+    test!(case_i32          : [7i32,   "i32 7"]);
+    test!(case_u64          : [7u64,   "i64 7"]);
+    test!(case_i64          : [7i64,   "i64 7"]);
+    test!(case_usize        : [7usize, "i64 7"]);
+    test!(case_isize        : [7isize, "i64 7"]);
+    test!(case_char         : ['*',    "i32 42"]);
+    test!(case_f32          : [4.2f32, "float 0x4010CCCCC0000000"]);
+    test!(case_f64          : [4.2f64, "double 4.200000e+00"]);
+    test!(case_str          : ["foo",  "[3 x i8] c\"foo\""]);
+    test!(case_u8_slice     : [b"bar", "[3 x i8] c\"bar\""]);
 }

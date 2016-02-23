@@ -35,10 +35,12 @@ use super::LLVMRef;
 
 use llvm::core::{
     LLVMDisposeMessage,
-    LLVMPrintValueToString
+    LLVMGetValueName,
+    LLVMPrintValueToString,
+    LLVMSetValueName
 };
 use llvm::prelude::LLVMValueRef;
-use std::ffi::CStr;
+use std::ffi::{CStr, CString};
 use std::fmt;
 
 pub struct Value {
@@ -79,12 +81,12 @@ impl fmt::Display for Value {
 #[cfg(test)]
 mod tests {
     use super::super::context::Context;
-    use super::super::constant::Constant;
+    use super::super::native_type::VMRepresentation;
 
     #[test]
     fn case_display() {
         let context = Context::new();
-        let value   = true.as_vm_constant(&context);
+        let value   = true.to_vm_representation(&context);
 
         assert_eq!(
             "i1 true",

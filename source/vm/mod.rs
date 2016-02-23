@@ -32,7 +32,6 @@
  */
 
 pub mod builder;
-pub mod constant;
 pub mod context;
 pub mod function;
 pub mod module;
