@@ -39,6 +39,7 @@ use libc::c_char;
 use llvm::core::{
     LLVMAddFunction,
     LLVMAppendBasicBlockInContext,
+    LLVMCountParams,
     LLVMDeleteFunction,
     LLVMFunctionType,
     LLVMGetTypeContext,
@@ -96,6 +97,12 @@ impl Function {
                 )
             }
         )
+    }
+
+    pub fn arity(&self) -> u32 {
+        unsafe {
+            LLVMCountParams(self.to_ref()) as u32
+        }
     }
 }
 
@@ -202,4 +209,29 @@ mod tests {
             format!("{}", module)
         );
     }
+
+    macro_rules! test_arity {
+        ($test_case_name:ident: (#$function:ident($argument_types:expr) -> $return_types:expr, $arity:expr)) => (
+            #[test]
+            fn $test_case_name() {
+                let context  = Context::new();
+                let module   = Module::new("foobar", &context);
+                let function = Function::new(
+                    &module,
+                    stringify!($function),
+                    &mut $argument_types,
+                    $return_types
+                );
+
+                assert_eq!(
+                    $arity,
+                    function.arity()
+                );
+            }
+        )
+    }
+
+    test_arity!(case_arity_zero: (#f([])  -> void_type(),                         0));
+    test_arity!(case_arity_one : (#f([int1_type()]) -> void_type(),               1));
+    test_arity!(case_arity_two : (#f([int1_type(), int1_type()]) -> void_type() , 2));
 }
