@@ -33,6 +33,7 @@
 
 pub mod builder;
 pub mod context;
+pub mod engine;
 pub mod function;
 pub mod module;
 pub mod native_type;
