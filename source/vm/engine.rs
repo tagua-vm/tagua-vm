@@ -32,15 +32,23 @@
  */
 
 use super::LLVMRef;
+use super::function::Function;
 use super::module::Module;
 
-use libc::{c_char, c_uint, size_t};
+use libc::{c_char, c_uint};
 use llvm::core::LLVMDisposeMessage;
 use llvm::execution_engine::{
     LLVMCreateMCJITCompilerForModule,
     LLVMDisposeExecutionEngine,
     LLVMExecutionEngineRef,
-    LLVMMCJITCompilerOptions
+    LLVMGenericValueRef,
+    LLVMLinkInMCJIT,
+    LLVMMCJITCompilerOptions,
+    LLVMRunFunction,
+};
+use llvm::target::{
+    LLVM_InitializeNativeAsmPrinter,
+    LLVM_InitializeNativeTarget
 };
 use llvm::target_machine::LLVMCodeModel;
 use std::ffi::CStr;
@@ -90,14 +98,27 @@ impl Engine {
             MCJMM             : ptr::null_mut()
         };
         let engine_options_size = mem::size_of::<LLVMMCJITCompilerOptions>();
-        let mut engine_ref      = 0 as LLVMExecutionEngineRef;
-        let mut engine_error    = 0 as *mut c_char;
+        let mut engine_ref;
+        let mut engine_error = 0 as *mut c_char;
 
-        let engine;
+        unsafe {
+            LLVMLinkInMCJIT();
+
+            if 1 == LLVM_InitializeNativeTarget() {
+                return Err("Cannot initialize LLVM native target.".to_string())
+            }
+
+            if 1 == LLVM_InitializeNativeAsmPrinter() {
+                return Err("Cannot initialize LLVM native ASM printer.".to_string())
+            }
+        }
+
+        let engine_status;
 
         unsafe {
             module.unown();
-            engine = LLVMCreateMCJITCompilerForModule(
+            engine_ref    = mem::uninitialized();
+            engine_status = LLVMCreateMCJITCompilerForModule(
                 &mut engine_ref,
                 module.to_ref(),
                 &mut engine_options,
@@ -106,7 +127,7 @@ impl Engine {
             );
         }
 
-        if 0 == engine {
+        if 1 == engine_status {
             let error;
 
             unsafe {
@@ -165,11 +186,11 @@ mod tests {
         );
 
         match result {
-            Ok(engine)
-                => assert!(engine.owned),
+            Ok(engine) =>
+                assert!(engine.owned),
 
-            Err(error)
-                => assert!(false)
+            Err(_) =>
+                assert!(false)
         }
     }
 }
