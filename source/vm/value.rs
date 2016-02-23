@@ -35,12 +35,10 @@ use super::LLVMRef;
 
 use llvm::core::{
     LLVMDisposeMessage,
-    LLVMGetValueName,
-    LLVMPrintValueToString,
-    LLVMSetValueName
+    LLVMPrintValueToString
 };
 use llvm::prelude::LLVMValueRef;
-use std::ffi::{CStr, CString};
+use std::ffi::CStr;
 use std::fmt;
 
 pub struct Value {
