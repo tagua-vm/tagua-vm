@@ -40,7 +40,6 @@ use llvm::core::{
     LLVMAddFunction,
     LLVMAppendBasicBlockInContext,
     LLVMCountParams,
-    LLVMDeleteFunction,
     LLVMFunctionType,
     LLVMGetTypeContext,
     LLVMTypeOf
@@ -53,8 +52,7 @@ use llvm::prelude::{
 use std::ffi::CString;
 
 pub struct Function {
-    function: LLVMValueRef,
-    owned   : bool
+    function: LLVMValueRef
 }
 
 impl Function {
@@ -76,8 +74,7 @@ impl Function {
                     function_name.as_ptr() as *const c_char,
                     function_type
                 )
-            },
-            owned: true
+            }
         }
     }
 
@@ -106,16 +103,6 @@ impl Function {
     }
 }
 
-impl Drop for Function {
-    fn drop(&mut self) {
-        if self.owned {
-            unsafe {
-                LLVMDeleteFunction(self.function);
-            }
-        }
-    }
-}
-
 impl LLVMRef<LLVMValueRef> for Function {
     fn to_ref(&self) -> LLVMValueRef {
         self.function
@@ -135,20 +122,6 @@ mod tests {
         double_type,
         array_type
     };
-
-    #[test]
-    fn case_ownership() {
-        let context  = Context::new();
-        let module   = Module::new("foobar", &context);
-        let function = Function::new(
-            &module,
-            "f",
-            &mut [],
-            void_type()
-        );
-
-        assert!(function.owned);
-    }
 
     #[test]
     fn case_declare_void_void() {
