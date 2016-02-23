@@ -168,7 +168,7 @@ mod tests {
             Ok(_) =>
                 assert!(true),
 
-            Err(error) =>
+            Err(_) =>
                 assert!(false)
         }
     }
