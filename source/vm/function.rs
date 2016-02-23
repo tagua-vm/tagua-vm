@@ -36,6 +36,10 @@ use super::module::Module;
 use super::builder::BasicBlock;
 
 use libc::c_char;
+use llvm::analysis::{
+    LLVMVerifierFailureAction,
+    LLVMVerifyFunction
+};
 use llvm::core::{
     LLVMAddFunction,
     LLVMAppendBasicBlockInContext,
@@ -99,6 +103,23 @@ impl Function {
     pub fn arity(&self) -> u32 {
         unsafe {
             LLVMCountParams(self.to_ref()) as u32
+        }
+    }
+
+    pub fn verify(&self) -> Result<(), String> {
+        let status;
+
+        unsafe {
+            status = LLVMVerifyFunction(
+                self.to_ref(),
+                LLVMVerifierFailureAction::LLVMPrintMessageAction
+            )
+        }
+
+        if 1 == status {
+            Err("Unknown error".to_string())
+        } else {
+            Ok(())
         }
     }
 }
