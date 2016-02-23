@@ -165,7 +165,7 @@ mod tests {
         let context     = Context::new();
         let module      = Module::new("foobar", &context);
         let mut builder = Builder::new(&context);
-        let function    = Function::new(&module, "f", &mut [], void_type());
+        let function    = Function::new(&module, "f", &mut [], void_type(&context));
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
         builder.return_void();
@@ -186,7 +186,7 @@ mod tests {
         let context     = Context::new();
         let module      = Module::new("foobar", &context);
         let mut builder = Builder::new(&context);
-        let function    = Function::new(&module, "f", &mut [], int1_type());
+        let function    = Function::new(&module, "f", &mut [], int1_type(&context));
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
         builder.return_value(true.to_vm_representation(&context));
@@ -207,7 +207,7 @@ mod tests {
         let context     = Context::new();
         let module      = Module::new("foobar", &context);
         let mut builder = Builder::new(&context);
-        let function    = Function::new(&module, "f", &mut [], int8_type());
+        let function    = Function::new(&module, "f", &mut [], int8_type(&context));
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
         builder.return_value(42u8.to_vm_representation(&context));
@@ -228,7 +228,7 @@ mod tests {
         let context     = Context::new();
         let module      = Module::new("foobar", &context);
         let mut builder = Builder::new(&context);
-        let function    = Function::new(&module, "f", &mut [], int8_type());
+        let function    = Function::new(&module, "f", &mut [], int8_type(&context));
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
         let addition = builder.add(

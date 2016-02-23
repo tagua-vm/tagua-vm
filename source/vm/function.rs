@@ -134,14 +134,17 @@ impl LLVMRef<LLVMValueRef> for Function {
 #[cfg(test)]
 mod tests {
     use super::Function;
+    use super::super::builder::Builder;
     use super::super::context::Context;
     use super::super::module::Module;
     use super::super::native_type::{
-        void_type,
+        VMRepresentation,
+        array_type,
+        double_type,
         int1_type,
         int8_type,
-        double_type,
-        array_type
+        int64_type,
+        void_type
     };
 
     #[test]
@@ -152,7 +155,7 @@ mod tests {
             &module,
             "f",
             &mut [],
-            void_type()
+            void_type(&context)
         );
 
         assert_eq!(
@@ -170,8 +173,8 @@ mod tests {
         let _function = Function::new(
             &module,
             "f",
-            &mut [int8_type(), array_type(int1_type(), 7)],
-            double_type()
+            &mut [int8_type(&context), array_type(int1_type(&context), 7)],
+            double_type(&context)
         );
 
         assert_eq!(
@@ -190,7 +193,7 @@ mod tests {
             &module,
             "f",
             &mut [],
-            void_type()
+            void_type(&context)
         );
         function.new_basic_block("entry");
 
@@ -225,7 +228,33 @@ mod tests {
         )
     }
 
-    test_arity!(case_arity_zero: (#f([])  -> void_type(),                         0));
-    test_arity!(case_arity_one : (#f([int1_type()]) -> void_type(),               1));
-    test_arity!(case_arity_two : (#f([int1_type(), int1_type()]) -> void_type() , 2));
+    /*
+    test_arity!(case_arity_zero: (#f([]) -> void_type(&context), 0));
+    test_arity!(case_arity_one : (#f([int1_type(&context)]) -> void_type(&context), 1));
+    test_arity!(case_arity_two : (#f([int1_type(&context), int1_type(&context)]) -> void_type(&context), 2));
+    */
+
+    #[test]
+    fn case_verify() {
+        let mut context = Context::new();
+        let mut module  = Module::new("foobar", &mut context);
+        let mut builder = Builder::new(&mut context);
+        let function    = Function::new(&mut module, "fgi", &mut[], int64_type(&context));
+        let basic_block = function.new_basic_block("entry");
+        builder.move_to_end(basic_block);
+        let addition = builder.add(
+            7u64.to_vm_representation(&context),
+            42u64.to_vm_representation(&context),
+            "addition"
+        );
+        builder.return_value(addition);
+
+        match function.verify() {
+            Ok(_) =>
+                assert!(true),
+
+            Err(_) =>
+                assert!(false)
+        }
+    }
 }

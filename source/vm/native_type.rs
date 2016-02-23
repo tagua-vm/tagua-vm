@@ -49,34 +49,34 @@ use std::mem;
 
 macro_rules! bind_type {
     ($LLVMName:ident => $name:ident) => (
-        pub fn $name() -> LLVMTypeRef {
+        pub fn $name(context: &Context) -> LLVMTypeRef {
             use llvm::core::$LLVMName;
 
             unsafe {
-                $LLVMName()
+                $LLVMName(context.to_ref())
             }
         }
     )
 }
 
-bind_type!(LLVMInt1Type     => int1_type);
-bind_type!(LLVMInt8Type     => int8_type);
-bind_type!(LLVMInt16Type    => int16_type);
-bind_type!(LLVMInt32Type    => int32_type);
-bind_type!(LLVMInt64Type    => int64_type);
-bind_type!(LLVMDoubleType   => double_type);
-bind_type!(LLVMFloatType    => float_type);
-bind_type!(LLVMFP128Type    => fp128_type);
-bind_type!(LLVMPPCFP128Type => ppcfp128_type);
-bind_type!(LLVMVoidType     => void_type);
-bind_type!(LLVMX86FP80Type  => x86fp80_type);
-bind_type!(LLVMX86MMXType   => x86mmx_type);
+bind_type!(LLVMInt1TypeInContext     => int1_type);
+bind_type!(LLVMInt8TypeInContext     => int8_type);
+bind_type!(LLVMInt16TypeInContext    => int16_type);
+bind_type!(LLVMInt32TypeInContext    => int32_type);
+bind_type!(LLVMInt64TypeInContext    => int64_type);
+bind_type!(LLVMDoubleTypeInContext   => double_type);
+bind_type!(LLVMFloatTypeInContext    => float_type);
+bind_type!(LLVMFP128TypeInContext    => fp128_type);
+bind_type!(LLVMPPCFP128TypeInContext => ppcfp128_type);
+bind_type!(LLVMVoidTypeInContext     => void_type);
+bind_type!(LLVMX86FP80TypeInContext  => x86fp80_type);
+bind_type!(LLVMX86MMXTypeInContext   => x86mmx_type);
 
-pub fn int_type(size: u32) -> LLVMTypeRef {
-    use llvm::core::LLVMIntType;
+pub fn int_type(size: u32, context: &Context) -> LLVMTypeRef {
+    use llvm::core::LLVMIntTypeInContext;
 
     unsafe {
-        LLVMIntType(size as c_uint)
+        LLVMIntTypeInContext(context.to_ref(), size as c_uint)
     }
 }
 
