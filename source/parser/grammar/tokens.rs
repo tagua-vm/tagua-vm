@@ -31,8 +31,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-mod grammar;
-
-pub fn parse(input: &[u8]) {
-    println!("{:?}", grammar::rules::root(input));
+macro_rules! token {
+    ($token_name:ident: $token_value:expr) => (
+        pub const $token_name: &'static str = $token_value;
+    )
 }
+
+token!(PLUS: "+");

@@ -31,8 +31,66 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-mod grammar;
+use super::ast;
+use super::tokens as token;
 
-pub fn parse(input: &[u8]) {
-    println!("{:?}", grammar::rules::root(input));
+use nom::digit;
+use nom::IResult::Done;
+use std::str;
+use std::str::FromStr;
+
+named!(
+    i64_digit<i64>,
+    map_res!(
+        map_res!(
+            digit,
+            str::from_utf8
+        ),
+        FromStr::from_str
+    )
+);
+
+named!(
+    expr<ast::Addition>,
+    chain!(
+        left: i64_digit ~
+        tag!(token::PLUS) ~
+        right: i64_digit,
+        || { ast::Addition { a: ast::Term { t: left }, b: ast::Term { t: right } } }
+    )
+);
+
+pub fn root(input: &[u8]) -> ast::Addition {
+    match expr(input) {
+        Done(_, ast) => ast,
+        _ => panic!("Youhouuu")
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use nom::IResult::Done;
+    use super::expr;
+    use super::i64_digit;
+    use super::super::ast::Addition;
+    use super::super::ast::Term;
+
+    #[test]
+    fn case_i64_digit() {
+        assert_eq!(
+            i64_digit(b"42"),
+            Done(&b""[..], 42)
+        );
+    }
+
+    #[test]
+    fn case_expr() {
+        assert_eq!(
+            expr(b"1+2"),
+            Done(
+                &b""[..], Addition { a: Term { t: 1 }, b: Term { t: 2 } }
+            )
+        );
+    }
 }

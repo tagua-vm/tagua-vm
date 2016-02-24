@@ -31,14 +31,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#[derive(Debug)]
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Term {
     pub t: i64
 }
 
-#[derive(Debug)]
-#[derive(PartialEq)]
+#[derive(Debug, PartialEq)]
 pub struct Addition {
     pub a: Term,
     pub b: Term
