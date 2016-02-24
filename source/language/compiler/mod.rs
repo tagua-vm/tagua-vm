@@ -1,5 +1,3 @@
-#![crate_type = "lib"]
-
 /**
  * Tagua VM
  *
@@ -33,11 +31,4 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#[macro_use]
-extern crate nom;
-extern crate libc;
-extern crate llvm_sys as llvm;
-
-pub mod language;
-pub mod shared;
 pub mod vm;

@@ -1,5 +1,3 @@
-#![crate_type = "lib"]
-
 /**
  * Tagua VM
  *
@@ -33,11 +31,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#[macro_use]
-extern crate nom;
-extern crate libc;
-extern crate llvm_sys as llvm;
+pub mod ast;
+pub mod rules;
+pub mod tokens;
 
-pub mod language;
-pub mod shared;
-pub mod vm;
+pub fn parse(input: &[u8]) -> ast::Addition {
+    let result = rules::root(input);
+    println!("{:?}", result);
+
+    result
+}

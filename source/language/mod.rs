@@ -31,10 +31,5 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-pub mod ast;
-pub mod rules;
-pub mod tokens;
-
-pub fn parse(input: &[u8]) {
-    println!("{:?}", rules::root(input));
-}
+pub mod compiler;
+pub mod parser;

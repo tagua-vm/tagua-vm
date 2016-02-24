@@ -1,5 +1,3 @@
-#![crate_type = "lib"]
-
 /**
  * Tagua VM
  *
@@ -33,11 +31,48 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#[macro_use]
-extern crate nom;
-extern crate libc;
-extern crate llvm_sys as llvm;
+use super::super::parser::ast;
+use super::super::super::vm::native_type::VMRepresentation;
+use super::super::super::vm;
 
-pub mod language;
-pub mod shared;
-pub mod vm;
+pub fn compile(ast: ast::Addition) {
+    let context     = vm::context::Context::new();
+    let mut module  = vm::module::Module::new("foobar", &context);
+    let mut builder = vm::builder::Builder::new(&context);
+    let function    = vm::function::Function::new(
+        &module,
+        "f",
+        &mut [],
+        vm::native_type::int64_type(&context)
+    );
+    let basic_block = function.new_basic_block("entry");
+    builder.move_to_end(basic_block);
+    let addition = builder.add(
+        ast.a.t.to_vm_representation(&context),
+        ast.b.t.to_vm_representation(&context),
+        "addition"
+    );
+    builder.return_value(addition);
+
+    let engine_result = vm::engine::Engine::new(
+        &mut module,
+        &vm::engine::Options {
+            level     : vm::engine::OptimizationLevel::NoOptimizations,
+            code_model: vm::engine::CodeModel::Default
+        }
+    );
+
+    match engine_result {
+        Ok(engine) =>
+            println!(
+                "THE result is {}.",
+                engine.run_function(&function, &mut [])
+            ),
+
+        Err(_) =>
+            panic!(
+                "Cannot execute the following module:\n{}",
+                module
+            )
+    }
+}

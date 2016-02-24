@@ -33,9 +33,7 @@
 
 extern crate tagua_vm;
 
-/*
-
-use tagua_vm::parser::parse;
+use tagua_vm::language;
 use tagua_vm::shared::VERSION;
 use std::env;
 use std::fs::File;
@@ -68,7 +66,9 @@ fn file(filename: &str) {
 
             match file.read_to_end(&mut buffer) {
                 Ok(_) =>
-                    parse(&buffer[..]),
+                    language::compiler::vm::compile(
+                        language::parser::parse(&buffer[..])
+                    ),
 
                 Err(error) => {
                     println!(
@@ -169,40 +169,4 @@ mod tests {
             version()
         );
     }
-}
-*/
-
-fn main() {
-    println!("hello");
-    let context = tagua_vm::vm::context::Context::new();
-    println!("{:?}", context);
-    let module = tagua_vm::vm::module::Module::new("foobar", &context);
-    println!("{}", module);
-
-    /*
-    let ctx = Context::new();
-    let module = Module::new("simple", &ctx);
-    let func = module.add_function("add", Type::get::<fn((u64, u64)) -> u64>(&ctx));
-    func.add_attributes(&[NoUnwind, ReadNone]);
-    let a = &func[0];
-    let b = &func[1];
-    a.set_name("a");
-    b.set_name("b");
-
-    let entry = func.append("entry");
-
-    let builder = Builder::new(&ctx);
-    builder.position_at_end(entry);
-    builder.build_ret(builder.build_add(a, b));
-
-    module.verify().unwrap();
-    println!("{:?}", module);
-
-    let ee = JitEngine::new(&module, JitOptions {opt_level: 0}).unwrap();
-    ee.with_function(func, |add: extern fn((u64, u64)) -> u64| {
-        for i in 0..25 {
-            println!("add {} + {} = {}", i, i, add((i, i)))
-        }
-    });
-    */
 }
