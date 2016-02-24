@@ -112,7 +112,7 @@ impl Function {
         unsafe {
             status = LLVMVerifyFunction(
                 self.to_ref(),
-                LLVMVerifierFailureAction::LLVMPrintMessageAction
+                LLVMVerifierFailureAction::LLVMReturnStatusAction
             )
         }
 
@@ -143,7 +143,6 @@ mod tests {
         double_type,
         int1_type,
         int8_type,
-        int64_type,
         void_type
     };
 
@@ -205,10 +204,19 @@ mod tests {
             "}\n",
             format!("{}", module)
         );
+
+        // The block has no terminator, so it must fail.
+        match function.verify() {
+            Ok(_) =>
+                assert!(false),
+
+            Err(_) =>
+                assert!(true)
+        }
     }
 
     macro_rules! test_arity {
-        ($test_case_name:ident: (#$function:ident($argument_types:expr) -> $return_types:expr, $arity:expr)) => (
+        ($test_case_name:ident: (#$function:ident([$($argument_types:ident),*]) -> $return_type:ident, $arity:expr)) => (
             #[test]
             fn $test_case_name() {
                 let context  = Context::new();
@@ -216,8 +224,8 @@ mod tests {
                 let function = Function::new(
                     &module,
                     stringify!($function),
-                    &mut $argument_types,
-                    $return_types
+                    &mut [$($argument_types(&context)),*],
+                    $return_type(&context)
                 );
 
                 assert_eq!(
@@ -228,23 +236,21 @@ mod tests {
         )
     }
 
-    /*
-    test_arity!(case_arity_zero: (#f([]) -> void_type(&context), 0));
-    test_arity!(case_arity_one : (#f([int1_type(&context)]) -> void_type(&context), 1));
-    test_arity!(case_arity_two : (#f([int1_type(&context), int1_type(&context)]) -> void_type(&context), 2));
-    */
+    test_arity!(case_arity_zero: (#f([]) -> void_type, 0));
+    test_arity!(case_arity_one : (#f([int1_type]) -> void_type, 1));
+    test_arity!(case_arity_two : (#f([int1_type, int1_type]) -> void_type, 2));
 
     #[test]
     fn case_verify() {
         let mut context = Context::new();
         let mut module  = Module::new("foobar", &mut context);
         let mut builder = Builder::new(&mut context);
-        let function    = Function::new(&mut module, "fgi", &mut[], int64_type(&context));
+        let function    = Function::new(&mut module, "fgi", &mut[], int8_type(&context));
         let basic_block = function.new_basic_block("entry");
         builder.move_to_end(basic_block);
         let addition = builder.add(
-            7u64.to_vm_representation(&context),
-            42u64.to_vm_representation(&context),
+            7u8.to_vm_representation(&context),
+            42u8.to_vm_representation(&context),
             "addition"
         );
         builder.return_value(addition);
