@@ -31,8 +31,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-mod grammar;
+pub mod ast;
+pub mod rules;
+pub mod tokens;
 
 pub fn parse(input: &[u8]) {
-    println!("{:?}", grammar::rules::root(input));
+    println!("{:?}", rules::root(input));
 }
