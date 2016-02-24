@@ -226,4 +226,5 @@ mod tests {
     test_vm_representation!(case_f64          : (4.2f64, "double 4.200000e+00"));
     test_vm_representation!(case_str          : ("foo",  "[3 x i8] c\"foo\""));
     test_vm_representation!(case_u8_slice     : (b"bar", "[3 x i8] c\"bar\""));
+    test_vm_representation!(case_unicode_str  : ("😄",    "[4 x i8] c\"\\F0\\9F\\98\\84\""));
 }
