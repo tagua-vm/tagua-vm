@@ -123,7 +123,7 @@ impl Engine {
                 &mut engine_ref,
                 module.to_ref(),
                 &mut engine_options,
-                engine_options_size as u64,
+                engine_options_size as usize,
                 &mut engine_error
             );
         }
