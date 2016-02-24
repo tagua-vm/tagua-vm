@@ -35,13 +35,14 @@ use super::LLVMRef;
 use super::function::Function;
 use super::module::Module;
 
-use libc::{c_char, c_uint};
+use libc::{c_char, c_uint, c_ulonglong};
 use llvm::core::LLVMDisposeMessage;
 use llvm::execution_engine::{
     LLVMCreateMCJITCompilerForModule,
     LLVMDisposeExecutionEngine,
     LLVMExecutionEngineRef,
     LLVMGenericValueRef,
+    LLVMGenericValueToInt,
     LLVMLinkInMCJIT,
     LLVMMCJITCompilerOptions,
     LLVMRunFunction,
@@ -146,13 +147,16 @@ impl Engine {
         }
     }
 
-    pub fn run_function(&self, function: &Function, arguments: &mut [LLVMGenericValueRef]) -> LLVMGenericValueRef {
+    pub fn run_function(&self, function: &Function, arguments: &mut [LLVMGenericValueRef]) -> c_ulonglong {
         unsafe {
-            LLVMRunFunction(
-                self.engine,
-                function.to_ref(),
-                arguments.len() as c_uint,
-                arguments.as_mut_ptr()
+            LLVMGenericValueToInt(
+                LLVMRunFunction(
+                    self.engine,
+                    function.to_ref(),
+                    arguments.len() as c_uint,
+                    arguments.as_mut_ptr()
+                ),
+                0
             )
         }
     }
@@ -189,8 +193,6 @@ mod tests {
         VMRepresentation,
         int8_type
     };
-
-    use llvm::execution_engine::LLVMGenericValueToInt;
 
     #[test]
     fn case_ownership() {
@@ -248,15 +250,7 @@ mod tests {
                     &mut []
                 );
 
-                assert_eq!(
-                    7,
-                    unsafe {
-                        LLVMGenericValueToInt(
-                            returned_value,
-                            0
-                        )
-                    }
-                );
+                assert_eq!(7, returned_value);
             }
 
             Err(_) =>
