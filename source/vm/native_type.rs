@@ -48,12 +48,12 @@ use llvm::prelude::{
 use std::mem;
 
 macro_rules! bind_type {
-    ($LLVMName:ident => $name:ident) => (
+    ($LLVM_name:ident => $name:ident) => (
         pub fn $name(context: &Context) -> LLVMTypeRef {
-            use llvm::core::$LLVMName;
+            use llvm::core::$LLVM_name;
 
             unsafe {
-                $LLVMName(context.to_ref())
+                $LLVM_name(context.to_ref())
             }
         }
     )
@@ -109,15 +109,15 @@ pub trait VMRepresentation {
 }
 
 macro_rules! to_integer {
-    ($type_name:ty as $($alias:ty)as+ => $LLVMType:ident($($LLVMTypeArgument:expr),*)) => (
+    ($type_name:ty as $($alias:ty)as+ => $LLVM_type:ident($($LLVM_type_argument:expr),*)) => (
         impl VMRepresentation for $type_name {
             fn to_vm_representation(self, context: &Context) -> Value {
-                use llvm::core::$LLVMType;
+                use llvm::core::$LLVM_type;
 
                 Value::from_ref(
                     unsafe {
                         LLVMConstInt(
-                            $LLVMType(context.to_ref(), $($LLVMTypeArgument),*),
+                            $LLVM_type(context.to_ref(), $($LLVM_type_argument),*),
                             self as $($alias)as+,
                             0 as LLVMBool
                         )
@@ -127,21 +127,21 @@ macro_rules! to_integer {
         }
     );
 
-    ($type_name:ty as $($alias:ty)as+ => $LLVMType:ident) => (
-        to_integer!{$type_name as $($alias)as+ => $LLVMType()}
+    ($type_name:ty as $($alias:ty)as+ => $LLVM_type:ident) => (
+        to_integer!{$type_name as $($alias)as+ => $LLVM_type()}
     )
 }
 
 macro_rules! to_float {
-    ($type_name:ty as $alias:ty => $LLVMType:ident) => (
+    ($type_name:ty as $alias:ty => $LLVM_type:ident) => (
         impl VMRepresentation for $type_name {
             fn to_vm_representation(self, context: &Context) -> Value {
-                use llvm::core::$LLVMType;
+                use llvm::core::$LLVM_type;
 
                 Value::from_ref(
                     unsafe {
                         LLVMConstReal(
-                            $LLVMType(context.to_ref()),
+                            $LLVM_type(context.to_ref()),
                             self as $alias
                         )
                     }
