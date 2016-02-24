@@ -36,8 +36,5 @@ pub mod rules;
 pub mod tokens;
 
 pub fn parse(input: &[u8]) -> ast::Addition {
-    let result = rules::root(input);
-    println!("{:?}", result);
-
-    result
+    rules::root(input)
 }
