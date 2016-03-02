@@ -1,4 +1,4 @@
-# Tagua VM
+# Tagua VM ![build status](https://api.travis-ci.org/tagua-vm/tagua-vm.svg)
 
 Tagua VM is an experimental [PHP](http://php.net/) Virtual Machine written with
 [the Rust language](https://www.rust-lang.org/) and [the LLVM Compiler
