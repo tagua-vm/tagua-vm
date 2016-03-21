@@ -29,6 +29,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+//! Function manipulation.
+
 use super::LLVMRef;
 use super::module::Module;
 use super::builder::BasicBlock;

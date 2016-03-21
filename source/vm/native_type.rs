@@ -29,6 +29,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+//! LLVM types manipulation and bindings from Rust types.
+
 use super::LLVMRef;
 use super::context::Context;
 use super::value::Value;
@@ -46,7 +48,8 @@ use llvm::prelude::{
 use std::mem;
 
 macro_rules! bind_type {
-    ($LLVM_name:ident => $name:ident) => (
+    ($LLVM_name:ident => $name:ident; $documentation:expr) => (
+        #[doc=$documentation]
         pub fn $name(context: &Context) -> LLVMTypeRef {
             use llvm::core::$LLVM_name;
 
@@ -57,19 +60,20 @@ macro_rules! bind_type {
     )
 }
 
-bind_type!(LLVMInt1TypeInContext     => int1_type);
-bind_type!(LLVMInt8TypeInContext     => int8_type);
-bind_type!(LLVMInt16TypeInContext    => int16_type);
-bind_type!(LLVMInt32TypeInContext    => int32_type);
-bind_type!(LLVMInt64TypeInContext    => int64_type);
-bind_type!(LLVMDoubleTypeInContext   => double_type);
-bind_type!(LLVMFloatTypeInContext    => float_type);
-bind_type!(LLVMFP128TypeInContext    => fp128_type);
-bind_type!(LLVMPPCFP128TypeInContext => ppcfp128_type);
-bind_type!(LLVMVoidTypeInContext     => void_type);
-bind_type!(LLVMX86FP80TypeInContext  => x86fp80_type);
-bind_type!(LLVMX86MMXTypeInContext   => x86mmx_type);
+bind_type!(LLVMInt1TypeInContext     => int1_type; "Create a LLVM `int1` type.");
+bind_type!(LLVMInt8TypeInContext     => int8_type; "Create a LLVM `int8` type.");
+bind_type!(LLVMInt16TypeInContext    => int16_type; "Create a LLVM `int16` type.");
+bind_type!(LLVMInt32TypeInContext    => int32_type; "Create a LLVM `int32` type.");
+bind_type!(LLVMInt64TypeInContext    => int64_type; "Create a LLVM `int64` type.");
+bind_type!(LLVMDoubleTypeInContext   => double_type; "Create a LLVM `double` type.");
+bind_type!(LLVMFloatTypeInContext    => float_type; "Create a LLVM `float` type.");
+bind_type!(LLVMFP128TypeInContext    => fp128_type; "Create a LLVM `fp128` type.");
+bind_type!(LLVMPPCFP128TypeInContext => ppcfp128_type; "Create a LLVM `ppcfp128` type.");
+bind_type!(LLVMVoidTypeInContext     => void_type; "Create a LLVM `void` type.");
+bind_type!(LLVMX86FP80TypeInContext  => x86fp80_type; "Create a LLVM `x86fp80` type.");
+bind_type!(LLVMX86MMXTypeInContext   => x86mmx_type; "Create a LLVM `x86mmx` type.");
 
+/// Create a LLVM `int` type.
 pub fn int_type(size: u32, context: &Context) -> LLVMTypeRef {
     use llvm::core::LLVMIntTypeInContext;
 
@@ -78,6 +82,7 @@ pub fn int_type(size: u32, context: &Context) -> LLVMTypeRef {
     }
 }
 
+/// Create a LLVM `array` type.
 pub fn array_type(elements_type: LLVMTypeRef, size: u32) -> LLVMTypeRef {
     use llvm::core::LLVMArrayType;
 
@@ -86,6 +91,7 @@ pub fn array_type(elements_type: LLVMTypeRef, size: u32) -> LLVMTypeRef {
     }
 }
 
+/// Create a LLVM `pointer` type.
 pub fn pointer_type(element_type: LLVMTypeRef, address_space: u32) -> LLVMTypeRef {
     use llvm::core::LLVMPointerType;
 
@@ -94,6 +100,7 @@ pub fn pointer_type(element_type: LLVMTypeRef, address_space: u32) -> LLVMTypeRe
     }
 }
 
+/// Create a LLVM `vector` type.
 pub fn vector_type(elements_type: LLVMTypeRef, size: u32) -> LLVMTypeRef {
     use llvm::core::LLVMVectorType;
 
@@ -102,6 +109,7 @@ pub fn vector_type(elements_type: LLVMTypeRef, size: u32) -> LLVMTypeRef {
     }
 }
 
+/// Map a Rust type to a LLVM type.
 pub trait VMRepresentation {
     fn to_vm_representation(self, context: &Context) -> Value;
 }

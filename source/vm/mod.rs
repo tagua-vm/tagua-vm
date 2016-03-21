@@ -34,7 +34,7 @@
 //! The virtual machine is based on [the LLVM Compiler
 //! Infrastructure](http://llvm.org/). Thus, it is based on:
 //!
-//!   1. An intermediate representation, called IR, which is an small
+//!   1. An intermediate representation, called IR, which is a small
 //!      intermediate typed-language,
 //!   2. An execution engine responsible to execute this IR.
 //!
@@ -42,7 +42,8 @@
 //! does not aim at being a generic safe bindings implementation. One might not
 //! feel lost if already familiar with LLVM infrastructure. The basis of the
 //! infrastructure is the context and the module, functions are declared inside
-//! a module and the execution engine is MCJIT.
+//! a module and the execution engine is MCJIT (see [MCJIT Design and
+//! Implementation](http://llvm.org/docs/MCJITDesignAndImplementation.html)).
 
 pub mod builder;
 pub mod context;
