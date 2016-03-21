@@ -35,7 +35,7 @@ to have advanced analysis about PHP types, but this is another topic.
 
 ### Safety first
 
-The legend says that PHP powers more than 80% of the Web application. The two
+The legend says that PHP powers more than 80% of the Web applications. The two
 biggest websites in terms of traffic, namely
 [Wikipedia](https://wikipedia.org/) and [Facebook](https://facebook.com/), are
 written in PHP. Thus, this is extremely important to have a safe VM to run
@@ -103,7 +103,8 @@ $ ./target/debug/tvm --help
 
 ## Contributing
 
-Do whatever you want. Just respect the license and the other contributors. You favorite tool is going to be:
+Do whatever you want. Just respect the license and the other contributors. Your
+favorite tool is going to be:
 
 ```sh
 $ cargo test
