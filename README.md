@@ -101,6 +101,30 @@ $ cargo build
 $ ./target/debug/tvm --help
 ```
 
+### Using Docker
+
+If you don't want to install Rust and LLVM on your machine you can use Docker:
+It provides everything you will need to build, test and run Tagua VM.
+
+First, you will need to build the docker image:
+
+```sh
+$ docker build -t tagua-vm .
+```
+
+You will then be able to run a container from this image:
+
+```sh
+$ docker run --rm -it --name tagua-vm-dev -v `pwd`:/source` bash
+```
+
+You are now inside a fresh container. To see if everything is fine, you can
+start the test suite:
+
+```sh
+$ cargo test
+```
+
 ## Contributing
 
 Do whatever you want. Just respect the license and the other contributors. Your
