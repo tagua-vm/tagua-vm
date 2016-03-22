@@ -1,6 +1,6 @@
 language: rust
 rust:
-  - 1.6.0
+  - 1.7.0
   - stable
   - beta
   - nightly
@@ -23,4 +23,3 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export LDFLAGS="-L/usr/local/opt/llvm/lib $LDFLAGS"; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CPPFLAGS="-I/usr/local/opt/llvm/include $CPPFLAGS"; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH="/usr/local/opt/llvm/bin:$PATH"; fi
-
