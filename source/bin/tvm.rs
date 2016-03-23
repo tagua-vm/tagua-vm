@@ -45,6 +45,7 @@ enum ExitCode {
     InvalidOption,
     MissingFile,
     InvalidFile,
+    MultipleFiles,
     Panic
 }
 
@@ -97,7 +98,7 @@ fn exit(code: ExitCode) {
 }
 
 pub fn process_options(arguments: Vec<String>) {
-    let mut input = "";
+    let mut input = None;
 
     for argument in &arguments[1..] {
         match argument.chars().next() {
@@ -120,8 +121,18 @@ pub fn process_options(arguments: Vec<String>) {
                     }
                 },
 
-            Some(_) =>
-                input = argument,
+            Some(_) => {
+                if input == None
+                {
+                    input = Some(argument);
+                }
+                else
+                {
+                    println!("Multiple input files\n");
+                    println!("{}", usage());
+                    exit(ExitCode::MultipleFiles);
+                }
+            }
 
             None => {
                 println!("{}", usage());
@@ -130,13 +141,14 @@ pub fn process_options(arguments: Vec<String>) {
         }
     }
 
-    if input.is_empty() {
+    if let Some(f) = input {
+        file(&f[..]);
+    }
+    else {
         println!("No file provided.\n");
         println!("{}", usage());
         exit(ExitCode::MissingFile);
     }
-
-    file(input);
 }
 
 fn main() {
