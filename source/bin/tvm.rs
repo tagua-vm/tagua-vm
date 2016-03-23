@@ -114,7 +114,7 @@ pub fn process_options(arguments: Vec<String>) {
                     },
 
                     _ => {
-                        println!("Invalid option “{}”.\n", argument);
+                        println!("Invalid option \"{}\".\n", argument);
                         println!("{}", usage());
                         exit(ExitCode::InvalidOption);
                     }
