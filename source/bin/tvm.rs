@@ -154,10 +154,8 @@ mod tests {
     #[test]
     fn case_usage() {
         assert_eq!(
-            "Usage: tvm [options] [file]\n".to_string() +
-            "Options:\n" +
-            "    -v, --version    Print version.\n" +
-            "    -h, --help       This help.",
+            "Usage: tvm [options] [file]\nOptions:\n    -v, --version    \
+            Print version.\n    -h, --help       This help.".to_string(),
             usage()
         );
     }
