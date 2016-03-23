@@ -100,7 +100,7 @@ fn exit(code: ExitCode) {
 pub fn process_options(arguments: Vec<String>) {
     let mut input = None;
 
-    for argument in &arguments[1..] {
+    for argument in arguments {
         match argument.chars().next() {
             Some('-') =>
                 match argument.as_ref() {
@@ -152,7 +152,7 @@ pub fn process_options(arguments: Vec<String>) {
 }
 
 fn main() {
-    let arguments: Vec<String> = env::args().collect();
+    let arguments: Vec<String> = env::args().skip(1).collect();
 
     process_options(arguments);
 }
