@@ -45,14 +45,15 @@ enum ExitCode {
     InvalidOption,
     MissingFile,
     InvalidFile,
+    MultipleFiles,
     Panic
 }
 
 fn usage() -> String {
-    "Usage: tvm [options] [file]\n".to_string() +
-    "Options:\n" +
-    "    -v, --version    Print version.\n" +
-    "    -h, --help       This help."
+    "Usage: tvm [options] [file]\
+    \nOptions:\
+    \n    -v, --version    Print version.\
+    \n    -h, --help       This help.".to_string()
 }
 
 fn version() -> String {
@@ -97,9 +98,9 @@ fn exit(code: ExitCode) {
 }
 
 pub fn process_options(arguments: Vec<String>) {
-    let mut input = "";
+    let mut input = None;
 
-    for argument in &arguments[1..] {
+    for argument in arguments {
         match argument.chars().next() {
             Some('-') =>
                 match argument.as_ref() {
@@ -114,14 +115,24 @@ pub fn process_options(arguments: Vec<String>) {
                     },
 
                     _ => {
-                        println!("Invalid option “{}”.\n", argument);
+                        println!("Invalid option \"{}\".\n", argument);
                         println!("{}", usage());
                         exit(ExitCode::InvalidOption);
                     }
                 },
 
-            Some(_) =>
-                input = argument,
+            Some(_) => {
+                if input == None
+                {
+                    input = Some(argument);
+                }
+                else
+                {
+                    println!("Multiple input files\n");
+                    println!("{}", usage());
+                    exit(ExitCode::MultipleFiles);
+                }
+            }
 
             None => {
                 println!("{}", usage());
@@ -130,17 +141,18 @@ pub fn process_options(arguments: Vec<String>) {
         }
     }
 
-    if input.is_empty() {
+    if let Some(f) = input {
+        file(&f[..]);
+    }
+    else {
         println!("No file provided.\n");
         println!("{}", usage());
         exit(ExitCode::MissingFile);
     }
-
-    file(input);
 }
 
 fn main() {
-    let arguments: Vec<String> = env::args().collect();
+    let arguments: Vec<String> = env::args().skip(1).collect();
 
     process_options(arguments);
 }
@@ -154,10 +166,8 @@ mod tests {
     #[test]
     fn case_usage() {
         assert_eq!(
-            "Usage: tvm [options] [file]\n".to_string() +
-            "Options:\n" +
-            "    -v, --version    Print version.\n" +
-            "    -h, --help       This help.",
+            "Usage: tvm [options] [file]\nOptions:\n    -v, --version    \
+            Print version.\n    -h, --help       This help.".to_string(),
             usage()
         );
     }
