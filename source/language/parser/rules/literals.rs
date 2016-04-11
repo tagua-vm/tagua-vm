@@ -30,6 +30,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 //! Group of literal rules.
+//!
+//! The list of all literals is provided by the PHP Language Specification in the [Grammar chapter,
+//! Literals section](https://github.com/php/php-langspec/blob/master/spec/19-grammar.md#literals).
 
 use nom::{digit, oct_digit};
 use std::str;
