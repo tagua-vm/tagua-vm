@@ -106,7 +106,7 @@ mod tests {
 
     #[test]
     fn case_octal() {
-        assert_eq!(octal(b"052"), Done(&b""[..], 42));
+        assert_eq!(octal(b"052"), Done(&b""[..], 42u64));
     }
 
     #[test]
