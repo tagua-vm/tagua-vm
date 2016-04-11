@@ -47,13 +47,17 @@ named!(
 );
 
 named!(
-    pub octal<i64>,
-    map_res!(
-        map_res!(
-            oct_digit,
-            str::from_utf8
+    pub octal<u64>,
+    chain!(
+        tag!("0") ~
+        out: map_res!(
+            map_res!(
+                oct_digit,
+                str::from_utf8
+            ),
+            |string: &str| { u64::from_str_radix(string, 8) }
         ),
-        FromStr::from_str
+        || out
     )
 );
 
@@ -86,7 +90,8 @@ named!(
 
 #[cfg(test)]
 mod tests {
-    use nom::IResult::Done;
+    use nom::IResult::{Done, Error};
+    use nom::{Err, ErrorKind};
     use super::{
         decimal,
         octal,
@@ -100,12 +105,17 @@ mod tests {
 
     #[test]
     fn case_octal() {
-        /*
-        assert_eq!(
-            octal(b"052"),
-            Done(&b""[..], 42)
-        );
-        */
+        assert_eq!(octal(b"052"), Done(&b""[..], 42));
+    }
+
+    #[test]
+    fn case_invalid_octal_not_starting_by_zero() {
+        assert_eq!(octal(b"7"), Error(Err::Position(ErrorKind::Tag, &b"7"[..])));
+    }
+
+    #[test]
+    fn case_invalid_octal_not_valid_base_range() {
+        assert_eq!(octal(b"8"), Error(Err::Position(ErrorKind::Tag, &b"8"[..])));
     }
 
     #[test]
