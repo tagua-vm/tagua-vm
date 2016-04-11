@@ -53,4 +53,4 @@ codegen-units    = 1
 [dependencies]
 libc = "~0.2.7"
 llvm-sys = "~0.2.1"
-nom = {version = "~1.2.0", features = ["regexp"]}
+nom = {version = "~1.2.0"}
