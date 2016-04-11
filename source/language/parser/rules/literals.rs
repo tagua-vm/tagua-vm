@@ -29,19 +29,14 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-//! The grammar as a set of rules.
+//! Group of literal rules.
 
-use super::ast;
-use super::tokens as token;
-
-use nom::digit;
-use nom::IResult::Done;
+use nom::{digit, oct_digit};
 use std::str;
 use std::str::FromStr;
 
-/// Hello
 named!(
-    pub i64_digit<i64>,
+    pub decimal<i64>,
     map_res!(
         map_res!(
             digit,
@@ -52,45 +47,75 @@ named!(
 );
 
 named!(
-    pub expr<ast::Addition>,
-    chain!(
-        left: i64_digit ~
-        tag!(token::PLUS) ~
-        right: i64_digit,
-        || { ast::Addition { a: ast::Term { t: left }, b: ast::Term { t: right } } }
+    pub octal<i64>,
+    map_res!(
+        map_res!(
+            oct_digit,
+            str::from_utf8
+        ),
+        FromStr::from_str
     )
 );
 
-pub fn root(input: &[u8]) -> ast::Addition {
-    match expr(input) {
-        Done(_, ast) => ast,
-        _ => panic!("Youhouuu")
+fn is_identifier_head(character: u8) -> bool {
+    match character {
+        64...90   => true, // A-Z
+        97...122  => true, // a-z
+        127...255 => true, // 0x7f-0xff
+        b'_'      => true,
+        _         => false
     }
 }
+
+fn is_identifier_tail(character: u8) -> bool {
+    match character {
+        48...57 => true, // 0-9
+        _       => is_identifier_head(character)
+    }
+}
+
+named!(
+    pub identifier,
+    chain!(
+        head: take_while1!(is_identifier_head) ~
+        _tail: take_while!(is_identifier_tail),
+        || head
+    )
+);
 
 
 #[cfg(test)]
 mod tests {
     use nom::IResult::Done;
-    use super::expr;
-    use super::i64_digit;
-    use super::super::ast;
+    use super::{
+        decimal,
+        octal,
+        identifier
+    };
 
     #[test]
-    fn case_i64_digit() {
+    fn case_decimal() {
         assert_eq!(
-            i64_digit(b"42"),
+            decimal(b"42"),
             Done(&b""[..], 42)
         );
     }
 
     #[test]
-    fn case_expr() {
+    fn case_octal() {
+        /*
         assert_eq!(
-            expr(b"1+2"),
-            Done(
-                &b""[..], ast::Addition { a: ast::Term { t: 1 }, b: ast::Term { t: 2 } }
-            )
+            octal(b"052"),
+            Done(&b""[..], 42)
+        );
+        */
+    }
+
+    #[test]
+    fn case_identifier() {
+        assert_eq!(
+            identifier(b"abc"),
+            Done(&b""[..], &b"abc"[..])
         );
     }
 }

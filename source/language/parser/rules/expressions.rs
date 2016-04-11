@@ -29,31 +29,36 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-//! List of lexemes.
-//!
-//! The list of all lexemes, aka tokens, is provided by the PHP Language
-//! Specification in the [Grammar
-//! chapter](https://github.com/php/php-langspec/blob/master/spec/19-grammar.md#lexical-grammar).
-//!
-//! All lexemes are declared as static string constants.
+//! Group of expression rules.
 
-/// Helper to declare a token.
-///
-/// ### Examples
-///
-/// The following example declares the `FOO_BAR` token:
-///
-/// ```
-/// token!(FOO_BAR: "foobar"; "The `FOO_BAR` token, mostly used in example.");
-/// ```
-macro_rules! token {
-    ($name:ident: $value:expr; $documentation:expr) => (
-        #[doc=$documentation]
-        pub const $name: &'static str = $value;
+use super::super::ast;
+use super::super::tokens as token;
+use super::literals::decimal;
+
+named!(
+    pub expr<ast::Addition>,
+    chain!(
+        left: decimal ~
+        tag!(token::PLUS) ~
+        right: decimal,
+        || ast::Addition { a: ast::Term { t: left }, b: ast::Term { t: right } }
     )
-}
+);
 
-token!(PLUS: "+"; "The `PLUS` token.\n\nRepresent the addition operator, used for instance in an arithmetic operation, e.g. `1 + 2`.");
-token!(EQUAL: "="; "The `EQUAL` token.\n\nRepresent a binding of a value to a variable, e.g. `$x = 42`.");
-token!(SEMI_COLON: ";"; "The `SEMI_COLON` token.\n\nRepresent a terminator of an expressions, e.g. `$x = 42;`.");
-token!(DOLLARS: "$"; "The `DOLLARS` token.\n\nRepresent the introduction of a variable, e.g. `$x`.");
+
+#[cfg(test)]
+mod tests {
+    use nom::IResult::Done;
+    use super::expr;
+    use super::super::super::ast;
+
+    #[test]
+    fn case_expr() {
+        assert_eq!(
+            expr(b"1+2"),
+            Done(
+                &b""[..], ast::Addition { a: ast::Term { t: 1 }, b: ast::Term { t: 2 } }
+            )
+        );
+    }
+}

@@ -38,6 +38,15 @@ pub struct Term {
     pub t: i64
 }
 
+/// A binding of a value to a variable.
+#[derive(Debug, PartialEq)]
+pub struct Binding {
+    ///
+    pub variable: String,
+    /// 
+    pub expression: Term
+}
+
 /// An addition of two terms.
 #[derive(Debug, PartialEq)]
 pub struct Addition {
