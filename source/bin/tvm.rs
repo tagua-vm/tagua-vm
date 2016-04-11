@@ -115,24 +115,24 @@ pub fn process_options(arguments: Vec<String>) {
                     },
 
                     _ => {
-                        println!("Invalid option \"{}\".\n", argument);
-                        println!("{}", usage());
+                        println!("Invalid option `{}`.\n\n{}", argument, usage());
                         exit(ExitCode::InvalidOption);
                     }
                 },
 
             Some(_) => {
-                if input == None
-                {
+                if input == None {
                     input = Some(argument);
-                }
-                else
-                {
-                    println!("Multiple input files\n");
-                    println!("{}", usage());
+                } else {
+                    println!(
+                        "Multiple input files is not allowed \
+                        (issue with the `{}` input).\n\n{}",
+                        argument,
+                        usage()
+                    );
                     exit(ExitCode::MultipleFiles);
                 }
-            }
+            },
 
             None => {
                 println!("{}", usage());
@@ -141,12 +141,10 @@ pub fn process_options(arguments: Vec<String>) {
         }
     }
 
-    if let Some(f) = input {
-        file(&f[..]);
-    }
-    else {
-        println!("No file provided.\n");
-        println!("{}", usage());
+    if let Some(filename) = input {
+        file(&filename[..]);
+    } else {
+        println!("No file provided.\n\n{}", usage());
         exit(ExitCode::MissingFile);
     }
 }
@@ -166,10 +164,10 @@ mod tests {
     #[test]
     fn case_usage() {
         assert_eq!(
-            "Usage: tvm [options] [file]\n".to_string() +
-            "Options:\n" +
-            "    -v, --version    Print version.\n" +
-            "    -h, --help       This help.",
+            "Usage: tvm [options] [file]\
+            \nOptions:\
+            \n    -v, --version    Print version.\
+            \n    -h, --help       This help.".to_string(),
             usage()
         );
     }
