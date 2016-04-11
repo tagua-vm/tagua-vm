@@ -38,11 +38,10 @@ use std::str::FromStr;
 named!(
     pub decimal<u64>,
     map_res!(
-        map_res!(
-            digit,
-            str::from_utf8
-        ),
-        FromStr::from_str
+        digit,
+        |string: &[u8]| {
+            u64::from_str(unsafe { str::from_utf8_unchecked(string) })
+        }
     )
 );
 
