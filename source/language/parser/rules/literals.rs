@@ -51,11 +51,13 @@ named!(
     chain!(
         tag!("0") ~
         out: map_res!(
-            map_res!(
-                oct_digit,
-                str::from_utf8
-            ),
-            |string: &str| { u64::from_str_radix(string, 8) }
+            oct_digit,
+            |string: &[u8]| {
+                u64::from_str_radix(
+                    unsafe { str::from_utf8_unchecked(string) },
+                    8
+                )
+            }
         ),
         || out
     )
