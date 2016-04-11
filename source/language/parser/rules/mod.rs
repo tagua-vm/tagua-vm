@@ -30,6 +30,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 //! The grammar as a set of rules.
+//!
 //! The grammar is splitted into group of rules for the sake of clarity.
 
 pub mod expressions;
