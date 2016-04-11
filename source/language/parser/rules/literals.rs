@@ -80,11 +80,11 @@ fn is_identifier_tail(character: u8) -> bool {
 }
 
 named!(
-    pub identifier,
+    pub identifier<String>,
     chain!(
         head: take_while1!(is_identifier_head) ~
-        _tail: take_while!(is_identifier_tail),
-        || head
+        tail: take_while!(is_identifier_tail),
+        || unsafe { format!("{}{}", str::from_utf8_unchecked(head), str::from_utf8_unchecked(tail)) }
     )
 );
 
@@ -121,9 +121,6 @@ mod tests {
 
     #[test]
     fn case_identifier() {
-        assert_eq!(
-            identifier(b"abc"),
-            Done(&b""[..], &b"abc"[..])
-        );
+        assert_eq!(identifier(b"abc"), Done(&b""[..], String::from("abc")));
     }
 }
