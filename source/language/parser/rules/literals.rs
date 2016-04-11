@@ -36,7 +36,7 @@ use std::str;
 use std::str::FromStr;
 
 named!(
-    pub decimal<i64>,
+    pub decimal<u64>,
     map_res!(
         map_res!(
             digit,
@@ -95,10 +95,7 @@ mod tests {
 
     #[test]
     fn case_decimal() {
-        assert_eq!(
-            decimal(b"42"),
-            Done(&b""[..], 42)
-        );
+        assert_eq!(decimal(b"42"), Done(&b""[..], 42u64));
     }
 
     #[test]

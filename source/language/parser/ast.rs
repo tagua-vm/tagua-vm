@@ -35,7 +35,7 @@
 #[derive(Debug, PartialEq)]
 pub struct Term {
     /// The term value.
-    pub t: i64
+    pub t: u64
 }
 
 /// A binding of a value to a variable.
