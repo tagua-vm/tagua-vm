@@ -39,6 +39,25 @@ use std::str;
 use std::str::FromStr;
 
 named!(
+    pub binary<u64>,
+    map_res!(
+        preceded!(
+            tag!("0"),
+            preceded!(
+                alt!(tag!("b") | tag!("B")),
+                is_a!("01")
+            )
+        ),
+        |string: &[u8]| {
+            u64::from_str_radix(
+                unsafe { str::from_utf8_unchecked(string) },
+                2
+            )
+        }
+    )
+);
+
+named!(
     pub decimal<u64>,
     map_res!(
         digit,
@@ -112,11 +131,27 @@ mod tests {
     use nom::IResult::{Done, Error};
     use nom::{Err, ErrorKind};
     use super::{
+        binary,
         decimal,
         octal,
         hexadecimal,
         identifier
     };
+
+    #[test]
+    fn case_binary_small_b() {
+        assert_eq!(binary(b"0b101010"), Done(&b""[..], 42u64));
+    }
+
+    #[test]
+    fn case_binary_big_b() {
+        assert_eq!(binary(b"0B101010"), Done(&b""[..], 42u64));
+    }
+
+    #[test]
+    fn case_invalid_binary_no_number() {
+        assert_eq!(binary(b"0b"), Error(Err::Position(ErrorKind::MapRes, &b"0b"[..])));
+    }
 
     #[test]
     fn case_decimal() {
