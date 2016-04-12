@@ -99,30 +99,9 @@ named!(
     )
 );
 
-fn is_identifier_head(character: u8) -> bool {
-    match character {
-        64...90   => true, // A-Z
-        97...122  => true, // a-z
-        127...255 => true, // 0x7f-0xff
-        b'_'      => true,
-        _         => false
-    }
-}
-
-fn is_identifier_tail(character: u8) -> bool {
-    match character {
-        48...57 => true, // 0-9
-        _       => is_identifier_head(character)
-    }
-}
-
 named!(
-    pub identifier<String>,
-    chain!(
-        head: take_while1!(is_identifier_head) ~
-        tail: take_while!(is_identifier_tail),
-        || unsafe { format!("{}{}", str::from_utf8_unchecked(head), str::from_utf8_unchecked(tail)) }
-    )
+    pub identifier,
+    re_bytes_find_static!(r"^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*")
 );
 
 
@@ -205,6 +184,38 @@ mod tests {
 
     #[test]
     fn case_identifier() {
-        assert_eq!(identifier(b"abc"), Done(&b""[..], String::from("abc")));
+        assert_eq!(identifier(b"_fooBar42"), Done(&b""[..], &b"_fooBar42"[..]));
+    }
+
+    #[test]
+    fn case_identifier_shortest() {
+        assert_eq!(identifier(b"x"), Done(&b""[..], &b"x"[..]));
+    }
+
+    #[test]
+    fn case_identifier_only_head() {
+        assert_eq!(identifier(b"aB_\x80"), Done(&b""[..], &b"aB_\x80"[..]));
+    }
+
+    #[test]
+    fn case_identifier_head_and_tail() {
+        assert_eq!(identifier(b"aB_\x80aB7\xff"), Done(&b""[..], &b"aB_\x80aB7\xff"[..]));
+    }
+
+    #[test]
+    fn case_identifier_copyright() {
+        // © = 0xa9
+        assert_eq!(identifier(b"\xa9"), Done(&b""[..], &b"\xa9"[..]));
+    }
+
+    #[test]
+    fn case_identifier_non_breaking_space() {
+        //   = 0xa0
+        assert_eq!(identifier(b"\xa0"), Done(&b""[..], &b"\xa0"[..]));
+    }
+
+    #[test]
+    fn case_identifier_invalid() {
+        assert_eq!(identifier(b"0x"), Error(Err::Code(ErrorKind::RegexpFind)));
     }
 }
