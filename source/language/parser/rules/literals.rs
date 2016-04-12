@@ -50,36 +50,33 @@ named!(
 
 named!(
     pub octal<u64>,
-    chain!(
-        tag!("0") ~
-        out: map_res!(
-            oct_digit,
-            |string: &[u8]| {
-                u64::from_str_radix(
-                    unsafe { str::from_utf8_unchecked(string) },
-                    8
-                )
-            }
-        ),
-        || out
+    map_res!(
+        preceded!(tag!("0"), oct_digit),
+        |string: &[u8]| {
+            u64::from_str_radix(
+                unsafe { str::from_utf8_unchecked(string) },
+                8
+            )
+        }
     )
 );
 
 named!(
     pub hexadecimal<u64>,
-    chain!(
-        tag!("0") ~
-        alt!(tag!("x") | tag!("X")) ~
-        out: map_res!(
-            hex_digit,
-            |string: &[u8]| {
-                u64::from_str_radix(
-                    unsafe { str::from_utf8_unchecked(string) },
-                    16
-                )
-            }
+    map_res!(
+        preceded!(
+            tag!("0"),
+            preceded!(
+                alt!(tag!("x") | tag!("X")),
+                hex_digit
+            )
         ),
-        || out
+        |string: &[u8]| {
+            u64::from_str_radix(
+                unsafe { str::from_utf8_unchecked(string) },
+                16
+            )
+        }
     )
 );
 
