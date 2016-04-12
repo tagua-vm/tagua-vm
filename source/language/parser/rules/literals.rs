@@ -163,17 +163,17 @@ mod tests {
     }
 
     #[test]
-    fn case_hexadecimal_small_x() {
+    fn case_hexadecimal_lowercase_x() {
         assert_eq!(hexadecimal(b"0x2a"), Done(&b""[..], 42u64));
     }
 
     #[test]
-    fn case_hexadecimal_big_x() {
+    fn case_hexadecimal_uppercase_x() {
         assert_eq!(hexadecimal(b"0X2a"), Done(&b""[..], 42u64));
     }
 
     #[test]
-    fn case_hexadecimal_big_alpha() {
+    fn case_hexadecimal_uppercase_alpha() {
         assert_eq!(hexadecimal(b"0x2A"), Done(&b""[..], 42u64));
     }
 
