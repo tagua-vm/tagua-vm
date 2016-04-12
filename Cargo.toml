@@ -51,6 +51,8 @@ debug-assertions = true
 codegen-units    = 1
 
 [dependencies]
+lazy_static = "~0.1"
 libc = "~0.2.7"
 llvm-sys = "~0.2.1"
-nom = {version = "~1.2.0"}
+nom = {git = "https://github.com/Geal/nom", rev = "master", "features" = ["regexp", "regexp_macros"]}
+regex = "~0.1"

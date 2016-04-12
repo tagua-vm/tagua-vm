@@ -34,7 +34,7 @@
 //! The list of all literals is provided by the PHP Language Specification in the [Grammar chapter,
 //! Literals section](https://github.com/php/php-langspec/blob/master/spec/19-grammar.md#literals).
 
-use nom::{digit, oct_digit, hex_digit};
+use nom::{oct_digit, hex_digit};
 use std::str;
 use std::str::FromStr;
 
@@ -60,7 +60,7 @@ named!(
 named!(
     pub decimal<u64>,
     map_res!(
-        digit,
+        re_bytes_find_static!(r"^[1-9][0-9]*"),
         |string: &[u8]| {
             u64::from_str(unsafe { str::from_utf8_unchecked(string) })
         }
@@ -154,8 +154,18 @@ mod tests {
     }
 
     #[test]
-    fn case_decimal() {
+    fn case_decimal_one_digit() {
+        assert_eq!(decimal(b"7"), Done(&b""[..], 7u64));
+    }
+
+    #[test]
+    fn case_decimal_many_digits() {
         assert_eq!(decimal(b"42"), Done(&b""[..], 42u64));
+    }
+
+    #[test]
+    fn case_decimal_plus() {
+        assert_eq!(decimal(b"42+"), Done(&b"+"[..], 42u64));
     }
 
     #[test]
