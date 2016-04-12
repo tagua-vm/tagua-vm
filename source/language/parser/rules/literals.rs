@@ -158,7 +158,7 @@ mod tests {
     }
 
     #[test]
-    fn case_invalid_octal_not_valid_base_range() {
+    fn case_invalid_octal_not_in_base() {
         assert_eq!(octal(b"8"), Error(Err::Position(ErrorKind::Tag, &b"8"[..])));
     }
 
@@ -180,6 +180,11 @@ mod tests {
     #[test]
     fn case_invalid_hexadecimal_no_number() {
         assert_eq!(hexadecimal(b"0x"), Error(Err::Position(ErrorKind::HexDigit, &b""[..])));
+    }
+
+    #[test]
+    fn case_invalid_hexadecimal_not_in_base() {
+        assert_eq!(hexadecimal(b"0xg"), Error(Err::Position(ErrorKind::HexDigit, &b"g"[..])));
     }
 
     #[test]
