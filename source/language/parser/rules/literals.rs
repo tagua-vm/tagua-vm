@@ -34,7 +34,7 @@
 //! The list of all literals is provided by the PHP Language Specification in the [Grammar chapter,
 //! Literals section](https://github.com/php/php-langspec/blob/master/spec/19-grammar.md#literals).
 
-use nom::{digit, oct_digit};
+use nom::{digit, oct_digit, hex_digit};
 use std::str;
 use std::str::FromStr;
 
@@ -58,6 +58,24 @@ named!(
                 u64::from_str_radix(
                     unsafe { str::from_utf8_unchecked(string) },
                     8
+                )
+            }
+        ),
+        || out
+    )
+);
+
+named!(
+    pub hexadecimal<u64>,
+    chain!(
+        tag!("0") ~
+        alt!(tag!("x") | tag!("X")) ~
+        out: map_res!(
+            hex_digit,
+            |string: &[u8]| {
+                u64::from_str_radix(
+                    unsafe { str::from_utf8_unchecked(string) },
+                    16
                 )
             }
         ),
@@ -99,6 +117,7 @@ mod tests {
     use super::{
         decimal,
         octal,
+        hexadecimal,
         identifier
     };
 
@@ -120,6 +139,26 @@ mod tests {
     #[test]
     fn case_invalid_octal_not_valid_base_range() {
         assert_eq!(octal(b"8"), Error(Err::Position(ErrorKind::Tag, &b"8"[..])));
+    }
+
+    #[test]
+    fn case_hexadecimal_small_x() {
+        assert_eq!(hexadecimal(b"0x2a"), Done(&b""[..], 42u64));
+    }
+
+    #[test]
+    fn case_hexadecimal_big_x() {
+        assert_eq!(hexadecimal(b"0X2a"), Done(&b""[..], 42u64));
+    }
+
+    #[test]
+    fn case_hexadecimal_big_alpha() {
+        assert_eq!(hexadecimal(b"0x2A"), Done(&b""[..], 42u64));
+    }
+
+    #[test]
+    fn case_invalid_hexadecimal_no_number() {
+        assert_eq!(hexadecimal(b"0x"), Error(Err::Position(ErrorKind::HexDigit, &b""[..])));
     }
 
     #[test]
