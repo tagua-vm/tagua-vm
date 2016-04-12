@@ -58,16 +58,6 @@ named!(
 );
 
 named!(
-    pub decimal<u64>,
-    map_res!(
-        re_bytes_find_static!(r"^[1-9][0-9]*"),
-        |string: &[u8]| {
-            u64::from_str(unsafe { str::from_utf8_unchecked(string) })
-        }
-    )
-);
-
-named!(
     pub octal<u64>,
     map_res!(
         preceded!(tag!("0"), oct_digit),
@@ -76,6 +66,16 @@ named!(
                 unsafe { str::from_utf8_unchecked(string) },
                 8
             )
+        }
+    )
+);
+
+named!(
+    pub decimal<u64>,
+    map_res!(
+        re_bytes_find_static!(r"^[1-9][0-9]*"),
+        |string: &[u8]| {
+            u64::from_str(unsafe { str::from_utf8_unchecked(string) })
         }
     )
 );
@@ -111,8 +111,8 @@ mod tests {
     use nom::{Err, ErrorKind};
     use super::{
         binary,
-        decimal,
         octal,
+        decimal,
         hexadecimal,
         identifier
     };
@@ -133,21 +133,6 @@ mod tests {
     }
 
     #[test]
-    fn case_decimal_one_digit() {
-        assert_eq!(decimal(b"7"), Done(&b""[..], 7u64));
-    }
-
-    #[test]
-    fn case_decimal_many_digits() {
-        assert_eq!(decimal(b"42"), Done(&b""[..], 42u64));
-    }
-
-    #[test]
-    fn case_decimal_plus() {
-        assert_eq!(decimal(b"42+"), Done(&b"+"[..], 42u64));
-    }
-
-    #[test]
     fn case_octal() {
         assert_eq!(octal(b"052"), Done(&b""[..], 42u64));
     }
@@ -160,6 +145,21 @@ mod tests {
     #[test]
     fn case_invalid_octal_not_in_base() {
         assert_eq!(octal(b"8"), Error(Err::Position(ErrorKind::Tag, &b"8"[..])));
+    }
+
+    #[test]
+    fn case_decimal_one_digit() {
+        assert_eq!(decimal(b"7"), Done(&b""[..], 7u64));
+    }
+
+    #[test]
+    fn case_decimal_many_digits() {
+        assert_eq!(decimal(b"42"), Done(&b""[..], 42u64));
+    }
+
+    #[test]
+    fn case_decimal_plus() {
+        assert_eq!(decimal(b"42+"), Done(&b"+"[..], 42u64));
     }
 
     #[test]
