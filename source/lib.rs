@@ -41,9 +41,12 @@
 //! compiler) and the virtual machine.
 
 #[macro_use]
-extern crate nom;
+extern crate lazy_static;
 extern crate libc;
 extern crate llvm_sys as llvm;
+#[macro_use]
+extern crate nom;
+extern crate regex;
 
 pub mod language;
 pub mod shared;
