@@ -39,6 +39,16 @@ use std::str;
 use std::str::FromStr;
 
 named!(
+    pub boolean<bool>,
+    map_res!(
+        alt!(tag!("true") | tag!("false")),
+        |string: &[u8]| -> Result<bool, ()> {
+            Ok(string[0] == 't' as u8)
+        }
+    )
+);
+
+named!(
     pub binary<u64>,
     map_res!(
         preceded!(
@@ -110,12 +120,23 @@ mod tests {
     use nom::IResult::{Done, Error};
     use nom::{Err, ErrorKind};
     use super::{
+        boolean,
         binary,
         octal,
         decimal,
         hexadecimal,
         identifier
     };
+
+    #[test]
+    fn case_boolean_true() {
+        assert_eq!(boolean(b"true"), Done(&b""[..], true));
+    }
+
+    #[test]
+    fn case_boolean_false() {
+        assert_eq!(boolean(b"false"), Done(&b""[..], false));
+    }
 
     #[test]
     fn case_binary_small_b() {
