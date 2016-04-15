@@ -39,6 +39,16 @@ use std::str;
 use std::str::FromStr;
 
 named!(
+    pub null< Option<()> >,
+    map_res!(
+        tag!("null"),
+        |_: &[u8]| -> Result<Option<()>, ()> {
+            Ok(None)
+        }
+    )
+);
+
+named!(
     pub boolean<bool>,
     map_res!(
         alt!(tag!("true") | tag!("false")),
@@ -120,6 +130,7 @@ mod tests {
     use nom::IResult::{Done, Error};
     use nom::{Err, ErrorKind};
     use super::{
+        null,
         boolean,
         binary,
         octal,
@@ -127,6 +138,11 @@ mod tests {
         hexadecimal,
         identifier
     };
+
+    #[test]
+    fn case_null() {
+        assert_eq!(null(b"null"), Done(&b""[..], None));
+    }
 
     #[test]
     fn case_boolean_true() {
