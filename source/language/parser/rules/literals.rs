@@ -139,12 +139,12 @@ mod tests {
     }
 
     #[test]
-    fn case_binary_small_b() {
+    fn case_binary_lowercase_b() {
         assert_eq!(binary(b"0b101010"), Done(&b""[..], 42u64));
     }
 
     #[test]
-    fn case_binary_big_b() {
+    fn case_binary_uppercase_b() {
         assert_eq!(binary(b"0B101010"), Done(&b""[..], 42u64));
     }
 
