@@ -120,6 +120,16 @@ named!(
 );
 
 named!(
+    pub exponential<f64>,
+    map_res!(
+        re_bytes_find_static!(r"^([0-9]*\.[0-9]+|[0-9]+\.)([eE][+-]?[0-9]+)?"),
+        |string: &[u8]| {
+            f64::from_str(unsafe { str::from_utf8_unchecked(string) })
+        }
+    )
+);
+
+named!(
     pub identifier,
     re_bytes_find_static!(r"^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*")
 );
@@ -136,6 +146,7 @@ mod tests {
         octal,
         decimal,
         hexadecimal,
+        exponential,
         identifier
     };
 
@@ -222,6 +233,66 @@ mod tests {
     #[test]
     fn case_invalid_hexadecimal_not_in_base() {
         assert_eq!(hexadecimal(b"0xg"), Error(Err::Position(ErrorKind::HexDigit, &b"g"[..])));
+    }
+
+    #[test]
+    fn case_exponential() {
+        assert_eq!(exponential(b"123.456e+78"), Done(&b""[..], 123.456e78f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_and_fractional_part() {
+        assert_eq!(exponential(b"123.456"), Done(&b""[..], 123.456f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_part() {
+        assert_eq!(exponential(b"123."), Done(&b""[..], 123.0f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_fractional_part() {
+        assert_eq!(exponential(b".456"), Done(&b""[..], 0.456f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_and_exponent_part_with_lowercase_e() {
+        assert_eq!(exponential(b"123.e78"), Done(&b""[..], 123e78f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_and_exponent_part_with_uppercase_e() {
+        assert_eq!(exponential(b"123.E78"), Done(&b""[..], 123e78f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_and_unsigned_exponent_part() {
+        assert_eq!(exponential(b"123.e78"), Done(&b""[..], 123e78f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_and_positive_exponent_part() {
+        assert_eq!(exponential(b"123.e+78"), Done(&b""[..], 123e78f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_and_negative_exponent_part() {
+        assert_eq!(exponential(b"123.e-78"), Done(&b""[..], 123e-78f64));
+    }
+
+    #[test]
+    fn case_exponential_only_with_rational_and_negative_zero_exponent_part() {
+        assert_eq!(exponential(b"123.e-0"), Done(&b""[..], 123f64));
+    }
+
+    #[test]
+    fn case_exponential_missing_exponent_part() {
+        assert_eq!(exponential(b".7e"), Done(&b"e"[..], 0.7f64));
+    }
+
+    #[test]
+    fn case_invalid_exponential_only_the_dot() {
+        assert_eq!(exponential(b"."), Error(Err::Code(ErrorKind::RegexpFind)));
     }
 
     #[test]
