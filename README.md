@@ -82,8 +82,8 @@ when speaking about quality.
 
 To install Tagua VM, you must have Rust (see [the Rust installation
 page](https://www.rust-lang.org/downloads.html)) and LLVM (see [the LLVM
-installation page](http://llvm.org/releases/download.html)) installed. This is
-important to have `llvm-config` available in the path. This is also important
+installation page](http://llvm.org/releases/download.html)) installed. For windows LLVM binaries can be downloaded [here](https://i10z.com/llvm/win64/).
+This is important to have `llvm-config` available in the path. This is also important
 to have `cargo` available in the path too.
 [Cargo](http://doc.crates.io/guide.html) is the Rust package manager.
 
