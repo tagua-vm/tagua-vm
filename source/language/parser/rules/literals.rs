@@ -149,7 +149,7 @@ pub enum StringError {
 }
 
 fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
-    if input.len() <= 2 {
+    if input.len() <= 1 {
         return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
     }
 
@@ -384,6 +384,11 @@ mod tests {
     #[test]
     fn case_string_single_quoted_escaped_any() {
         assert_eq!(string(b"'foo\\nbar'"), Done(&b""[..], String::from("foo\\nbar")));
+    }
+
+    #[test]
+    fn case_string_single_quoted_empty() {
+        assert_eq!(string(b"''"), Done(&b""[..], String::new()));
     }
 
     #[test]
