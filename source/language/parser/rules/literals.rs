@@ -149,12 +149,20 @@ pub enum StringError {
 }
 
 fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
-    if input.len() <= 1 {
+    let input_length = input.len();
+
+    if input_length < 2 {
         return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
     }
 
-    if input[0] == 'b' as u8 && input[1] == '\'' as u8 {
-        return string_single_quoted(&input[1..]);
+    if input[0] == 'b' as u8 {
+        if input_length < 3 {
+            return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
+        } else if input[1] != '\'' as u8 {
+            return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
+        } else {
+            return string_single_quoted(&input[1..]);
+        }
     } else if input[0] != '\'' as u8 {
         return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
     }
@@ -426,6 +434,16 @@ mod tests {
     #[test]
     fn case_invalid_string_single_quoted_closing_character_is_a_backslash() {
         assert_eq!(string(b"'foobar\\"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+    }
+
+    #[test]
+    fn case_invalid_string_binary_single_quoted_too_short() {
+        assert_eq!(string(b"b'"), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+    }
+
+    #[test]
+    fn case_invalid_string_binary_single_quoted_opening_character() {
+        assert_eq!(string(b"bb'"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
     }
 
     #[test]
