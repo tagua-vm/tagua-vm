@@ -153,7 +153,9 @@ fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
         return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
     }
 
-    if input[0] != '\'' as u8 {
+    if input[0] == 'b' as u8 && input[1] == '\'' as u8 {
+        return string_single_quoted(&input[1..]);
+    } else if input[0] != '\'' as u8 {
         return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
     }
 
@@ -387,8 +389,23 @@ mod tests {
     }
 
     #[test]
+    fn case_string_single_quoted_escaped_many() {
+        assert_eq!(string(b"'\\'f\\oo\\\\bar'"), Done(&b""[..], String::from("'f\\oo\\bar")));
+    }
+
+    #[test]
     fn case_string_single_quoted_empty() {
         assert_eq!(string(b"''"), Done(&b""[..], String::new()));
+    }
+
+    #[test]
+    fn case_string_binary_single_quoted() {
+        assert_eq!(string(b"b'foobar'"), Done(&b""[..], String::from("foobar")));
+    }
+
+    #[test]
+    fn case_string_binary_single_quoted_escaped_many() {
+        assert_eq!(string(b"b'\\'f\\oo\\\\bar'"), Done(&b""[..], String::from("'f\\oo\\bar")));
     }
 
     #[test]
