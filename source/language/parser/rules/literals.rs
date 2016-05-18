@@ -135,20 +135,25 @@ named!(
     )
 );
 
-named!(
-    pub string<String>,
-    call!(string_single_quoted)
-);
-
+/// String errors.
 #[derive(Debug)]
 pub enum StringError {
+    /// The datum starts as a string but is too short to be a string.
     TooShort,
+    /// The string open character is not correct.
     InvalidOpeningCharacter,
+    /// The string close character is not correct.
     InvalidClosingCharacter,
+    /// The string is not correctly encoded (expect UTF-8).
     InvalidEncoding
 }
 
-fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
+named!(
+    pub string<String>,
+        call!(string_single_quoted)
+);
+
+pub fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
     let input_length = input.len();
 
     if input_length < 2 {
