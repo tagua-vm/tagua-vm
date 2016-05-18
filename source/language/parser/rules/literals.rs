@@ -153,7 +153,7 @@ named!(
         call!(string_single_quoted)
 );
 
-pub fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
+fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
     let input_length = input.len();
 
     if input_length < 2 {
