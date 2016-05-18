@@ -213,6 +213,69 @@ fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
     IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32)))
 }
 
+pub fn string_nowdoc(input: &[u8]) -> IResult<&[u8], String> {
+    // `<<<'A'\nA\n` is the shortest datum.
+    if input.len() < 9 {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
+    }
+
+    if false == input.starts_with(&['<' as u8, '<' as u8, '<' as u8, '\'' as u8]) {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
+    }
+
+    let padding      = 4;
+    let mut offset   = padding;
+    let mut iterator = input[offset..].iter().enumerate();
+
+    while let Some((index, item)) = iterator.next() {
+        if *item == '\'' as u8 {
+            offset += index;
+
+            break;
+        }
+    }
+
+    if input[offset] != '\'' as u8 || input[offset + 1] != '\n' as u8 {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
+    }
+
+    let name       = &input[padding..offset];
+    let mut output = String::new();
+
+    iterator.next();
+
+    while let Some((index, item)) = iterator.next() {
+        if *item == '\n' as u8 {
+            if !input[padding + index + 1..].starts_with(name) {
+                continue;
+            }
+
+            offset                   = padding + index;
+            let mut lookahead_offset = offset + name.len() + 1;
+
+            if input[lookahead_offset] == ';' as u8 {
+                lookahead_offset += 1;
+            }
+
+            if input[lookahead_offset] == '\n' as u8 {
+                match str::from_utf8(&input[padding + name.len() + 2..offset]) {
+                    Ok(output_content) => {
+                        output.push_str(output_content);
+
+                        return IResult::Done(&input[lookahead_offset + 1..], output);
+                    },
+
+                    Err(_) => {
+                        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidEncoding as u32)));
+                    }
+                }
+            }
+        }
+    }
+
+    IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32)))
+}
+
 named!(
     pub identifier,
     re_bytes_find_static!(r"^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*")
@@ -233,7 +296,8 @@ mod tests {
         identifier,
         null,
         octal,
-        string
+        string,
+        string_nowdoc
     };
 
     #[test]
@@ -449,6 +513,46 @@ mod tests {
     #[test]
     fn case_invalid_string_binary_single_quoted_opening_character() {
         assert_eq!(string(b"bb'"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+    }
+
+    #[test]
+    fn case_string_nowdoc() {
+        assert_eq!(string_nowdoc(b"<<<'FOO'\nhello \n  world \nFOO;\n"), Done(&b""[..], String::from("hello \n  world ")));
+    }
+
+    #[test]
+    fn case_string_nowdoc_without_semi_colon() {
+        assert_eq!(string_nowdoc(b"<<<'FOO'\nhello \n  world \nFOO\n"), Done(&b""[..], String::from("hello \n  world ")));
+    }
+
+    #[test]
+    fn case_string_nowdoc_empty() {
+        assert_eq!(string_nowdoc(b"<<<'FOO'\n\nFOO\n"), Done(&b""[..], String::from("")));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_too_short() {
+        assert_eq!(string_nowdoc(b"<<<'A'\nA"), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_opening_character_missing_first_quote() {
+        assert_eq!(string_nowdoc(b"<<<FOO'\nhello \n  world \nFOO\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_opening_character_missing_second_quote() {
+        assert_eq!(string_nowdoc(b"<<<'FOO\nhello \n  world \nFOO\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_opening_character_missing_newline() {
+        assert_eq!(string_nowdoc(b"<<<'FOO'hello \n  world \nFOO\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_closing_character() {
+        assert_eq!(string_nowdoc(b"<<<'FOO'\nhello \n  world \nFO;\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
     }
 
     #[test]
