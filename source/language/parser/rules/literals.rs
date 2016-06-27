@@ -467,7 +467,7 @@ mod tests {
 
     #[test]
     fn case_string_single_quoted_escaped_many() {
-        assert_eq!(string(b"'\\'f\\oo\\\\bar'"), Done(&b""[..], String::from("'f\\oo\\bar")));
+        assert_eq!(string(b"'\\'f\\oo\\\\bar\\\\'"), Done(&b""[..], String::from("'f\\oo\\bar\\")));
     }
 
     #[test]
