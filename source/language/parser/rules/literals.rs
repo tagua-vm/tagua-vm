@@ -150,7 +150,10 @@ pub enum StringError {
 
 named!(
     pub string<String>,
+    alt_complete!(
         call!(string_single_quoted)
+      | call!(string_nowdoc)
+    )
 );
 
 fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
@@ -213,7 +216,7 @@ fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
     IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32)))
 }
 
-pub fn string_nowdoc(input: &[u8]) -> IResult<&[u8], String> {
+fn string_nowdoc(input: &[u8]) -> IResult<&[u8], String> {
     // `<<<'A'\nA\n` is the shortest datum.
     if input.len() < 9 {
         return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
@@ -297,6 +300,7 @@ mod tests {
         null,
         octal,
         string,
+        string_single_quoted,
         string_nowdoc
     };
 
@@ -447,112 +451,189 @@ mod tests {
 
     #[test]
     fn case_string_single_quoted() {
-        assert_eq!(string(b"'foobar'"), Done(&b""[..], String::from("foobar")));
+        let input  = b"'foobar'";
+        let output = Done(&b""[..], String::from("foobar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_single_quoted_escaped_quote() {
-        assert_eq!(string(b"'foo\\'bar'"), Done(&b""[..], String::from("foo'bar")));
+        let input  = b"'foo\\'bar'";
+        let output = Done(&b""[..], String::from("foo'bar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_single_quoted_escaped_backslash() {
-        assert_eq!(string(b"'foo\\\\bar'"), Done(&b""[..], String::from("foo\\bar")));
+        let input  = b"'foo\\\\bar'";
+        let output = Done(&b""[..], String::from("foo\\bar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_single_quoted_escaped_any() {
-        assert_eq!(string(b"'foo\\nbar'"), Done(&b""[..], String::from("foo\\nbar")));
+        let input  = b"'foo\\nbar'";
+        let output = Done(&b""[..], String::from("foo\\nbar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_single_quoted_escaped_many() {
-        assert_eq!(string(b"'\\'f\\oo\\\\bar\\\\'"), Done(&b""[..], String::from("'f\\oo\\bar\\")));
+        let input  = b"'\\'f\\oo\\\\bar\\\\'";
+        let output = Done(&b""[..], String::from("'f\\oo\\bar\\"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_single_quoted_empty() {
-        assert_eq!(string(b"''"), Done(&b""[..], String::new()));
+        let input  = b"''";
+        let output = Done(&b""[..], String::new());
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_binary_single_quoted() {
-        assert_eq!(string(b"b'foobar'"), Done(&b""[..], String::from("foobar")));
+        let input  = b"b'foobar'";
+        let output = Done(&b""[..], String::from("foobar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_binary_single_quoted_escaped_many() {
-        assert_eq!(string(b"b'\\'f\\oo\\\\bar'"), Done(&b""[..], String::from("'f\\oo\\bar")));
+        let input  = b"b'\\'f\\oo\\\\bar'";
+        let output = Done(&b""[..], String::from("'f\\oo\\bar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_invalid_string_single_quoted_too_short() {
-        assert_eq!(string(b"'"), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        let input = b"'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_single_quoted_opening_character() {
-        assert_eq!(string(b"foobar'"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        let input = b"foobar'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_single_quoted_closing_character() {
-        assert_eq!(string(b"'foobar"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        let input = b"'foobar";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_single_quoted_closing_character_is_a_backslash() {
-        assert_eq!(string(b"'foobar\\"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        let input = b"'foobar\\";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_binary_single_quoted_too_short() {
-        assert_eq!(string(b"b'"), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        let input = b"b'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_binary_single_quoted_opening_character() {
-        assert_eq!(string(b"bb'"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        let input = b"bb'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_string_nowdoc() {
-        assert_eq!(string_nowdoc(b"<<<'FOO'\nhello \n  world \nFOO;\n"), Done(&b""[..], String::from("hello \n  world ")));
+        let input  = b"<<<'FOO'\nhello \n  world \nFOO;\n";
+        let output = Done(&b""[..], String::from("hello \n  world "));
+
+        assert_eq!(string_nowdoc(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_nowdoc_without_semi_colon() {
-        assert_eq!(string_nowdoc(b"<<<'FOO'\nhello \n  world \nFOO\n"), Done(&b""[..], String::from("hello \n  world ")));
+        let input  = b"<<<'FOO'\nhello \n  world \nFOO\n";
+        let output = Done(&b""[..], String::from("hello \n  world "));
+
+        assert_eq!(string_nowdoc(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_string_nowdoc_empty() {
-        assert_eq!(string_nowdoc(b"<<<'FOO'\n\nFOO\n"), Done(&b""[..], String::from("")));
+        let input  = b"<<<'FOO'\n\nFOO\n";
+        let output = Done(&b""[..], String::from(""));
+
+        assert_eq!(string_nowdoc(input), output);
+        assert_eq!(string(input), output);
     }
 
     #[test]
     fn case_invalid_string_nowdoc_too_short() {
-        assert_eq!(string_nowdoc(b"<<<'A'\nA"), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        let input = b"<<<'A'\nA";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_nowdoc_opening_character_missing_first_quote() {
-        assert_eq!(string_nowdoc(b"<<<FOO'\nhello \n  world \nFOO\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        let input = b"<<<FOO'\nhello \n  world \nFOO\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_nowdoc_opening_character_missing_second_quote() {
-        assert_eq!(string_nowdoc(b"<<<'FOO\nhello \n  world \nFOO\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        let input = b"<<<'FOO\nhello \n  world \nFOO\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_nowdoc_opening_character_missing_newline() {
-        assert_eq!(string_nowdoc(b"<<<'FOO'hello \n  world \nFOO\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        let input = b"<<<'FOO'hello \n  world \nFOO\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
     fn case_invalid_string_nowdoc_closing_character() {
-        assert_eq!(string_nowdoc(b"<<<'FOO'\nhello \n  world \nFO;\n"), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        let input = b"<<<'FOO'\nhello \n  world \nFO;\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
