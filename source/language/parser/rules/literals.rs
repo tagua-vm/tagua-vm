@@ -34,7 +34,13 @@
 //! The list of all literals is provided by the PHP Language Specification in the [Grammar chapter,
 //! Literals section](https://github.com/php/php-langspec/blob/master/spec/19-grammar.md#literals).
 
-use nom::{oct_digit, hex_digit};
+use nom::{
+    Err,
+    ErrorKind,
+    IResult,
+    hex_digit,
+    oct_digit
+};
 use std::str;
 use std::str::FromStr;
 
@@ -129,6 +135,150 @@ named!(
     )
 );
 
+/// String errors.
+#[derive(Debug)]
+pub enum StringError {
+    /// The datum starts as a string but is too short to be a string.
+    TooShort,
+    /// The string open character is not correct.
+    InvalidOpeningCharacter,
+    /// The string close character is not correct.
+    InvalidClosingCharacter,
+    /// The string is not correctly encoded (expect UTF-8).
+    InvalidEncoding
+}
+
+named!(
+    pub string<String>,
+    alt_complete!(
+        call!(string_single_quoted)
+      | call!(string_nowdoc)
+    )
+);
+
+fn string_single_quoted(input: &[u8]) -> IResult<&[u8], String> {
+    let input_length = input.len();
+
+    if input_length < 2 {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
+    }
+
+    if input[0] == 'b' as u8 {
+        if input_length < 3 {
+            return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
+        } else if input[1] != '\'' as u8 {
+            return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
+        } else {
+            return string_single_quoted(&input[1..]);
+        }
+    } else if input[0] != '\'' as u8 {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
+    }
+
+    let mut output   = String::new();
+    let mut offset   = 1;
+    let mut iterator = input[offset..].iter().enumerate();
+
+    while let Some((index, item)) = iterator.next() {
+        if *item == '\\' as u8 {
+            if let Some((next_index, next_item)) = iterator.next() {
+                if *next_item == '\'' as u8 ||
+                   *next_item == '\\' as u8 {
+                    match str::from_utf8(&input[offset..index + 1]) {
+                        Ok(output_tail) => {
+                            output.push_str(output_tail);
+                            offset = next_index + 1;
+                        },
+
+                        Err(_) => {
+                            return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidEncoding as u32)));
+                        }
+                    }
+                }
+            } else {
+                return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32)));
+            }
+        } else if *item == '\'' as u8 {
+            match str::from_utf8(&input[offset..index + 1]) {
+                Ok(output_tail) => {
+                    output.push_str(output_tail);
+
+                    return IResult::Done(&input[index + 2..], output);
+                },
+
+                Err(_) => {
+                    return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidEncoding as u32)));
+                }
+            }
+        }
+    }
+
+    IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32)))
+}
+
+fn string_nowdoc(input: &[u8]) -> IResult<&[u8], String> {
+    // `<<<'A'\nA\n` is the shortest datum.
+    if input.len() < 9 {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32)));
+    }
+
+    if false == input.starts_with(&['<' as u8, '<' as u8, '<' as u8, '\'' as u8]) {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
+    }
+
+    let padding      = 4;
+    let mut offset   = padding;
+    let mut iterator = input[offset..].iter().enumerate();
+
+    while let Some((index, item)) = iterator.next() {
+        if *item == '\'' as u8 {
+            offset += index;
+
+            break;
+        }
+    }
+
+    if input[offset] != '\'' as u8 || input[offset + 1] != '\n' as u8 {
+        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32)));
+    }
+
+    let name       = &input[padding..offset];
+    let mut output = String::new();
+
+    iterator.next();
+
+    while let Some((index, item)) = iterator.next() {
+        if *item == '\n' as u8 {
+            if !input[padding + index + 1..].starts_with(name) {
+                continue;
+            }
+
+            offset                   = padding + index;
+            let mut lookahead_offset = offset + name.len() + 1;
+
+            if input[lookahead_offset] == ';' as u8 {
+                lookahead_offset += 1;
+            }
+
+            if input[lookahead_offset] == '\n' as u8 {
+                match str::from_utf8(&input[padding + name.len() + 2..offset]) {
+                    Ok(output_content) => {
+                        output.push_str(output_content);
+
+                        return IResult::Done(&input[lookahead_offset + 1..], output);
+                    },
+
+                    Err(_) => {
+                        return IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidEncoding as u32)));
+                    }
+                }
+            }
+        }
+    }
+
+    IResult::Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32)))
+}
+
 named!(
     pub identifier,
     re_bytes_find_static!(r"^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*")
@@ -140,14 +290,18 @@ mod tests {
     use nom::IResult::{Done, Error};
     use nom::{Err, ErrorKind};
     use super::{
-        null,
-        boolean,
+        StringError,
         binary,
-        octal,
+        boolean,
         decimal,
-        hexadecimal,
         exponential,
-        identifier
+        hexadecimal,
+        identifier,
+        null,
+        octal,
+        string,
+        string_single_quoted,
+        string_nowdoc
     };
 
     #[test]
@@ -293,6 +447,193 @@ mod tests {
     #[test]
     fn case_invalid_exponential_only_the_dot() {
         assert_eq!(exponential(b"."), Error(Err::Code(ErrorKind::RegexpFind)));
+    }
+
+    #[test]
+    fn case_string_single_quoted() {
+        let input  = b"'foobar'";
+        let output = Done(&b""[..], String::from("foobar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_single_quoted_escaped_quote() {
+        let input  = b"'foo\\'bar'";
+        let output = Done(&b""[..], String::from("foo'bar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_single_quoted_escaped_backslash() {
+        let input  = b"'foo\\\\bar'";
+        let output = Done(&b""[..], String::from("foo\\bar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_single_quoted_escaped_any() {
+        let input  = b"'foo\\nbar'";
+        let output = Done(&b""[..], String::from("foo\\nbar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_single_quoted_escaped_many() {
+        let input  = b"'\\'f\\oo\\\\bar\\\\'";
+        let output = Done(&b""[..], String::from("'f\\oo\\bar\\"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_single_quoted_empty() {
+        let input  = b"''";
+        let output = Done(&b""[..], String::new());
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_binary_single_quoted() {
+        let input  = b"b'foobar'";
+        let output = Done(&b""[..], String::from("foobar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_binary_single_quoted_escaped_many() {
+        let input  = b"b'\\'f\\oo\\\\bar'";
+        let output = Done(&b""[..], String::from("'f\\oo\\bar"));
+
+        assert_eq!(string_single_quoted(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_invalid_string_single_quoted_too_short() {
+        let input = b"'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_single_quoted_opening_character() {
+        let input = b"foobar'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_single_quoted_closing_character() {
+        let input = b"'foobar";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_single_quoted_closing_character_is_a_backslash() {
+        let input = b"'foobar\\";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_binary_single_quoted_too_short() {
+        let input = b"b'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_binary_single_quoted_opening_character() {
+        let input = b"bb'";
+
+        assert_eq!(string_single_quoted(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_string_nowdoc() {
+        let input  = b"<<<'FOO'\nhello \n  world \nFOO;\n";
+        let output = Done(&b""[..], String::from("hello \n  world "));
+
+        assert_eq!(string_nowdoc(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_nowdoc_without_semi_colon() {
+        let input  = b"<<<'FOO'\nhello \n  world \nFOO\n";
+        let output = Done(&b""[..], String::from("hello \n  world "));
+
+        assert_eq!(string_nowdoc(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_string_nowdoc_empty() {
+        let input  = b"<<<'FOO'\n\nFOO\n";
+        let output = Done(&b""[..], String::from(""));
+
+        assert_eq!(string_nowdoc(input), output);
+        assert_eq!(string(input), output);
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_too_short() {
+        let input = b"<<<'A'\nA";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::TooShort as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_opening_character_missing_first_quote() {
+        let input = b"<<<FOO'\nhello \n  world \nFOO\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_opening_character_missing_second_quote() {
+        let input = b"<<<'FOO\nhello \n  world \nFOO\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_opening_character_missing_newline() {
+        let input = b"<<<'FOO'hello \n  world \nFOO\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidOpeningCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
+    }
+
+    #[test]
+    fn case_invalid_string_nowdoc_closing_character() {
+        let input = b"<<<'FOO'\nhello \n  world \nFO;\n";
+
+        assert_eq!(string_nowdoc(input), Error(Err::Code(ErrorKind::Custom(StringError::InvalidClosingCharacter as u32))));
+        assert_eq!(string(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 
     #[test]
