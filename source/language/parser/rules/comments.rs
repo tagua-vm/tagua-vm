@@ -29,38 +29,40 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-//! The grammar as a set of rules.
+//! Group of comment rules.
 //!
-//! The grammar is splitted into group of rules for the sake of clarity.
+//! The list of all comments is provided by the PHP Language Specification in
+//! the [Grammar chapter, Comments
+//! section](https://github.com/php/php-langspec/blob/master/spec/19-grammar.md#comments).
 
-pub mod comments;
-pub mod expressions;
-pub mod literals;
+named!(
+    pub comment,
+    //alt!(
+        call!(comment_single_line)
+    //  | call!(comment_delimited)
+    //)
+);
 
-use super::ast;
-use nom::IResult::Done;
-
-pub fn root(input: &[u8]) -> ast::Addition {
-    match expressions::expr(input) {
-        Done(_, ast) => ast,
-        _ => panic!("Youhouuu")
-    }
-}
+named!(
+    comment_single_line,
+    preceded!(
+        tag!("//"),
+        re_bytes_find_static!(r".*(\r\n|\r|\n)$")
+    )
+);
 
 
 #[cfg(test)]
 mod tests {
-    use nom::IResult::Done;
-    use super::expressions::expr;
-    use super::super::ast;
+    use nom::IResult::{Done, Error};
+    use nom::{Err, ErrorKind};
+    use super::{
+        comment,
+        comment_single_line
+    };
 
     #[test]
-    fn case_expr() {
-        assert_eq!(
-            expr(b"1+2"),
-            Done(
-                &b""[..], ast::Addition { a: ast::Term { t: 1 }, b: ast::Term { t: 2 } }
-            )
-        );
+    fn case_comment_single_line() {
+        assert_eq!(comment_single_line(b"// foobar\n"), Done(&b""[..], &b" foobar\n"[..]));
     }
 }
