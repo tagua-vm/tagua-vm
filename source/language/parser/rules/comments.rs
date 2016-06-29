@@ -116,6 +116,15 @@ mod tests {
     }
 
     #[test]
+    fn case_comment_single_line_double_slash_embedded() {
+        let input  = b"//foo//bar";
+        let output = Done(&b""[..], &b"foo//bar"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
     fn case_comment_single_line_hash_empty() {
         let input  = b"#";
         let output = Done(&b""[..], &b""[..]);
@@ -155,6 +164,15 @@ mod tests {
     fn case_comment_single_line_hash_without_line_ending() {
         let input  = b"# foobar";
         let output = Done(&b""[..], &b" foobar"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_hash_embedded() {
+        let input  = b"#foo#bar";
+        let output = Done(&b""[..], &b"foo#bar"[..]);
 
         assert_eq!(comment_single_line(input), output);
         assert_eq!(comment(input), output);
