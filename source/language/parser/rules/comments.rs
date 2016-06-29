@@ -37,17 +37,25 @@
 
 named!(
     pub comment,
-    //alt!(
+    alt!(
         call!(comment_single_line)
-    //  | call!(comment_delimited)
-    //)
+      | call!(comment_delimited)
+    )
 );
 
 named!(
     comment_single_line,
     preceded!(
-        tag!("//"),
-        re_bytes_find_static!(r".*(\r\n|\r|\n)$")
+        alt!(tag!("//") | tag!("#")),
+        re_bytes_find_static!(r"^.*?(\r\n|\r|\n|$)")
+    )
+);
+
+named!(
+    comment_delimited,
+    preceded!(
+        tag!("/*"),
+        take_until_and_consume!("*/")
     )
 );
 
@@ -58,11 +66,123 @@ mod tests {
     use nom::{Err, ErrorKind};
     use super::{
         comment,
+        comment_delimited,
         comment_single_line
     };
 
     #[test]
-    fn case_comment_single_line() {
-        assert_eq!(comment_single_line(b"// foobar\n"), Done(&b""[..], &b" foobar\n"[..]));
+    fn case_comment_single_line_double_slash_empty() {
+        let input  = b"//";
+        let output = Done(&b""[..], &b""[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_double_slash_with_feed() {
+        let input  = b"// foobar\nbazqux";
+        let output = Done(&b"bazqux"[..], &b" foobar\n"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_double_slash_with_carriage_return() {
+        let input  = b"// foobar\rbazqux";
+        let output = Done(&b"bazqux"[..], &b" foobar\r"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_double_slash_with_carriage_return_feed() {
+        let input  = b"// foobar\r\nbazqux";
+        let output = Done(&b"bazqux"[..], &b" foobar\r\n"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_double_slash_without_ending() {
+        let input  = b"// foobar";
+        let output = Done(&b""[..], &b" foobar"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_hash_empty() {
+        let input  = b"#";
+        let output = Done(&b""[..], &b""[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_hash_with_line_feed() {
+        let input  = b"# foobar\nbazqux";
+        let output = Done(&b"bazqux"[..], &b" foobar\n"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_hash_with_carriage_return() {
+        let input  = b"# foobar\rbazqux";
+        let output = Done(&b"bazqux"[..], &b" foobar\r"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_hash_with_carriage_return_line_feed() {
+        let input  = b"# foobar\r\nbazqux";
+        let output = Done(&b"bazqux"[..], &b" foobar\r\n"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_single_line_hash_without_line_ending() {
+        let input  = b"# foobar";
+        let output = Done(&b""[..], &b" foobar"[..]);
+
+        assert_eq!(comment_single_line(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_delimited_empty() {
+        let input  = b"/**/xyz";
+        let output = Done(&b"xyz"[..], &b""[..]);
+
+        assert_eq!(comment_delimited(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_comment_delimited() {
+        let input  = b"/* foo bar\nbaz\r\nqux // hello,\n /*world!*/xyz */";
+        let output = Done(&b"xyz */"[..], &b" foo bar\nbaz\r\nqux // hello,\n /*world!"[..]);
+
+        assert_eq!(comment_delimited(input), output);
+        assert_eq!(comment(input), output);
+    }
+
+    #[test]
+    fn case_invalid_comment_delimited_not_closed() {
+        let input = b"/*foobar";
+
+        assert_eq!(comment_delimited(input), Error(Err::Position(ErrorKind::TakeUntilAndConsume, &b"foobar"[..])));
+        assert_eq!(comment(input), Error(Err::Position(ErrorKind::Alt, &input[..])));
     }
 }
