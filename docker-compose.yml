@@ -1,0 +1,12 @@
+version: "2"
+services:
+  dev:
+    build: config/docker/dev/
+    volumes:
+      - ./:/source/
+  tvm:
+    build:
+      context: .
+      dockerfile: config/docker/tvm/Dockerfile
+    volumes:
+      - ./:/source/:ro
