@@ -40,13 +40,9 @@
 //! This library is the fundation of the VM. It contains the language (with the lexer, parser and
 //! compiler) and the virtual machine.
 
-#[macro_use]
-extern crate lazy_static;
 extern crate libc;
 extern crate llvm_sys as llvm;
-#[macro_use]
-extern crate nom;
-extern crate regex;
+extern crate taguavm_parser as parser;
 
 pub mod language;
 pub mod shared;

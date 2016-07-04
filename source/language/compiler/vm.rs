@@ -31,7 +31,7 @@
 
 //! Transform an AST to VM intermediate representation.
 
-use super::super::parser::ast;
+use parser::ast;
 use super::super::super::vm::native_type::VMRepresentation;
 use super::super::super::vm;
 

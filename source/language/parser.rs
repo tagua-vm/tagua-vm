@@ -30,38 +30,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 //! Lexical and syntax analyzers, and AST producer.
-//!
-//! This is a parser combinator. The immediate consequence is that the lexical
-//! and syntax analyzers form a monolithic algorithm. The organization is the
-//! following:
-//!
-//!   * The `tokens` module declares all the lexemes,
-//!   * The `rules` module declares the grammar as a set of rules,
-//!   * The `ast` module contains the structure that will constitute the AST.
-//!
-//! The parser is based on [nom](https://github.com/Geal/nom). nom is a parser
-//! combinator library with a focus on safe parsing, streaming patterns, and as
-//! much as possible zero copy. We try to enforce the zero copy property to
-//! hold.
 
-pub mod ast;
-pub mod rules;
-pub mod tokens;
+use parser::{ast, rules};
 
-/// Complete parsing of a datum starting by the sentence symbol of the grammar.
-///
-/// The grammar is a set of rules. By definition, it has a sentence symbol,
-/// also called the root rule. The `parse` function will lex, parse and produce
-/// the associated AST of the `input` datum.
-///
-/// # Examples
-///
-/// ```ignore
-/// use tagua_vm::language::parser;
-///
-/// let expression = b"1+2";
-/// parser::parse(&expression[..]);
-/// ```
 pub fn parse(input: &[u8]) -> ast::Addition {
     rules::root(input)
 }
