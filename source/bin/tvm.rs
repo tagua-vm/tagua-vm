@@ -29,12 +29,12 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-//! Binary to drive the `tagua_vm` library.
+//! Binary to drive the `taguavm` library.
 
-extern crate tagua_vm;
+extern crate taguavm;
 
-use tagua_vm::language;
-use tagua_vm::shared::VERSION;
+use taguavm::language;
+use taguavm::shared::VERSION;
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
@@ -157,7 +157,7 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use tagua_vm::shared::VERSION;
+    use taguavm::shared::VERSION;
     use super::usage;
     use super::version;
 

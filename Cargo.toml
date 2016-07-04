@@ -9,7 +9,7 @@ keywords    = ["php", "virtual machine"]
 license     = "BSD-3-Clause"
 
 [lib]
-name    = "tagua_vm"
+name    = "taguavm"
 path    = "source/lib.rs"
 test    = true
 doctest = true
