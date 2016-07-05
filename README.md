@@ -1,91 +1,143 @@
 # Tagua VM [![build status](https://api.travis-ci.org/tagua-vm/tagua-vm.svg)](https://travis-ci.org/tagua-vm/tagua-vm)
 
-Tagua VM is an experimental [PHP](http://php.net/) Virtual Machine written with
-[the Rust language](https://www.rust-lang.org/) and [the LLVM Compiler
-Infrastructure](http://llvm.org/).
+Tagua VM is an experimental [PHP][1] Virtual Machine that
+guarantees safety and quality by removing large classes of vulnerabilities
+thanks to [the Rust language][2] and [the LLVM Compiler
+Infrastructure][3].
 
-## Goals
+## Introduction
 
-The PHP language currently has two majors virtual machines (VM): [Zend
-Engine](https://en.wikipedia.org/wiki/Zend_Engine) and
-[HHVM](http://hhvm.com/).  Zend Engine is the original VM, it is mainly written
-in C and counts hundreds of contributors. HHVM is mainly written in C++ and
-also counts hundreds of contributors. HHVM, by being more recent, has a more
+PHP is an extremely popular programming language. On 2015, [PHP was used by
+more than 80% of all websites][4]. However, almost [500 known severe
+vulnerabilities have been recorded][5], whose almost [50 with a high CVE
+score][6]. This is inherent to any popular language but this is dangerous.
+
+The goal of this project is to provide a PHP VM that guarantees safety and
+quality by removing large classes of vulnerabilities. This will be achieved by
+using appropriated tools like Rust and LLVM. Rust is a remarkable language that
+brings strong guarantees about memory safety. This is also a fast language that
+competes well with C. It can also talk to C very easily. LLVM is a famous
+compiler infrastructure that brings modernity, state-of-the-art algorithms,
+performance, developer tool chains…
+
+This project will solve three problems at once:
+
+  1. **Providing safety and high quality by removing large classes of
+     vulnerabilities and thus avoid the cost of dramatic bugs**,
+  2. **Providing modernity, new developer experience and state-of-the-art
+     algorithms so performance**,
+  3. **Providing a set of libraries that will compose the VM and that can be
+     reused outside of the project (like the parser, analysers, extensions
+     etc.)**.
+
+## Why PHP is critical?
+
+[PHP][1] is a popular programming language. Today, it powers a large part of
+the softwares we daily use on Internet. To list a few: Wikipedia, Facebook,
+Baidu, Yahoo, or Pinterest, but also softwares you can install for your own
+purposes, such as: Wordpress (blog and website), Drupal (CMS), Joomla (CMS),
+Magento (commerce), Shopify (commerce), Moodle (learning), phpBB (forum)….  On
+2015, PHP was used as the server-side programming language on more than [80% of
+all websites][4].
+
+Due to its unique position in the Internet land, a single vulnerability could
+have a huge impact.
+
+  * Economical: Imagine a shop; A bug in the check out and products can no
+    longer be sold, or prices can be wrong. This is critical for both a small or a
+    big business. Note that this could be done by a malicious person,
+  * Privacy: Imagine a social network with hundreds of thousands enthusiasms; A
+    bug could leak private or personal information,
+  * Organisational: Imagine a music festival; A bug in the event software can
+    cause the cancellation of several months of works,
+  * Any other: Memory corruption, segmentation fault, data races… all these
+    class of bugs can be critical at so much levels.
+
+PHP VMs have recorded almost [500 known vulnerabilities][5], whose almost
+[50 vulnerabilities with a CVE score greater or equal to 9 over 10][6]. Many of
+them and the most dangerous are about memory corruptions [[7], [8], [9]] or
+errors in parsers [[10], [11], [12], [13], [14]]. The implications of these
+vulnerabilities are for instance remote code execution or Denial Of Service, two
+vectors that have important impact on a whole infrastructure.
+
+This situation is real for any programming language (like [Python][15] or
+[Java][16]). Nevertheless, the criticality of a vulnerability is hardly linked
+to the popularity of the language. In the case of PHP, a single vulnerability
+can be dangerous in so many fashions. However, this is not the fault of the
+language itself: All the listed vulnerabilities are due to the VMs.
+
+## What is the big plan?
+
+Currently, PHP has two major virtual machines (VM): [Zend Engine][17] and
+[HHVM][18]. Zend Engine is the original VM, it is mainly written in C and
+counts hundreds of contributors. HHVM is mainly written in C++ and also counts
+hundreds of contributors. HHVM, by being more recent, has a more
 state-of-the-art approach and offers features like Just-In-Time compilation.
 
 However, both VM are written in unsafe languages, where segmentation faults,
 data races, memory corruptions etc. are very frequent and are severe
-errors/vulnerabilities.
+errors/vulnerabilities, as presented in the previous section.
 
-Tagua VM has a different approach.
+Tagua VM has a different approach.
 
-1. It is written in Rust: A language that guarantees memory safety, threads
-   without data races (by using the move semantics, data ownership, borrowing,
-   lifetime…), zero-cost abstractions, minimal runtime and, as a bonus,
-   efficient C bindings,
-2. It relies on LLVM for the compiler backend: A solid, state-of-the-art,
-   research, widely used modular and reusable compiler and toolchains
-   technologies.
+  * It is written in [Rust][2]: A language that guarantees memory safety,
+    threads without data races (by using the move semantics, data ownership,
+    borrowing, lifetime…), zero-cost abstractions, minimal runtime and, as
+    a bonus, efficient C bindings, in addition to being as fast as C,
+  * It relies on [LLVM][3] for the compiler backend: A solid,
+    state-of-the-art, research, widely used modular and reusable compiler and
+    toolchains technologies.
 
-Instead of re-developing our own algorithms to get a better VM, LLVM will be
-used. It natively provides a typed [Intermediate Representation (IR)
-language](http://llvm.org/docs/LangRef.html), kind of an “opcode” (to match
-the classical PHP vocabulary). Because this IR language is typed, it forces us
-to have advanced analysis about PHP types, but this is another topic.
+The class of vulnerabilities and class of bugs mentioned earlier are almost
+removed in the Rust language. This is part of its guarantees. It does not avoid
+the need of complete test suites and security audits though.
 
 ### Safety first
 
-The legend says that PHP powers more than 80% of the Web applications. The two
-biggest websites in terms of traffic, namely
-[Wikipedia](https://wikipedia.org/) and [Facebook](https://facebook.com/), are
-written in PHP. Thus, this is extremely important to have a safe VM to run
-these applications.
+Due to the popularity of PHP, this is extremely important to have a safe VM to
+run these applications.
 
 Since the old days of Computer Science, numerous bugs and vulnerabilities in OS
-(like Linux or BSD), in libraries (like Gclibc), in major programs (like Bash or
-X.org), have been found, simply due to the lack of memory and type safety.
-Intrinsically, Rust enforces safety statically, hence removing most of the
-memory vulnerabilities like segmentation faults or data races.
-
-LLVM, as for it, is written in C++. Rust provides efficient C bindings and can
-check the safety of these bindings as most as possible. Rust stops checking when
-encountering an `unsafe` block. We commit to land the smallest unsafe surfaces
-as much as possible and abstracting the data from Rust to LLVM in order to help
-Rust ensuring the safety.
+(like Linux or BSD), in libraries (like Gclibc), in major programs (like Bash,
+X.org or PHP VMs), have been found, simply due to the lack of memory and
+type safety. Intrinsically, Rust enforces safety statically, hence removing most
+of the memory vulnerabilities like segmentation faults or data races.
 
 ### High quality
 
 The quality of a project can be defined in various ways. Here is what we mean
 when speaking about quality.
 
-1. Documentation: Always up-to-date, detailed as much as possible, both for API
-   and user documentations.
-2. Unit tests: Each functions, each structures, each traits is unit tested.
-   No code lands without a unit test.
-3. Integration tests: Tagua VM is both a library and a binary; the library part
-   also has an integration test suite.
-4. Continuous Integration: Each set of commits must compile and must not
-   introduce a regression on all build targets.
+  * Documentation: Always up-to-date, detailed as much as possible, both for
+    API and user documentations.
+  * Unit tests: Each function, each structure, each trait is unit tested. No
+    code lands without a unit test.
+  * Integration tests: Tagua VM is both a set of libraries and a binary; The
+    libraries part also has an integration test suites.
+  * Continuous Integration: Each set of commits must compile and must not
+    introduce a regression on all build targets.
+
+### Performance
+
+The term “performance” must be defined. By saying “performance” we mean: Speed
+and memory efficiency. While speed is not the top priority, memory is. It is
+part of safety. When safety is ensured and quality is high enough to detect most
+of the regressions, we can safely patch the VM to get better performances if and
+when necessary.
+
+Obviously, we commit to use the state-of-the-art algorithms and structures to
+ensure excellent performances.
 
 ## Roadmap
 
-* [x] Parser with strong types and zero-copy,
-* [x] Minimal LLVM safe bindings:
-  * [x] Context, module, builder, value…,
-  * [x] Engine: Use [MCJIT](http://llvm.org/docs/MCJITDesignAndImplementation.html) for the JIT engine,
-  * [x] Native types: Bindings from Rust to LLVM,
-* [x] Minimal complete chains (from PHP file to a real execution),
-* [ ] Type inference algorithms to reduce memory consumption,
-* (not defined yet)
+(Under rewriting).
 
 ## Installing
 
-To install Tagua VM, you must have Rust (see [the Rust installation
-page](https://www.rust-lang.org/downloads.html)) and LLVM (see [the LLVM
-installation page](http://llvm.org/releases/download.html)) installed. This is
-important to have `llvm-config` available in the path. This is also important
-to have `cargo` available in the path too.
-[Cargo](http://doc.crates.io/guide.html) is the Rust package manager.
+To install Tagua VM, you must have Rust (see [the Rust installation page][19])
+and LLVM (see [the LLVM installation page][20]) installed. This is important to
+have `llvm-config` and `cargo` available in the path. [Cargo][21] is the Rust
+package manager.
 
 To build a release version:
 
@@ -103,23 +155,23 @@ $ ./target/debug/tvm --help
 
 ### Using Docker
 
-If you don't want to install Rust and LLVM on your machine you can use Docker:
-It provides everything you will need to build, test and run Tagua VM.
+If installing Rust and LLVM on your machine is too much, Docker might be an
+alternative: It provides everything needed to build, test and run Tagua VM.
 
-First, you will need to build the docker image:
+First, build the Docker image:
 
 ```sh
 $ docker build -t tagua-vm .
 ```
 
-You will then be able to run a container from this image:
+Now, it is possible to run a container from this image:
 
 ```sh
 $ docker run --rm -it --name tagua-vm-dev -v `pwd`:/source` bash
 ```
 
-You are now inside a fresh container. To see if everything is fine, you can
-start the test suite:
+If this command succeeds, you are inside a fresh container. To see if
+everything is fine, you can start the test suite:
 
 ```sh
 $ cargo test
@@ -136,7 +188,7 @@ $ cargo test
 
 to run all the test suites (unit test suites, integration test suites and documentation test suites).
 
-### カンバン
+### カンバン ([Kanban](https://en.wikipedia.org/wiki/Kanban))
 
 In order to get an overview of what need to be done, what is in progress and
 what has been recently done, [a kanban board is
@@ -150,6 +202,14 @@ The documentation is not online yet. To generate it locally, please, run the fol
 $ cargo doc
 $ open target/doc/tagua_vm/index.html
 ```
+
+## Libraries
+
+Tagua VM is designed as a set of libraries that can work outside of the
+project. So far, the following libraries are living outside of the project:
+
+  * [`libtaguavm_parser`][22], Safe, fast and memory efficient PHP parser
+    (lexical and syntactic analysers).
 
 ## License
 
@@ -186,3 +246,27 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ```
+
+
+[1]: http://php.net/
+[2]: https://www.rust-lang.org/
+[3]: http://llvm.org/
+[4]: https://w3techs.com/technologies/details/pl-php/all/all
+[5]: https://www.cvedetails.com/vendor/74/PHP.html
+[6]: https://www.cvedetails.com/vulnerability-list.php?vendor_id=74&product_id=&version_id=&page=1&hasexp=0&opdos=0&opec=0&opov=0&opcsrf=0&opgpriv=0&opsqli=0&opxss=0&opdirt=0&opmemc=0&ophttprs=0&opbyp=0&opfileinc=0&opginf=0&cvssscoremin=9&cvssscoremax=0&year=0&month=0&cweid=0&order=1&trc=495&sha=3a14a3e67be8aa88a16a1018e06ffe4e0d940af5
+[7]: https://www.cvedetails.com/cve/CVE-2016-2554/
+[8]: https://www.cvedetails.com/cve/CVE-2015-8880/
+[9]: https://www.cvedetails.com/cve/CVE-2015-5589/
+[10]: https://www.cvedetails.com/cve/CVE-2015-8617/
+[11]: https://www.cvedetails.com/cve/CVE-2015-4642/
+[12]: https://www.cvedetails.com/cve/CVE-2015-4601/
+[13]: https://www.cvedetails.com/cve/CVE-2016-4544/
+[14]: https://www.cvedetails.com/cve/CVE-2016-4539/
+[15]: https://www.cvedetails.com/vulnerability-list/vendor_id-10210/Python.html
+[16]: http://www.cvedetails.com/vulnerability-list.php?vendor_id=5&product_id=1526&version_id=&page=1&hasexp=0&opdos=0&opec=0&opov=0&opcsrf=0&opgpriv=0&opsqli=0&opxss=0&opdirt=0&opmemc=0&ophttprs=0&opbyp=0&opfileinc=0&opginf=0&cvssscoremin=9&cvssscoremax=0&year=0&month=0&cweid=0&order=1&trc=435&sha=0050c3562eb6901e183f2b2b636c9769579a0fb8
+[17]: http://zend.com/
+[18]: http://hhvm.com/
+[19]: https://www.rust-lang.org/downloads.html
+[20]: http://llvm.org/releases/download.html
+[21]: http://doc.crates.io/guide.html
+[22]: https://github.com/tagua-vm/parser
