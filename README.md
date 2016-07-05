@@ -161,13 +161,13 @@ alternative: It provides everything needed to build, test and run Tagua VM.
 First, build the Docker image:
 
 ```sh
-$ docker build -t tagua-vm .
+$ docker build -t tagua-vm-dev .
 ```
 
 Now, it is possible to run a container from this image:
 
 ```sh
-$ docker run --rm -it --name tagua-vm-dev -v `pwd`:/source` bash
+$ docker run --rm -it -v $(pwd):/source tagua-vm-dev
 ```
 
 If this command succeeds, you are inside a fresh container. To see if
