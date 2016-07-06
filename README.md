@@ -194,7 +194,7 @@ In order to get an overview of what need to be done, what is in progress and
 what has been recently done, [a kanban board is
 available](https://waffle.io/tagua-vm/tagua-vm).
 
-## Documentation
+## Documentation and help
 
 The documentation is not online yet. To generate it locally, please, run the following command:
 
@@ -202,6 +202,9 @@ The documentation is not online yet. To generate it locally, please, run the fol
 $ cargo doc
 $ open target/doc/tagua_vm/index.html
 ```
+
+To get help on IRC, please join the official [`#taguavm` channel on
+Freenode](irc://irc.freenode.net/taguavm).
 
 ## Libraries
 
