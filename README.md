@@ -1,4 +1,7 @@
-# Tagua VM [![build status](https://api.travis-ci.org/tagua-vm/tagua-vm.svg)](https://travis-ci.org/tagua-vm/tagua-vm)
+# Tagua VM
+
+[![Build status](https://api.travis-ci.org/tagua-vm/tagua-vm.svg)](https://travis-ci.org/tagua-vm/tagua-vm)
+[![Chat on Gitter](https://badges.gitter.im/tagua-vm/tagua-vm.svg)](https://gitter.im/tagua-vm/tagua-vm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Tagua VM is an experimental [PHP][1] Virtual Machine that
 guarantees safety and quality by removing large classes of vulnerabilities
