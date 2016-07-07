@@ -36,7 +36,7 @@ use super::super::super::vm::native_type::VMRepresentation;
 use super::super::super::vm;
 
 /// Compile an AST to VM intermediate representation.
-pub fn compile(ast: ast::Addition) {
+pub fn compile(ast: ast::Expression) {
     let context     = vm::context::Context::new();
     let mut module  = vm::module::Module::new("foobar", &context);
     let mut builder = vm::builder::Builder::new(&context);
@@ -48,12 +48,25 @@ pub fn compile(ast: ast::Addition) {
     );
     let basic_block = function.new_basic_block("entry");
     builder.move_to_end(basic_block);
-    let addition = builder.add(
-        ast.a.t.to_vm_representation(&context),
-        ast.b.t.to_vm_representation(&context),
-        "addition"
-    );
-    builder.return_value(addition);
+    let expression = match ast {
+        ast::Expression::Addition { a, b } => builder.add(
+            a.t.to_vm_representation(&context),
+            b.t.to_vm_representation(&context),
+            "addition"
+        ),
+        ast::Expression::Multiplication { a, b } => builder.mul(
+            a.t.to_vm_representation(&context),
+            b.t.to_vm_representation(&context),
+            "multiplication"
+        ),
+        ast::Expression::Subtraction { a, b } => builder.sub(
+            a.t.to_vm_representation(&context),
+            b.t.to_vm_representation(&context),
+            "division"
+        ),
+        _ => panic!("Not implemented yet")
+    };
+    builder.return_value(expression);
 
     let engine_result = vm::engine::Engine::new(
         &mut module,
