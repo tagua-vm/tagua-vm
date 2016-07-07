@@ -1,7 +1,8 @@
 # Tagua VM
 
 [![Build status](https://api.travis-ci.org/tagua-vm/tagua-vm.svg)](https://travis-ci.org/tagua-vm/tagua-vm)
-[![Chat on Gitter](https://badges.gitter.im/tagua-vm/tagua-vm.svg)](https://gitter.im/tagua-vm/tagua-vm?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Chat on Freenode](https://img.shields.io/badge/chat-on_%23taguavm-ff0066.svg)](https://webchat.freenode.net/?channels=#taguavm)
+[![Chat on Gitter](https://img.shields.io/badge/chat-on_gitter-ff0066.svg)](https://gitter.im/tagua-vm/tagua-vm)
 
 Tagua VM is an experimental [PHP][1] Virtual Machine that
 guarantees safety and quality by removing large classes of vulnerabilities
@@ -207,7 +208,8 @@ $ open target/doc/tagua_vm/index.html
 ```
 
 To get help on IRC, please join the official [`#taguavm` channel on
-Freenode](irc://irc.freenode.net/taguavm).
+Freenode](https://webchat.freenode.net/?channels=#taguavm). Alternatively, there
+is a [mirrored room on Gitter](https://gitter.im/tagua-vm/tagua-vm).
 
 ## Libraries
 
