@@ -1,6 +1,6 @@
 # Tagua VM
 
-[![Build status](https://api.travis-ci.org/tagua-vm/tagua-vm.svg)](https://travis-ci.org/tagua-vm/tagua-vm)
+[![Build status](https://api.travis-ci.org/tagua-vm/tagua-vm.svg?branch=master)](https://travis-ci.org/tagua-vm/tagua-vm)
 [![Chat on Freenode](https://img.shields.io/badge/chat-on_%23taguavm-ff0066.svg)](https://webchat.freenode.net/?channels=#taguavm)
 [![Chat on Gitter](https://img.shields.io/badge/chat-on_gitter-ff0066.svg)](https://gitter.im/tagua-vm/tagua-vm)
 
