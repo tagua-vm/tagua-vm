@@ -34,6 +34,7 @@
 use super::LLVMRef;
 use super::context::Context;
 use super::value::Value;
+use parser;
 
 use libc::{c_char, c_uint, c_ulonglong};
 use llvm::core::{
@@ -191,6 +192,18 @@ impl<'a> VMRepresentation for &'a [u8] {
                 )
             }
         )
+    }
+}
+
+impl VMRepresentation for parser::ast::Literal {
+    fn to_vm_representation(self, context: &Context) -> Value {
+        match self {
+            parser::ast::Literal::Integer(value) =>
+                value.to_vm_representation(context),
+
+            _ =>
+                panic!("No VM representation for this kind of value, yet.")
+        }
     }
 }
 
