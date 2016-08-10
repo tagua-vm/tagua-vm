@@ -200,11 +200,13 @@ available](https://waffle.io/tagua-vm/tagua-vm).
 
 ## Documentation and help
 
-The documentation is not online yet. To generate it locally, please, run the following command:
+The documentation is automatically uploaded online at the following address:
+https://tagua-vm.github.io/tagua-vm.
+
+To generate it locally, please, run the following command:
 
 ```sh
-$ cargo doc
-$ open target/doc/tagua_vm/index.html
+$ cargo doc --open
 ```
 
 To get help on IRC, please join the official [`#taguavm` channel on
