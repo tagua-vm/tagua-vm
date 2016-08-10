@@ -10,6 +10,16 @@ os:
 matrix:
   allow_failures:
     - rust: nightly
+addons:
+  apt:
+    packages:
+      - libcurl4-openssl-dev
+      - libelf-dev
+      - libdw-dev
+      - binutils-dev
+env:
+  global:
+    secure: nDy6lalxkiPOkM1zvCjkdPhi8OK+k8Ac6MlcIDWUyw/GccSda9BkOZ4nQuGx3xwjsMjaZ6M81r2p8jne6Fc89DfjtpgWNZ7BlShLHSQgT86vcuT3f92OjLySJawEGHQGpndfzoBbySVghTfTfiCQdphrniHdDw9vvo/f70L8L17/JeVVM5lUQmekDlbBLLugWg4e2U1aBi6czZwZhqHhuAvU2rXP6tDx3PNU97tTDFF2Xxt0FjdrcAtweVSr8jOIArtHpy8/EXFgJZYzkRxitVCMEb5MU1Ddpttsoj7Sdg2f0Cpv7r5PPvTc1qnGWcWKb+xWjo3GtHrpQFI/6InWVEF8ytEyqX1VwQSOMG+9W2Rwns35xGMuPzCaJusmIohFc0XRN9wB6+SeH1mbx2QXpdcdPrepzaHZ9s+Dj5VbcJ+5dYaRiI7sIQSZ337bxLuHIH79k9ztMU3kS2U0oTJFIE/CZAJ9mrgZJ6Dc2lI/p0b5HR7Avj83KTVU+OiPL4abcX5j8PQQpIoF+RWj62+eTPqU+X5vgFA2eQeX8NKWE9Gb/t9YrD5KTebhTnLIOCLOOyZKz41VRy9q4M2kdFj1NqGe2SQazSA558jtC1kEoDgfuVNiVDiak/Hn8Cc8+eI7/9Hr6ykU5mvgl9xTY/a+olbTN3AyesxXnJVU8mdvLgc=
 before_install:
   - |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -32,3 +42,14 @@ install:
           export CPPFLAGS="-I/usr/local/opt/llvm/include $CPPFLAGS";
           export PATH="/usr/local/opt/llvm/bin:$PATH";
       fi
+before_script:
+  - |
+      pip install 'travis-cargo<0.2' --user &&
+      export PATH="$HOME/.local/bin:$HOME/Library/Python/2.7/bin:$PATH"
+script:
+  - |
+      travis-cargo build &&
+      travis-cargo test &&
+      travis-cargo --only stable doc
+after_success:
+  - travis-cargo --only stable doc-upload
