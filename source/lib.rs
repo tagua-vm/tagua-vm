@@ -42,7 +42,7 @@
 
 extern crate libc;
 extern crate llvm_sys as llvm;
-extern crate taguavm_parser as parser;
+extern crate tagua_parser as parser;
 
 pub mod language;
 pub mod shared;

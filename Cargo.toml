@@ -9,7 +9,7 @@ keywords    = ["php", "virtual machine"]
 license     = "BSD-3-Clause"
 
 [lib]
-name    = "taguavm"
+name    = "tagua_vm"
 path    = "source/lib.rs"
 test    = true
 doctest = true
@@ -53,4 +53,4 @@ codegen-units    = 1
 [dependencies]
 libc = "~0.2.7"
 llvm-sys = "~0.2.1"
-tagua-vm-parser = {git = "https://github.com/tagua-vm/parser", rev = "master"}
+tagua-parser = {git = "https://github.com/tagua-vm/parser", rev = "master"}

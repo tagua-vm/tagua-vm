@@ -216,7 +216,7 @@ is a [mirrored room on Gitter](https://gitter.im/tagua-vm/tagua-vm).
 Tagua VM is designed as a set of libraries that can work outside of the
 project. So far, the following libraries are living outside of the project:
 
-  * [`libtaguavm_parser`][22], Safe, fast and memory efficient PHP parser
+  * [`libtagua_parser`][22], Safe, fast and memory efficient PHP parser
     (lexical and syntactic analysers).
 
 ## License
