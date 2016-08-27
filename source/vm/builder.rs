@@ -38,6 +38,8 @@ use super::value::Value;
 use libc::c_char;
 use llvm::core::{
     LLVMBuildAdd,
+    LLVMBuildMul,
+    LLVMBuildSub,
     LLVMBuildRet,
     LLVMBuildRetVoid,
     LLVMCreateBuilderInContext,
@@ -94,6 +96,36 @@ impl Builder {
         Value::from_ref(
             unsafe {
                 LLVMBuildAdd(
+                    self.to_ref(),
+                    lhs.to_ref(),
+                    rhs.to_ref(),
+                    name.as_ptr() as *const c_char
+                )
+            }
+        )
+    }
+
+    pub fn mul(&mut self, lhs: Value, rhs: Value, name: &str) -> Value {
+        let name = CString::new(name).unwrap();
+
+        Value::from_ref(
+            unsafe {
+                LLVMBuildMul(
+                    self.to_ref(),
+                    lhs.to_ref(),
+                    rhs.to_ref(),
+                    name.as_ptr() as *const c_char
+                )
+            }
+        )
+    }
+
+    pub fn sub(&mut self, lhs: Value, rhs: Value, name: &str) -> Value {
+        let name = CString::new(name).unwrap();
+
+        Value::from_ref(
+            unsafe {
+                LLVMBuildSub(
                     self.to_ref(),
                     lhs.to_ref(),
                     rhs.to_ref(),
