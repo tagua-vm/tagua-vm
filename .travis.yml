@@ -1,17 +1,44 @@
 language: rust
-rust:
-  - 1.9.0
-  - 1.10.0
-  - stable
-  - beta
-  - nightly
-os:
-  - linux
-  - osx
+
 matrix:
+  include:
+    - rust: 1.9.0
+      os: linux
+    - rust: 1.9.0
+      os: osx
+    - rust: 1.10.0
+      os: linux
+    - rust: 1.10.0
+      os: osx
+    - rust: 1.11.0
+      os: linux
+    - rust: 1.11.0
+      os: osx
+    - rust: stable
+      os: linux
+    - rust: stable
+      os: osx
+    - rust: beta
+      os: linux
+    - rust: beta
+      os: osx
+    - rust: nightly
+      os: linux
+    - rust: nightly
+      os: osx
   allow_failures:
     - rust: nightly
   fast_finish: true
+
+os:
+  - linux
+  - osx
+
+notifications:
+  irc: "chat.freenode.net#taguavm"
+
+sudo: false
+
 addons:
   apt:
     packages:
@@ -19,9 +46,11 @@ addons:
       - libelf-dev
       - libdw-dev
       - binutils-dev
+
 env:
   global:
     secure: hveXyFhx/C/kWJebjAauSYBrOGMX8qpzXmWGCMBaeAtbXo2uGWs/a+VA/R/AfJS+EZv5e578ZVtcO773XDCryQ7j+nFJQGQWO/3pY00HqDnItwPmy6tp2BIlxtahAaYCufGJnm4yPtMFXajDvtp3n1oFCZvT+rINBelKb/9NggHyvnm9dz/0Hfj/2floyRRdC656jgOVpE/3bmi5N9UamZjHOvdP2ZVabKFgCacw2GKVQM3BFyKeKHpUy/n1lZtpKw4TMGLcw0Ot3VR/EobtR647MldM9kVZCHfdmAuJDGG2azdLyjm1OqSZZzyJH+IWhWzbXIXNhON7pwg39sLr1S1q5Gwf/OsEnRtov5CrnYdnEFeSZzU5i6uJ5hujU1KooppSHh/q08ELNzbTsYrug2OVtbGxrxUyU38rlZEI7iOCE+KIx3IDHWz3UOBebjArc3MDgB3LBi37pUqgfaMG265y7uH6LG5EfjperYX7IVtAcpZbIl2MQYXOz0UzU/jnPuqUlvKR1IHqMguPnt1V0w+SNUV4eG1PlhMsVnSxVDtCMfN18V6/yNL0xf0yFaxfesa3pluA3NfaPPTi1lcdXSifLZz6j1QGjHY1Sr6TpPKORwDQZoDY2b3tz5GAYbDIXPDeg2QmHWl2yPmI6AKMog6KGbLi2XKV30e7SidHHNI=
+
 before_install:
   - |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -29,6 +58,7 @@ before_install:
           sudo sh -c "echo 'deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main' >> /etc/apt/sources.list";
           wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | sudo apt-key add -;
       fi
+
 install:
   - |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -44,14 +74,21 @@ install:
           export CPPFLAGS="-I/usr/local/opt/llvm/include $CPPFLAGS";
           export PATH="/usr/local/opt/llvm/bin:$PATH";
       fi
+
 before_script:
   - |
       pip install 'travis-cargo<0.2' --user &&
       export PATH="$HOME/.local/bin:$HOME/Library/Python/2.7/bin:$PATH"
+
 script:
   - |
       travis-cargo build &&
       travis-cargo test &&
       travis-cargo --only stable doc
+
 after_success:
-  - travis-cargo --only stable doc-upload
+  - |
+      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+          travis-cargo --only stable doc-upload;
+          travis-cargo coveralls --no-sudo;
+      fi
