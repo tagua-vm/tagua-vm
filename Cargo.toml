@@ -52,5 +52,5 @@ codegen-units    = 1
 
 [dependencies]
 libc = "~0.2.7"
-llvm-sys = "~0.2.1"
+llvm-sys = "~0.3.9"
 tagua-parser = {git = "https://github.com/tagua-vm/parser", rev = "master"}
