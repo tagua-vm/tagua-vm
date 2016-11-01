@@ -31,35 +31,35 @@
 
 //! Transform an AST to VM intermediate representation.
 
+use llvm::native_type::VMRepresentation;
+use llvm;
 use parser::ast;
-use super::super::super::vm::native_type::VMRepresentation;
-use super::super::super::vm;
 
 /// Compile an AST to VM intermediate representation.
 pub fn compile(ast: ast::Addition) {
-    let context     = vm::context::Context::new();
-    let mut module  = vm::module::Module::new("foobar", &context);
-    let mut builder = vm::builder::Builder::new(&context);
-    let function    = vm::function::Function::new(
+    let context     = llvm::context::Context::new();
+    let mut module  = llvm::module::Module::new("foobar", &context);
+    let mut builder = llvm::builder::Builder::new(&context);
+    let function    = llvm::function::Function::new(
         &module,
         "f",
         &mut [],
-        vm::native_type::int64_type(&context)
+        llvm::native_type::int64_type(&context)
     );
     let basic_block = function.new_basic_block("entry");
     builder.move_to_end(basic_block);
     let addition = builder.add(
-        ast.a.t.to_vm_representation(&context),
-        ast.b.t.to_vm_representation(&context),
+        7u64.to_vm_representation(&context),
+        42u64.to_vm_representation(&context),
         "addition"
     );
     builder.return_value(addition);
 
-    let engine_result = vm::engine::Engine::new(
+    let engine_result = llvm::engine::Engine::new(
         &mut module,
-        &vm::engine::Options {
-            level     : vm::engine::OptimizationLevel::NoOptimizations,
-            code_model: vm::engine::CodeModel::Default
+        &llvm::engine::Options {
+            level     : llvm::engine::OptimizationLevel::NoOptimizations,
+            code_model: llvm::engine::CodeModel::Default
         }
     );
 

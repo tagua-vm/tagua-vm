@@ -51,6 +51,5 @@ debug-assertions = true
 codegen-units    = 1
 
 [dependencies]
-libc = "~0.2.7"
-llvm-sys = "~0.3.9"
+tagua-llvm = {git = "https://github.com/tagua-vm/llvm", rev = "master"}
 tagua-parser = {git = "https://github.com/tagua-vm/parser", rev = "master"}
