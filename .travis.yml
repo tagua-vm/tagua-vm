@@ -4,75 +4,89 @@ matrix:
   include:
     - rust: 1.9.0
       os: linux
+      dist: trusty
     - rust: 1.9.0
       os: osx
     - rust: 1.10.0
       os: linux
+      dist: trusty
     - rust: 1.10.0
       os: osx
     - rust: 1.11.0
       os: linux
+      dist: trusty
     - rust: 1.11.0
       os: osx
     - rust: stable
       os: linux
+      dist: trusty
     - rust: stable
       os: osx
     - rust: beta
       os: linux
+      dist: trusty
     - rust: beta
       os: osx
     - rust: nightly
       os: linux
+      dist: trusty
     - rust: nightly
       os: osx
   allow_failures:
     - rust: nightly
   fast_finish: true
 
-os:
-  - linux
-  - osx
+cache:
+  directories:
+    - llvm-3.9.0
 
-notifications:
-  irc: "chat.freenode.net#taguavm"
+sudo: required
 
 addons:
   apt:
     packages:
       - libcurl4-openssl-dev
-      - libelf-dev
       - libdw-dev
-      - binutils-dev
+      - libdw1
+      - libelf-dev
 
 env:
   global:
     secure: hveXyFhx/C/kWJebjAauSYBrOGMX8qpzXmWGCMBaeAtbXo2uGWs/a+VA/R/AfJS+EZv5e578ZVtcO773XDCryQ7j+nFJQGQWO/3pY00HqDnItwPmy6tp2BIlxtahAaYCufGJnm4yPtMFXajDvtp3n1oFCZvT+rINBelKb/9NggHyvnm9dz/0Hfj/2floyRRdC656jgOVpE/3bmi5N9UamZjHOvdP2ZVabKFgCacw2GKVQM3BFyKeKHpUy/n1lZtpKw4TMGLcw0Ot3VR/EobtR647MldM9kVZCHfdmAuJDGG2azdLyjm1OqSZZzyJH+IWhWzbXIXNhON7pwg39sLr1S1q5Gwf/OsEnRtov5CrnYdnEFeSZzU5i6uJ5hujU1KooppSHh/q08ELNzbTsYrug2OVtbGxrxUyU38rlZEI7iOCE+KIx3IDHWz3UOBebjArc3MDgB3LBi37pUqgfaMG265y7uH6LG5EfjperYX7IVtAcpZbIl2MQYXOz0UzU/jnPuqUlvKR1IHqMguPnt1V0w+SNUV4eG1PlhMsVnSxVDtCMfN18V6/yNL0xf0yFaxfesa3pluA3NfaPPTi1lcdXSifLZz6j1QGjHY1Sr6TpPKORwDQZoDY2b3tz5GAYbDIXPDeg2QmHWl2yPmI6AKMog6KGbLi2XKV30e7SidHHNI=
 
-before_install:
-  - |
-      if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-          sudo sh -c "ls /etc/apt/";
-          sudo sh -c "echo 'deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' >> /etc/apt/sources.list";
-          sudo sh -c "echo 'deb-src http://apt.llvm.org/jessie/ llvm-toolchain-jessie-3.9 main' >> /etc/apt/sources.list";
-          wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -;
-      fi
+notifications:
+  irc: "chat.freenode.net#taguavm"
 
 install:
   - |
       if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-          sudo apt-get update -qq;
-          sudo apt-get install -qq llvm-3.9 libllvm3.9 libllvm3.9-dbg cmake libedit-dev;
-          export PATH="/usr/lib/llvm-3.9/bin:$PATH";
+          if [[ ! -n "$(ls -A llvm-3.9.0)" ]]; then
+              curl 'http://llvm.org/releases/3.9.0/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz' --verbose > llvm-3.9.0.tar.xz;
+              mkdir llvm-3.9.0;
+              tar -xvf llvm-3.9.0.tar.xz --strip 1 -C llvm-3.9.0;
+          fi
+
+          export PATH="$PWD/llvm-3.9.0/bin/:$PATH";
+
+          # llvm-config gives compiler arguments for the compiler it was
+          # compiled with. On Ubuntu cc is gcc, so override that to avoid:
+          # “unrecognized command line option ‘-Wcovered-switch-default’”.
+          cc --version;
+          sudo rm $(which cc);
+          sudo ln -s $PWD/llvm-3.9.0/bin/clang /usr/bin/cc;
+          cc --version;
       fi
   - |
       if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
           brew update;
-          brew rm -f llvm && brew install llvm;
-          export LDFLAGS="-L/usr/local/opt/llvm/lib $LDFLAGS";
-          export CPPFLAGS="-I/usr/local/opt/llvm/include $CPPFLAGS";
+          brew rm -f llvm;
+          brew install llvm;
+          export CXX="clang++ -stdlib=libc++"
+          export CXXFLAGS="$CXXFLAGS -I/usr/local/opt/llvm/include"
+          export LDFLAGS="$LDFLAGS -L/usr/local/opt/llvm/lib -Wl,-rpath,/usr/local/opt/llvm/lib"
           export PATH="/usr/local/opt/llvm/bin:$PATH";
       fi
+  - llvm-config --version
 
 before_script:
   - |
