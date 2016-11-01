@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `object` mod in crate `llvm_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, object">
+
+    <title>llvm_sys::object - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>llvm_sys</a></p><script>window.sidebarCurrent = {name: 'object', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>llvm_sys</a>::<wbr><a class='mod' href=''>object</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2146' class='srclink' href='../../src/llvm_sys/object.rs.html#1-65' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Object file reading and writing</p>
+</div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMOpaqueObjectFile.html'
+                                  title='llvm_sys::object::LLVMOpaqueObjectFile'>LLVMOpaqueObjectFile</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMOpaqueRelocationIterator.html'
+                                  title='llvm_sys::object::LLVMOpaqueRelocationIterator'>LLVMOpaqueRelocationIterator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMOpaqueSectionIterator.html'
+                                  title='llvm_sys::object::LLVMOpaqueSectionIterator'>LLVMOpaqueSectionIterator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMOpaqueSymbolIterator.html'
+                                  title='llvm_sys::object::LLVMOpaqueSymbolIterator'>LLVMOpaqueSymbolIterator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMCreateObjectFile.html'
+                                  title='llvm_sys::object::LLVMCreateObjectFile'>LLVMCreateObjectFile</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMDisposeObjectFile.html'
+                                  title='llvm_sys::object::LLVMDisposeObjectFile'>LLVMDisposeObjectFile</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMDisposeRelocationIterator.html'
+                                  title='llvm_sys::object::LLVMDisposeRelocationIterator'>LLVMDisposeRelocationIterator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMDisposeSectionIterator.html'
+                                  title='llvm_sys::object::LLVMDisposeSectionIterator'>LLVMDisposeSectionIterator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMDisposeSymbolIterator.html'
+                                  title='llvm_sys::object::LLVMDisposeSymbolIterator'>LLVMDisposeSymbolIterator</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetRelocationAddress.html'
+                                  title='llvm_sys::object::LLVMGetRelocationAddress'>LLVMGetRelocationAddress</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetRelocationOffset.html'
+                                  title='llvm_sys::object::LLVMGetRelocationOffset'>LLVMGetRelocationOffset</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetRelocationSymbol.html'
+                                  title='llvm_sys::object::LLVMGetRelocationSymbol'>LLVMGetRelocationSymbol</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetRelocationType.html'
+                                  title='llvm_sys::object::LLVMGetRelocationType'>LLVMGetRelocationType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetRelocationTypeName.html'
+                                  title='llvm_sys::object::LLVMGetRelocationTypeName'>LLVMGetRelocationTypeName</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetRelocationValueString.html'
+                                  title='llvm_sys::object::LLVMGetRelocationValueString'>LLVMGetRelocationValueString</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetRelocations.html'
+                                  title='llvm_sys::object::LLVMGetRelocations'>LLVMGetRelocations</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSectionAddress.html'
+                                  title='llvm_sys::object::LLVMGetSectionAddress'>LLVMGetSectionAddress</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSectionContainsSymbol.html'
+                                  title='llvm_sys::object::LLVMGetSectionContainsSymbol'>LLVMGetSectionContainsSymbol</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSectionContents.html'
+                                  title='llvm_sys::object::LLVMGetSectionContents'>LLVMGetSectionContents</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSectionName.html'
+                                  title='llvm_sys::object::LLVMGetSectionName'>LLVMGetSectionName</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSectionSize.html'
+                                  title='llvm_sys::object::LLVMGetSectionSize'>LLVMGetSectionSize</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSections.html'
+                                  title='llvm_sys::object::LLVMGetSections'>LLVMGetSections</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSymbolAddress.html'
+                                  title='llvm_sys::object::LLVMGetSymbolAddress'>LLVMGetSymbolAddress</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSymbolName.html'
+                                  title='llvm_sys::object::LLVMGetSymbolName'>LLVMGetSymbolName</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSymbolSize.html'
+                                  title='llvm_sys::object::LLVMGetSymbolSize'>LLVMGetSymbolSize</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMGetSymbols.html'
+                                  title='llvm_sys::object::LLVMGetSymbols'>LLVMGetSymbols</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMIsRelocationIteratorAtEnd.html'
+                                  title='llvm_sys::object::LLVMIsRelocationIteratorAtEnd'>LLVMIsRelocationIteratorAtEnd</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMIsSectionIteratorAtEnd.html'
+                                  title='llvm_sys::object::LLVMIsSectionIteratorAtEnd'>LLVMIsSectionIteratorAtEnd</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMIsSymbolIteratorAtEnd.html'
+                                  title='llvm_sys::object::LLVMIsSymbolIteratorAtEnd'>LLVMIsSymbolIteratorAtEnd</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMMoveToContainingSection.html'
+                                  title='llvm_sys::object::LLVMMoveToContainingSection'>LLVMMoveToContainingSection</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMMoveToNextRelocation.html'
+                                  title='llvm_sys::object::LLVMMoveToNextRelocation'>LLVMMoveToNextRelocation</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMMoveToNextSection.html'
+                                  title='llvm_sys::object::LLVMMoveToNextSection'>LLVMMoveToNextSection</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMMoveToNextSymbol.html'
+                                  title='llvm_sys::object::LLVMMoveToNextSymbol'>LLVMMoveToNextSymbol</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMObjectFileRef.html'
+                                  title='llvm_sys::object::LLVMObjectFileRef'>LLVMObjectFileRef</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMRelocationIteratorRef.html'
+                                  title='llvm_sys::object::LLVMRelocationIteratorRef'>LLVMRelocationIteratorRef</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMSectionIteratorRef.html'
+                                  title='llvm_sys::object::LLVMSectionIteratorRef'>LLVMSectionIteratorRef</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMSymbolIteratorRef.html'
+                                  title='llvm_sys::object::LLVMSymbolIteratorRef'>LLVMSymbolIteratorRef</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "llvm_sys";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

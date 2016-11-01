@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ErrorKindCustom","Custom values for `ErrorKind::Custom`."]]});

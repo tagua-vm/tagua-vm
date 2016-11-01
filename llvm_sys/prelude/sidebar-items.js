@@ -1,0 +1,1 @@
+initSidebarItems({"type":[["LLVMBasicBlockRef",""],["LLVMBool",""],["LLVMBuilderRef",""],["LLVMContextRef",""],["LLVMDiagnosticInfoRef",""],["LLVMMemoryBufferRef",""],["LLVMModuleProviderRef",""],["LLVMModuleRef",""],["LLVMPassManagerRef",""],["LLVMPassRegistryRef",""],["LLVMTypeRef",""],["LLVMUseRef",""],["LLVMValueRef",""]]});

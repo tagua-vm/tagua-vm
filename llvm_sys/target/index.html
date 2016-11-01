@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `target` mod in crate `llvm_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, target">
+
+    <title>llvm_sys::target - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>llvm_sys</a></p><script>window.sidebarCurrent = {name: 'target', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>llvm_sys</a>::<wbr><a class='mod' href=''>target</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2220' class='srclink' href='../../src/llvm_sys/target.rs.html#1-150' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Target information</p>
+</div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMByteOrdering.html'
+                                  title='llvm_sys::target::LLVMByteOrdering'>LLVMByteOrdering</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMOpaqueTargetData.html'
+                                  title='llvm_sys::target::LLVMOpaqueTargetData'>LLVMOpaqueTargetData</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMOpaqueTargetLibraryInfotData.html'
+                                  title='llvm_sys::target::LLVMOpaqueTargetLibraryInfotData'>LLVMOpaqueTargetLibraryInfotData</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMABIAlignmentOfType.html'
+                                  title='llvm_sys::target::LLVMABIAlignmentOfType'>LLVMABIAlignmentOfType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMABISizeOfType.html'
+                                  title='llvm_sys::target::LLVMABISizeOfType'>LLVMABISizeOfType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMAddTargetData.html'
+                                  title='llvm_sys::target::LLVMAddTargetData'>LLVMAddTargetData</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMAddTargetLibraryInfo.html'
+                                  title='llvm_sys::target::LLVMAddTargetLibraryInfo'>LLVMAddTargetLibraryInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMByteOrder.html'
+                                  title='llvm_sys::target::LLVMByteOrder'>LLVMByteOrder</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMCallFrameAlignmentOfType.html'
+                                  title='llvm_sys::target::LLVMCallFrameAlignmentOfType'>LLVMCallFrameAlignmentOfType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMCopyStringRepOfTargetData.html'
+                                  title='llvm_sys::target::LLVMCopyStringRepOfTargetData'>LLVMCopyStringRepOfTargetData</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMCreateTargetData.html'
+                                  title='llvm_sys::target::LLVMCreateTargetData'>LLVMCreateTargetData</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMDisposeTargetData.html'
+                                  title='llvm_sys::target::LLVMDisposeTargetData'>LLVMDisposeTargetData</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMElementAtOffset.html'
+                                  title='llvm_sys::target::LLVMElementAtOffset'>LLVMElementAtOffset</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeAArch64AsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializeAArch64AsmParser'>LLVMInitializeAArch64AsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeAArch64AsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeAArch64AsmPrinter'>LLVMInitializeAArch64AsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeAArch64Disassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeAArch64Disassembler'>LLVMInitializeAArch64Disassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeAArch64Target.html'
+                                  title='llvm_sys::target::LLVMInitializeAArch64Target'>LLVMInitializeAArch64Target</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeAArch64TargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeAArch64TargetInfo'>LLVMInitializeAArch64TargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeAArch64TargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeAArch64TargetMC'>LLVMInitializeAArch64TargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeARMAsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializeARMAsmParser'>LLVMInitializeARMAsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeARMAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeARMAsmPrinter'>LLVMInitializeARMAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeARMDisassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeARMDisassembler'>LLVMInitializeARMDisassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeARMTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeARMTarget'>LLVMInitializeARMTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeARMTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeARMTargetInfo'>LLVMInitializeARMTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeARMTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeARMTargetMC'>LLVMInitializeARMTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeCppBackendTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeCppBackendTarget'>LLVMInitializeCppBackendTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeCppBackendTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeCppBackendTargetInfo'>LLVMInitializeCppBackendTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeCppBackendTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeCppBackendTargetMC'>LLVMInitializeCppBackendTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeHexagonAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeHexagonAsmPrinter'>LLVMInitializeHexagonAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeHexagonDisassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeHexagonDisassembler'>LLVMInitializeHexagonDisassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeHexagonTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeHexagonTarget'>LLVMInitializeHexagonTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeHexagonTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeHexagonTargetInfo'>LLVMInitializeHexagonTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeHexagonTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeHexagonTargetMC'>LLVMInitializeHexagonTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMSP430AsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeMSP430AsmPrinter'>LLVMInitializeMSP430AsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMSP430Target.html'
+                                  title='llvm_sys::target::LLVMInitializeMSP430Target'>LLVMInitializeMSP430Target</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMSP430TargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeMSP430TargetInfo'>LLVMInitializeMSP430TargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMSP430TargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeMSP430TargetMC'>LLVMInitializeMSP430TargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMipsAsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializeMipsAsmParser'>LLVMInitializeMipsAsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMipsAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeMipsAsmPrinter'>LLVMInitializeMipsAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMipsDisassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeMipsDisassembler'>LLVMInitializeMipsDisassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMipsTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeMipsTarget'>LLVMInitializeMipsTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMipsTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeMipsTargetInfo'>LLVMInitializeMipsTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeMipsTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeMipsTargetMC'>LLVMInitializeMipsTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeNVPTXAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeNVPTXAsmPrinter'>LLVMInitializeNVPTXAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeNVPTXTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeNVPTXTarget'>LLVMInitializeNVPTXTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeNVPTXTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeNVPTXTargetInfo'>LLVMInitializeNVPTXTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeNVPTXTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeNVPTXTargetMC'>LLVMInitializeNVPTXTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializePowerPCAsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializePowerPCAsmParser'>LLVMInitializePowerPCAsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializePowerPCAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializePowerPCAsmPrinter'>LLVMInitializePowerPCAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializePowerPCDisassembler.html'
+                                  title='llvm_sys::target::LLVMInitializePowerPCDisassembler'>LLVMInitializePowerPCDisassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializePowerPCTarget.html'
+                                  title='llvm_sys::target::LLVMInitializePowerPCTarget'>LLVMInitializePowerPCTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializePowerPCTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializePowerPCTargetInfo'>LLVMInitializePowerPCTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializePowerPCTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializePowerPCTargetMC'>LLVMInitializePowerPCTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeR600AsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializeR600AsmParser'>LLVMInitializeR600AsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeR600AsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeR600AsmPrinter'>LLVMInitializeR600AsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeR600Target.html'
+                                  title='llvm_sys::target::LLVMInitializeR600Target'>LLVMInitializeR600Target</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeR600TargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeR600TargetInfo'>LLVMInitializeR600TargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeR600TargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeR600TargetMC'>LLVMInitializeR600TargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSparcAsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializeSparcAsmParser'>LLVMInitializeSparcAsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSparcAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeSparcAsmPrinter'>LLVMInitializeSparcAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSparcDisassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeSparcDisassembler'>LLVMInitializeSparcDisassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSparcTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeSparcTarget'>LLVMInitializeSparcTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSparcTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeSparcTargetInfo'>LLVMInitializeSparcTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSparcTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeSparcTargetMC'>LLVMInitializeSparcTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSystemZAsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializeSystemZAsmParser'>LLVMInitializeSystemZAsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSystemZAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeSystemZAsmPrinter'>LLVMInitializeSystemZAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSystemZDisassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeSystemZDisassembler'>LLVMInitializeSystemZDisassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSystemZTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeSystemZTarget'>LLVMInitializeSystemZTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSystemZTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeSystemZTargetInfo'>LLVMInitializeSystemZTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeSystemZTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeSystemZTargetMC'>LLVMInitializeSystemZTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeX86AsmParser.html'
+                                  title='llvm_sys::target::LLVMInitializeX86AsmParser'>LLVMInitializeX86AsmParser</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeX86AsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeX86AsmPrinter'>LLVMInitializeX86AsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeX86Disassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeX86Disassembler'>LLVMInitializeX86Disassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeX86Target.html'
+                                  title='llvm_sys::target::LLVMInitializeX86Target'>LLVMInitializeX86Target</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeX86TargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeX86TargetInfo'>LLVMInitializeX86TargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeX86TargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeX86TargetMC'>LLVMInitializeX86TargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeXCoreAsmPrinter.html'
+                                  title='llvm_sys::target::LLVMInitializeXCoreAsmPrinter'>LLVMInitializeXCoreAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeXCoreDisassembler.html'
+                                  title='llvm_sys::target::LLVMInitializeXCoreDisassembler'>LLVMInitializeXCoreDisassembler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeXCoreTarget.html'
+                                  title='llvm_sys::target::LLVMInitializeXCoreTarget'>LLVMInitializeXCoreTarget</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeXCoreTargetInfo.html'
+                                  title='llvm_sys::target::LLVMInitializeXCoreTargetInfo'>LLVMInitializeXCoreTargetInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMInitializeXCoreTargetMC.html'
+                                  title='llvm_sys::target::LLVMInitializeXCoreTargetMC'>LLVMInitializeXCoreTargetMC</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMIntPtrType.html'
+                                  title='llvm_sys::target::LLVMIntPtrType'>LLVMIntPtrType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMIntPtrTypeForAS.html'
+                                  title='llvm_sys::target::LLVMIntPtrTypeForAS'>LLVMIntPtrTypeForAS</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMIntPtrTypeForASInContext.html'
+                                  title='llvm_sys::target::LLVMIntPtrTypeForASInContext'>LLVMIntPtrTypeForASInContext</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMIntPtrTypeInContext.html'
+                                  title='llvm_sys::target::LLVMIntPtrTypeInContext'>LLVMIntPtrTypeInContext</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMOffsetOfElement.html'
+                                  title='llvm_sys::target::LLVMOffsetOfElement'>LLVMOffsetOfElement</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMPointerSize.html'
+                                  title='llvm_sys::target::LLVMPointerSize'>LLVMPointerSize</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMPointerSizeForAS.html'
+                                  title='llvm_sys::target::LLVMPointerSizeForAS'>LLVMPointerSizeForAS</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMPreferredAlignmentOfGlobal.html'
+                                  title='llvm_sys::target::LLVMPreferredAlignmentOfGlobal'>LLVMPreferredAlignmentOfGlobal</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMPreferredAlignmentOfType.html'
+                                  title='llvm_sys::target::LLVMPreferredAlignmentOfType'>LLVMPreferredAlignmentOfType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMSizeOfTypeInBits.html'
+                                  title='llvm_sys::target::LLVMSizeOfTypeInBits'>LLVMSizeOfTypeInBits</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVMStoreSizeOfType.html'
+                                  title='llvm_sys::target::LLVMStoreSizeOfType'>LLVMStoreSizeOfType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeAllAsmParsers.html'
+                                  title='llvm_sys::target::LLVM_InitializeAllAsmParsers'>LLVM_InitializeAllAsmParsers</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeAllAsmPrinters.html'
+                                  title='llvm_sys::target::LLVM_InitializeAllAsmPrinters'>LLVM_InitializeAllAsmPrinters</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeAllDisassemblers.html'
+                                  title='llvm_sys::target::LLVM_InitializeAllDisassemblers'>LLVM_InitializeAllDisassemblers</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeAllTargetInfos.html'
+                                  title='llvm_sys::target::LLVM_InitializeAllTargetInfos'>LLVM_InitializeAllTargetInfos</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeAllTargetMCs.html'
+                                  title='llvm_sys::target::LLVM_InitializeAllTargetMCs'>LLVM_InitializeAllTargetMCs</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeAllTargets.html'
+                                  title='llvm_sys::target::LLVM_InitializeAllTargets'>LLVM_InitializeAllTargets</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeNativeAsmParser.html'
+                                  title='llvm_sys::target::LLVM_InitializeNativeAsmParser'>LLVM_InitializeNativeAsmParser</a></td>
+                           <td class='docblock short'>
+                                <p>Returns 1 on failure.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeNativeAsmPrinter.html'
+                                  title='llvm_sys::target::LLVM_InitializeNativeAsmPrinter'>LLVM_InitializeNativeAsmPrinter</a></td>
+                           <td class='docblock short'>
+                                <p>Returns 1 on failure.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeNativeDisassembler.html'
+                                  title='llvm_sys::target::LLVM_InitializeNativeDisassembler'>LLVM_InitializeNativeDisassembler</a></td>
+                           <td class='docblock short'>
+                                <p>Returns 1 on failure.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.LLVM_InitializeNativeTarget.html'
+                                  title='llvm_sys::target::LLVM_InitializeNativeTarget'>LLVM_InitializeNativeTarget</a></td>
+                           <td class='docblock short'>
+                                <p>Returns 1 on failure.</p>
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMTargetDataRef.html'
+                                  title='llvm_sys::target::LLVMTargetDataRef'>LLVMTargetDataRef</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMTargetLibraryInfoRef.html'
+                                  title='llvm_sys::target::LLVMTargetLibraryInfoRef'>LLVMTargetLibraryInfoRef</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "llvm_sys";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

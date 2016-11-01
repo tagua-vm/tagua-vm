@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Error","Contains the error that a parser can return"],["ErrorKind","indicates which parser returned an error"],["Needed","Contains information on needed data if a parser returned `Incomplete`"],["Result","Holds the result of parsing functions"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["LLVMAddBBVectorizePass",""],["LLVMAddLoopVectorizePass",""],["LLVMAddSLPVectorizePass",""]]});

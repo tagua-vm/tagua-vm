@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["builder","Build blocks, statements, … of all kinds."],["context","Context manipulation."],["engine","Execute the VM intermediate representation."],["function","Function manipulation."],["module","Module manipulation."],["native_type","LLVM types manipulation and bindings from Rust types."],["value","Value manipulation."]],"trait":[["LLVMRef",""]]});

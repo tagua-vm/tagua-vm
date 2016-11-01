@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `tokens` mod in crate `tagua_parser`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, tokens">
+
+    <title>tagua_parser::tokens - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>tagua_parser</a></p><script>window.sidebarCurrent = {name: 'tokens', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>tagua_parser</a>::<wbr><a class='mod' href=''>tokens</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-969' class='srclink' href='../../src/tagua_parser/tokens.rs.html#32-755' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>List of lexemes.</p>
+
+<p>The list of all lexemes, aka tokens, is provided by the PHP Language
+Specification in the <a href="https://github.com/php/php-langspec/blob/master/spec/19-grammar.md#lexical-grammar">Grammar
+chapter</a>.</p>
+
+<p>All lexemes are declared as static bytes constants.</p>
+</div><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ABSTRACT.html'
+                                  title='tagua_parser::tokens::ABSTRACT'>ABSTRACT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ABSTRACT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ADD.html'
+                                  title='tagua_parser::tokens::ADD'>ADD</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ADD</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ADD_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::ADD_AND_ASSIGN'>ADD_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ADD_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AND.html'
+                                  title='tagua_parser::tokens::AND'>AND</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>AND</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ARRAY.html'
+                                  title='tagua_parser::tokens::ARRAY'>ARRAY</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ARRAY</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.AS.html'
+                                  title='tagua_parser::tokens::AS'>AS</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>AS</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ASSIGN.html'
+                                  title='tagua_parser::tokens::ASSIGN'>ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_AND.html'
+                                  title='tagua_parser::tokens::BITWISE_AND'>BITWISE_AND</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_AND</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_AND_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::BITWISE_AND_AND_ASSIGN'>BITWISE_AND_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_AND_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_LEFT_SHIFT.html'
+                                  title='tagua_parser::tokens::BITWISE_LEFT_SHIFT'>BITWISE_LEFT_SHIFT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_LEFT_SHIFT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_LEFT_SHIFT_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::BITWISE_LEFT_SHIFT_AND_ASSIGN'>BITWISE_LEFT_SHIFT_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_LEFT_SHIFT_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_NOT.html'
+                                  title='tagua_parser::tokens::BITWISE_NOT'>BITWISE_NOT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_NOT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_OR.html'
+                                  title='tagua_parser::tokens::BITWISE_OR'>BITWISE_OR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_OR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_OR_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::BITWISE_OR_AND_ASSIGN'>BITWISE_OR_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_OR_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_RIGHT_SHIFT.html'
+                                  title='tagua_parser::tokens::BITWISE_RIGHT_SHIFT'>BITWISE_RIGHT_SHIFT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_RIGHT_SHIFT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_RIGHT_SHIFT_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::BITWISE_RIGHT_SHIFT_AND_ASSIGN'>BITWISE_RIGHT_SHIFT_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_RIGHT_SHIFT_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_XOR.html'
+                                  title='tagua_parser::tokens::BITWISE_XOR'>BITWISE_XOR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_XOR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BITWISE_XOR_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::BITWISE_XOR_AND_ASSIGN'>BITWISE_XOR_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BITWISE_XOR_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BOOLEAN_AND.html'
+                                  title='tagua_parser::tokens::BOOLEAN_AND'>BOOLEAN_AND</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BOOLEAN_AND</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BOOLEAN_NOT.html'
+                                  title='tagua_parser::tokens::BOOLEAN_NOT'>BOOLEAN_NOT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>NOT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BOOLEAN_OR.html'
+                                  title='tagua_parser::tokens::BOOLEAN_OR'>BOOLEAN_OR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BOOLEAN_OR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.BREAK.html'
+                                  title='tagua_parser::tokens::BREAK'>BREAK</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>BREAK</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CALLABLE.html'
+                                  title='tagua_parser::tokens::CALLABLE'>CALLABLE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CALLABLE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CASE.html'
+                                  title='tagua_parser::tokens::CASE'>CASE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CASE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CATCH.html'
+                                  title='tagua_parser::tokens::CATCH'>CATCH</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CATCH</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CLASS.html'
+                                  title='tagua_parser::tokens::CLASS'>CLASS</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CLASS</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CLONE.html'
+                                  title='tagua_parser::tokens::CLONE'>CLONE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CLONE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.COALESCE.html'
+                                  title='tagua_parser::tokens::COALESCE'>COALESCE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>COALESCE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.COMMA.html'
+                                  title='tagua_parser::tokens::COMMA'>COMMA</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>COMMA</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.COMPARE.html'
+                                  title='tagua_parser::tokens::COMPARE'>COMPARE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>COMPARE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CONCATENATE.html'
+                                  title='tagua_parser::tokens::CONCATENATE'>CONCATENATE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CONCATENATE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CONCATENATE_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::CONCATENATE_AND_ASSIGN'>CONCATENATE_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CONCATENATE_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CONST.html'
+                                  title='tagua_parser::tokens::CONST'>CONST</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CONST</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.CONTINUE.html'
+                                  title='tagua_parser::tokens::CONTINUE'>CONTINUE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>CONTINUE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DECLARE.html'
+                                  title='tagua_parser::tokens::DECLARE'>DECLARE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DECLARE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DECREMENT.html'
+                                  title='tagua_parser::tokens::DECREMENT'>DECREMENT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DECREMENT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DEFAULT.html'
+                                  title='tagua_parser::tokens::DEFAULT'>DEFAULT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DEFAULT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DIE.html'
+                                  title='tagua_parser::tokens::DIE'>DIE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DIE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DIVIDE.html'
+                                  title='tagua_parser::tokens::DIVIDE'>DIVIDE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DIVIDE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DIVIDE_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::DIVIDE_AND_ASSIGN'>DIVIDE_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DIVIDE_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DO.html'
+                                  title='tagua_parser::tokens::DO'>DO</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DO</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.DYNAMIC_CALL.html'
+                                  title='tagua_parser::tokens::DYNAMIC_CALL'>DYNAMIC_CALL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>DYNAMIC_CALL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ECHO.html'
+                                  title='tagua_parser::tokens::ECHO'>ECHO</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ECHO</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELLIPSIS.html'
+                                  title='tagua_parser::tokens::ELLIPSIS'>ELLIPSIS</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ELLIPSIS</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELSE.html'
+                                  title='tagua_parser::tokens::ELSE'>ELSE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ELSE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ELSEIF.html'
+                                  title='tagua_parser::tokens::ELSEIF'>ELSEIF</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ELSEIF</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.EMPTY.html'
+                                  title='tagua_parser::tokens::EMPTY'>EMPTY</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>EMPTY</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ENDDECLARE.html'
+                                  title='tagua_parser::tokens::ENDDECLARE'>ENDDECLARE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ENDDECLARE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ENDFOR.html'
+                                  title='tagua_parser::tokens::ENDFOR'>ENDFOR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ENDFOR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ENDFOREACH.html'
+                                  title='tagua_parser::tokens::ENDFOREACH'>ENDFOREACH</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ENDFOREACH</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ENDIF.html'
+                                  title='tagua_parser::tokens::ENDIF'>ENDIF</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ENDIF</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ENDSWITCH.html'
+                                  title='tagua_parser::tokens::ENDSWITCH'>ENDSWITCH</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ENDSWITCH</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ENDWHILE.html'
+                                  title='tagua_parser::tokens::ENDWHILE'>ENDWHILE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ENDWHILE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.EQUAL.html'
+                                  title='tagua_parser::tokens::EQUAL'>EQUAL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>EQUAL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.EVAL.html'
+                                  title='tagua_parser::tokens::EVAL'>EVAL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>EVAL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.EXIT.html'
+                                  title='tagua_parser::tokens::EXIT'>EXIT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>EXIT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.EXTENDS.html'
+                                  title='tagua_parser::tokens::EXTENDS'>EXTENDS</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>EXTENDS</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.FINAL.html'
+                                  title='tagua_parser::tokens::FINAL'>FINAL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>FINAL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.FINALLY.html'
+                                  title='tagua_parser::tokens::FINALLY'>FINALLY</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>FINALLY</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.FOR.html'
+                                  title='tagua_parser::tokens::FOR'>FOR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>FOR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.FOREACH.html'
+                                  title='tagua_parser::tokens::FOREACH'>FOREACH</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>FOREACH</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.FUNCTION.html'
+                                  title='tagua_parser::tokens::FUNCTION'>FUNCTION</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>FUNCTION</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.FUNCTION_OUTPUT.html'
+                                  title='tagua_parser::tokens::FUNCTION_OUTPUT'>FUNCTION_OUTPUT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>FUNCTION_OUTPUT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.GLOBAL.html'
+                                  title='tagua_parser::tokens::GLOBAL'>GLOBAL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>GLOBAL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.GOTO.html'
+                                  title='tagua_parser::tokens::GOTO'>GOTO</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>GOTO</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.GREATER_THAN.html'
+                                  title='tagua_parser::tokens::GREATER_THAN'>GREATER_THAN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>GREATER_THAN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.GREATER_THAN_OR_EQUAL_TO.html'
+                                  title='tagua_parser::tokens::GREATER_THAN_OR_EQUAL_TO'>GREATER_THAN_OR_EQUAL_TO</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>GREATER_THAN_OR_EQUAL_TO</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.IDENTICAL.html'
+                                  title='tagua_parser::tokens::IDENTICAL'>IDENTICAL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>IDENTICAL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.IF.html'
+                                  title='tagua_parser::tokens::IF'>IF</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>IF</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.IMPLEMENTS.html'
+                                  title='tagua_parser::tokens::IMPLEMENTS'>IMPLEMENTS</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>IMPLEMENTS</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.INCLUDE.html'
+                                  title='tagua_parser::tokens::INCLUDE'>INCLUDE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>INCLUDE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.INCLUDE_ONCE.html'
+                                  title='tagua_parser::tokens::INCLUDE_ONCE'>INCLUDE_ONCE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>INCLUDE_ONCE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.INCREMENT.html'
+                                  title='tagua_parser::tokens::INCREMENT'>INCREMENT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>INCREMENT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.INSTANCEOF.html'
+                                  title='tagua_parser::tokens::INSTANCEOF'>INSTANCEOF</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>INSTANCEOF</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.INSTEADOF.html'
+                                  title='tagua_parser::tokens::INSTEADOF'>INSTEADOF</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>INSTEADOF</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.INTERFACE.html'
+                                  title='tagua_parser::tokens::INTERFACE'>INTERFACE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>INTERFACE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.ISSET.html'
+                                  title='tagua_parser::tokens::ISSET'>ISSET</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>ISSET</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LEFT_CURLY_BRACKET.html'
+                                  title='tagua_parser::tokens::LEFT_CURLY_BRACKET'>LEFT_CURLY_BRACKET</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>LEFT_CURLY_BRACKET</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LEFT_PARENTHESIS.html'
+                                  title='tagua_parser::tokens::LEFT_PARENTHESIS'>LEFT_PARENTHESIS</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>LEFT_PARENTHESIS</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LEFT_SQUARE_BRACKET.html'
+                                  title='tagua_parser::tokens::LEFT_SQUARE_BRACKET'>LEFT_SQUARE_BRACKET</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>LEFT_SQUARE_BRACKET</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LESS_THAN.html'
+                                  title='tagua_parser::tokens::LESS_THAN'>LESS_THAN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>LESS_THAN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LESS_THAN_OR_EQUAL_TO.html'
+                                  title='tagua_parser::tokens::LESS_THAN_OR_EQUAL_TO'>LESS_THAN_OR_EQUAL_TO</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>LESS_THAN_OR_EQUAL_TO</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LIST.html'
+                                  title='tagua_parser::tokens::LIST'>LIST</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>LIST</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.MODULO.html'
+                                  title='tagua_parser::tokens::MODULO'>MODULO</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>MODULO</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.MODULO_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::MODULO_AND_ASSIGN'>MODULO_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>MODULO_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.MULTIPLY.html'
+                                  title='tagua_parser::tokens::MULTIPLY'>MULTIPLY</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>MULTIPLY</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.MULTIPLY_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::MULTIPLY_AND_ASSIGN'>MULTIPLY_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>MULTIPLY_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.NAMESPACE.html'
+                                  title='tagua_parser::tokens::NAMESPACE'>NAMESPACE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>NAMESPACE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.NAMESPACE_SEPARATOR.html'
+                                  title='tagua_parser::tokens::NAMESPACE_SEPARATOR'>NAMESPACE_SEPARATOR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>NAMESPACE_SEPARATOR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.NEW.html'
+                                  title='tagua_parser::tokens::NEW'>NEW</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>NEW</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.NOT_EQUAL.html'
+                                  title='tagua_parser::tokens::NOT_EQUAL'>NOT_EQUAL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>NOT_EQUAL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.NOT_IDENTICAL.html'
+                                  title='tagua_parser::tokens::NOT_IDENTICAL'>NOT_IDENTICAL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>NOT_IDENTICAL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.NULLABLE.html'
+                                  title='tagua_parser::tokens::NULLABLE'>NULLABLE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>NULLABLE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.OR.html'
+                                  title='tagua_parser::tokens::OR'>OR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>OR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.POW.html'
+                                  title='tagua_parser::tokens::POW'>POW</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>POW</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.POW_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::POW_AND_ASSIGN'>POW_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>POW_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.PRINT.html'
+                                  title='tagua_parser::tokens::PRINT'>PRINT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>PRINT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.PRIVATE.html'
+                                  title='tagua_parser::tokens::PRIVATE'>PRIVATE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>PRIVATE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.PROTECTED.html'
+                                  title='tagua_parser::tokens::PROTECTED'>PROTECTED</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>PROTECTED</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.PUBLIC.html'
+                                  title='tagua_parser::tokens::PUBLIC'>PUBLIC</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>PUBLIC</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.REFERENCE.html'
+                                  title='tagua_parser::tokens::REFERENCE'>REFERENCE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>REFERENCE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.REQUIRE.html'
+                                  title='tagua_parser::tokens::REQUIRE'>REQUIRE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>REQUIRE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.REQUIRE_ONCE.html'
+                                  title='tagua_parser::tokens::REQUIRE_ONCE'>REQUIRE_ONCE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>REQUIRE_ONCE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.RETURN.html'
+                                  title='tagua_parser::tokens::RETURN'>RETURN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>RETURN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.RIGHT_CURLY_BRACKET.html'
+                                  title='tagua_parser::tokens::RIGHT_CURLY_BRACKET'>RIGHT_CURLY_BRACKET</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>RIGHT_CURLY_BRACKET</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.RIGHT_PARENTHESIS.html'
+                                  title='tagua_parser::tokens::RIGHT_PARENTHESIS'>RIGHT_PARENTHESIS</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>RIGHT_PARENTHESIS</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.RIGHT_SQUARE_BRACKET.html'
+                                  title='tagua_parser::tokens::RIGHT_SQUARE_BRACKET'>RIGHT_SQUARE_BRACKET</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>RIGHT_SQUARE_BRACKET</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SEMICOLON.html'
+                                  title='tagua_parser::tokens::SEMICOLON'>SEMICOLON</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>SEMICOLON</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.STATIC.html'
+                                  title='tagua_parser::tokens::STATIC'>STATIC</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>STATIC</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.STATIC_CALL.html'
+                                  title='tagua_parser::tokens::STATIC_CALL'>STATIC_CALL</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>STATIC_CALL</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SUBTRACT.html'
+                                  title='tagua_parser::tokens::SUBTRACT'>SUBTRACT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>SUBTRACT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SUBTRACT_AND_ASSIGN.html'
+                                  title='tagua_parser::tokens::SUBTRACT_AND_ASSIGN'>SUBTRACT_AND_ASSIGN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>SUBTRACT_AND_ASSIGN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.SWITCH.html'
+                                  title='tagua_parser::tokens::SWITCH'>SWITCH</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>SWITCH</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.TERNARY_ELSE.html'
+                                  title='tagua_parser::tokens::TERNARY_ELSE'>TERNARY_ELSE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>TERNARY_ELSE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.TERNARY_THEN.html'
+                                  title='tagua_parser::tokens::TERNARY_THEN'>TERNARY_THEN</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>TERNARY_THEN</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.THROW.html'
+                                  title='tagua_parser::tokens::THROW'>THROW</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>THROW</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.TRAIT.html'
+                                  title='tagua_parser::tokens::TRAIT'>TRAIT</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>TRAIT</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.TRY.html'
+                                  title='tagua_parser::tokens::TRY'>TRY</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>TRY</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.UNSET.html'
+                                  title='tagua_parser::tokens::UNSET'>UNSET</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>UNSET</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.USE.html'
+                                  title='tagua_parser::tokens::USE'>USE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>USE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.VAR.html'
+                                  title='tagua_parser::tokens::VAR'>VAR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>VAR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.VARIABLE.html'
+                                  title='tagua_parser::tokens::VARIABLE'>VARIABLE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>VARIABLE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.WHILE.html'
+                                  title='tagua_parser::tokens::WHILE'>WHILE</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>WHILE</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.XOR.html'
+                                  title='tagua_parser::tokens::XOR'>XOR</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>XOR</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.YIELD.html'
+                                  title='tagua_parser::tokens::YIELD'>YIELD</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>YIELD</code> token.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.YIELD_FROM.html'
+                                  title='tagua_parser::tokens::YIELD_FROM'>YIELD_FROM</a></td>
+                           <td class='docblock short'>
+                                <p>The <code>YIELD_FROM</code> token.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.keywords.html'
+                                  title='tagua_parser::tokens::keywords'>keywords</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "tagua_parser";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

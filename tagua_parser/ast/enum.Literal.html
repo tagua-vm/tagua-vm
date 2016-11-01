@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Literal` enum in crate `tagua_parser`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Literal">
+
+    <title>tagua_parser::ast::Literal - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>tagua_parser</a>::<wbr><a href='index.html'>ast</a></p><script>window.sidebarCurrent = {name: 'Literal', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>tagua_parser</a>::<wbr><a href='index.html'>ast</a>::<wbr><a class='enum' href=''>Literal</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-101' class='srclink' href='../../src/tagua_parser/ast.rs.html#52-145' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Literal {
+    Null,
+    Boolean(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>),
+    Integer(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>),
+    Real(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>),
+    String(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;),
+}</pre><div class='docblock'><p>A literal represents a fixed value, aka an atom.</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.Null' class='variant'><code>Null</code></span><div class='docblock'><p>A null value.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='prelude-ty'>Result</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>ast</span>::<span class='ident'>Literal</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>rules</span>::<span class='ident'>literals</span>::<span class='ident'>literal</span>;
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;null&quot;</span>), <span class='prelude-ty'>Result</span>::<span class='ident'>Done</span>(<span class='kw-2'>&amp;</span><span class='string'>b&quot;&quot;</span>[..], <span class='ident'>Literal</span>::<span class='ident'>Null</span>));</pre>
+</div><span id='variant.Boolean' class='variant'><code>Boolean(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></span><div class='docblock'><p>A boolean, either <code>true</code> or <code>false</code>.</p>
+
+<h1 id='examples-1' class='section-header'><a href='#examples-1'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='prelude-ty'>Result</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>ast</span>::<span class='ident'>Literal</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>rules</span>::<span class='ident'>literals</span>::<span class='ident'>literal</span>;
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;true&quot;</span>),  <span class='prelude-ty'>Result</span>::<span class='ident'>Done</span>(<span class='kw-2'>&amp;</span><span class='string'>b&quot;&quot;</span>[..], <span class='ident'>Literal</span>::<span class='ident'>Boolean</span>(<span class='bool-val'>true</span>)));
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;false&quot;</span>), <span class='prelude-ty'>Result</span>::<span class='ident'>Done</span>(<span class='kw-2'>&amp;</span><span class='string'>b&quot;&quot;</span>[..], <span class='ident'>Literal</span>::<span class='ident'>Boolean</span>(<span class='bool-val'>false</span>)));</pre>
+</div><span id='variant.Integer' class='variant'><code>Integer(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.i64.html'>i64</a>)</code></span><div class='docblock'><p>An integer, for instance a binary, octal, decimal or hexadecimal number.</p>
+
+<h1 id='examples-2' class='section-header'><a href='#examples-2'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='prelude-ty'>Result</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>ast</span>::<span class='ident'>Literal</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>rules</span>::<span class='ident'>literals</span>::<span class='ident'>literal</span>;
+
+<span class='kw'>let</span> <span class='ident'>output</span> <span class='op'>=</span> <span class='prelude-ty'>Result</span>::<span class='ident'>Done</span>(<span class='kw-2'>&amp;</span><span class='string'>b&quot;&quot;</span>[..], <span class='ident'>Literal</span>::<span class='ident'>Integer</span>(<span class='number'>42i64</span>));
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;0b101010&quot;</span>), <span class='ident'>output</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;052&quot;</span>), <span class='ident'>output</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;42&quot;</span>), <span class='ident'>output</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;0x2a&quot;</span>), <span class='ident'>output</span>);</pre>
+</div><span id='variant.Real' class='variant'><code>Real(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>)</code></span><div class='docblock'><p>A real, for instance an exponential number.</p>
+
+<h1 id='examples-3' class='section-header'><a href='#examples-3'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='prelude-ty'>Result</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>ast</span>::<span class='ident'>Literal</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>rules</span>::<span class='ident'>literals</span>::<span class='ident'>literal</span>;
+
+<span class='kw'>let</span> <span class='ident'>output</span> <span class='op'>=</span> <span class='prelude-ty'>Result</span>::<span class='ident'>Done</span>(<span class='kw-2'>&amp;</span><span class='string'>b&quot;&quot;</span>[..], <span class='ident'>Literal</span>::<span class='ident'>Real</span>(<span class='number'>4.2f64</span>));
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;4.2&quot;</span>), <span class='ident'>output</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;.42e1&quot;</span>), <span class='ident'>output</span>);
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>literal</span>(<span class='string'>b&quot;420e-2&quot;</span>), <span class='ident'>output</span>);</pre>
+</div><span id='variant.String' class='variant'><code>String(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;)</code></span><div class='docblock'><p>A string.</p>
+
+<h1 id='examples-4' class='section-header'><a href='#examples-4'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='prelude-ty'>Result</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>ast</span>::<span class='ident'>Literal</span>;
+<span class='kw'>use</span> <span class='ident'>tagua_parser</span>::<span class='ident'>rules</span>::<span class='ident'>literals</span>::<span class='ident'>literal</span>;
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='ident'>literal</span>(<span class='string'>b&quot;&#39;foo\\&#39;bar&#39;&quot;</span>),
+    <span class='prelude-ty'>Result</span>::<span class='ident'>Done</span>(<span class='kw-2'>&amp;</span><span class='string'>b&quot;&quot;</span>[..], <span class='ident'>Literal</span>::<span class='ident'>String</span>(<span class='string'>b&quot;foo&#39;bar&quot;</span>.<span class='ident'>to_vec</span>()))
+);</pre>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../tagua_parser/ast/enum.Literal.html' title='tagua_parser::ast::Literal'>Literal</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-61' class='srclink' href='../../src/tagua_parser/ast.rs.html#51' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../tagua_parser/ast/enum.Literal.html' title='tagua_parser::ast::Literal'>Literal</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../tagua_parser/ast/enum.Literal.html' title='tagua_parser::ast::Literal'>Literal</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../tagua_parser/ast/enum.Literal.html' title='tagua_parser::ast::Literal'>Literal</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-88' class='srclink' href='../../src/tagua_parser/ast.rs.html#51' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "tagua_parser";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

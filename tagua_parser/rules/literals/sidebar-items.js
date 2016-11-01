@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["StringError","String errors."]],"fn":[["binary",""],["boolean",""],["decimal",""],["exponential",""],["hexadecimal",""],["integer",""],["literal",""],["null",""],["octal",""],["string",""]]});

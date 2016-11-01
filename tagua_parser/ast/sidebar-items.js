@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Literal","A literal represents a fixed value, aka an atom."],["Name","A name represents an entity name."]],"struct":[["Addition","An addition of two terms."],["Term","A term."],["Variable","A variable."]]});

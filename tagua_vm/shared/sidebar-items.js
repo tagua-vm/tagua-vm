@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["VERSION","Library version."]]});

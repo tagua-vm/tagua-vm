@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["language","Language manipulation (like the lexer, parser, compiler…)."],["shared","Small entities shared by many modules."]]});

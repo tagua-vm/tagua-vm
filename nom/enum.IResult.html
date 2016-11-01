@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `IResult` enum in crate `nom`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, IResult">
+
+    <title>nom::IResult - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>nom</a></p><script>window.sidebarCurrent = {name: 'IResult', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>nom</a>::<wbr><a class='enum' href=''>IResult</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-954' class='srclink' href='../src/nom/internal.rs.html#56-63' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum IResult&lt;I,&nbsp;O,&nbsp;E&nbsp;=&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt; {
+    Done(I,&nbsp;O),
+    Error(<a class='enum' href='../nom/enum.Err.html' title='nom::Err'>Err</a>&lt;I,&nbsp;E&gt;),
+    Incomplete(<a class='enum' href='../nom/enum.Needed.html' title='nom::Needed'>Needed</a>),
+}</pre><div class='docblock'><p>Holds the result of parsing functions</p>
+
+<p>It depends on I, the input type, O, the output type, and E, the error type (by default u32)</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.Done' class='variant'><code>Done(I,&nbsp;O)</code></span><div class='docblock'><p>indicates a correct parsing, the first field containing the rest of the unparsed data, the second field contains the parsed data</p>
+</div><span id='variant.Error' class='variant'><code>Error(<a class='enum' href='../nom/enum.Err.html' title='nom::Err'>Err</a>&lt;I,&nbsp;E&gt;)</code></span><div class='docblock'><p>contains a Err, an enum that can indicate an error code, a position in the input, and a pointer to another error, making a list of errors in the parsing tree</p>
+</div><span id='variant.Incomplete' class='variant'><code>Incomplete(<a class='enum' href='../nom/enum.Needed.html' title='nom::Needed'>Needed</a>)</code></span><div class='docblock'><p>Incomplete contains a Needed, an enum than can represent a known quantity of input data, or unknown</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;I,&nbsp;O,&nbsp;E&gt; <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-965' class='srclink' href='../src/nom/internal.rs.html#65-154' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.is_done' class='method'><code>fn <a href='#method.is_done' class='fnname'>is_done</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.is_err' class='method'><code>fn <a href='#method.is_err' class='fnname'>is_err</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.is_incomplete' class='method'><code>fn <a href='#method.is_incomplete' class='fnname'>is_incomplete</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.map' class='method'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;N,&nbsp;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(O) -&gt; N&gt;(self, f: F) -&gt; <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;N,&nbsp;E&gt;</code></h4>
+<div class='docblock'><p>Maps a <code>IResult&lt;I, O, E&gt;</code> to <code>IResult&lt;I, N, E&gt;</code> by appling a function
+to a contained <code>Done</code> value, leaving <code>Error</code> and <code>Incomplete</code> value
+untouched.</p>
+</div><h4 id='method.map_inc' class='method'><code>fn <a href='#method.map_inc' class='fnname'>map_inc</a>&lt;F&gt;(self, f: F) -&gt; <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='enum' href='../nom/enum.Needed.html' title='nom::Needed'>Needed</a>) -&gt; <a class='enum' href='../nom/enum.Needed.html' title='nom::Needed'>Needed</a></span></code></h4>
+<div class='docblock'><p>Maps a <code>IResult&lt;I, O, E&gt;</code> to <code>IResult&lt;I, O, E&gt;</code> by appling a function
+to a contained <code>Incomplete</code> value, leaving <code>Done</code> and <code>Error</code> value
+untouched.</p>
+</div><h4 id='method.map_err' class='method'><code>fn <a href='#method.map_err' class='fnname'>map_err</a>&lt;N,&nbsp;F&gt;(self, f: F) -&gt; <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;N&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='enum' href='../nom/enum.Err.html' title='nom::Err'>Err</a>&lt;I,&nbsp;E&gt;) -&gt; <a class='enum' href='../nom/enum.Err.html' title='nom::Err'>Err</a>&lt;I,&nbsp;N&gt;</span></code></h4>
+<div class='docblock'><p>Maps a <code>IResult&lt;I, O, E&gt;</code> to <code>IResult&lt;I, O, N&gt;</code> by appling a function
+to a contained <code>Error</code> value, leaving <code>Done</code> and <code>Incomplete</code> value
+untouched.</p>
+</div><h4 id='method.unwrap' class='method'><code>fn <a href='#method.unwrap' class='fnname'>unwrap</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>I, O<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></h4>
+<div class='docblock'><p>Unwrap the contained <code>Done(I, O)</code> value, or panic if the <code>IResult</code> is not
+<code>Done</code>.</p>
+</div><h4 id='method.unwrap_inc' class='method'><code>fn <a href='#method.unwrap_inc' class='fnname'>unwrap_inc</a>(self) -&gt; <a class='enum' href='../nom/enum.Needed.html' title='nom::Needed'>Needed</a></code></h4>
+<div class='docblock'><p>Unwrap the contained <code>Done(I, O)</code> value, or panic if the <code>IResult</code> is not
+<code>Done</code>.</p>
+</div><h4 id='method.unwrap_err' class='method'><code>fn <a href='#method.unwrap_err' class='fnname'>unwrap_err</a>(self) -&gt; <a class='enum' href='../nom/enum.Err.html' title='nom::Err'>Err</a>&lt;I,&nbsp;E&gt;</code></h4>
+<div class='docblock'><p>Unwrap the contained <code>Done(I, O)</code> value, or panic if the <code>IResult</code> is not
+<code>Done</code>.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;I:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>,&nbsp;O:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>,&nbsp;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-890' class='srclink' href='../src/nom/internal.rs.html#55' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;</code></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;I:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a>,&nbsp;O:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a>,&nbsp;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-900' class='srclink' href='../src/nom/internal.rs.html#55' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;I:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a>,&nbsp;O:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a>,&nbsp;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-910' class='srclink' href='../src/nom/internal.rs.html#55' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;I:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>,&nbsp;O:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>,&nbsp;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-940' class='srclink' href='../src/nom/internal.rs.html#55' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a,&nbsp;I,&nbsp;O,&nbsp;E&gt; <a class='trait' href='../nom/trait.GetInput.html' title='nom::GetInput'>GetInput</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a>I<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt; for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a>I<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1025' class='srclink' href='../src/nom/internal.rs.html#164-171' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.remaining_input' class='method'><code>fn <a href='../nom/trait.GetInput.html#tymethod.remaining_input' class='fnname'>remaining_input</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a>I<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl&lt;O,&nbsp;E&gt; <a class='trait' href='../nom/trait.GetInput.html' title='nom::GetInput'>GetInput</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1033' class='srclink' href='../src/nom/internal.rs.html#173-180' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.remaining_input-1' class='method'><code>fn <a href='../nom/trait.GetInput.html#tymethod.remaining_input' class='fnname'>remaining_input</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl&lt;'a,&nbsp;O,&nbsp;E&gt; <a class='trait' href='../nom/trait.GetInput.html' title='nom::GetInput'>GetInput</a>&lt;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt; for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>,&nbsp;O,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1038' class='srclink' href='../src/nom/internal.rs.html#182-189' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.remaining_input-2' class='method'><code>fn <a href='../nom/trait.GetInput.html#tymethod.remaining_input' class='fnname'>remaining_input</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl&lt;'a,&nbsp;I,&nbsp;O,&nbsp;E&gt; <a class='trait' href='../nom/trait.GetOutput.html' title='nom::GetOutput'>GetOutput</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a>O<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt; for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a>O<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1045' class='srclink' href='../src/nom/internal.rs.html#191-198' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.output' class='method'><code>fn <a href='../nom/trait.GetOutput.html#tymethod.output' class='fnname'>output</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a>O<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl&lt;I,&nbsp;E&gt; <a class='trait' href='../nom/trait.GetOutput.html' title='nom::GetOutput'>GetOutput</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1053' class='srclink' href='../src/nom/internal.rs.html#200-207' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.output-1' class='method'><code>fn <a href='../nom/trait.GetOutput.html#tymethod.output' class='fnname'>output</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div><h3 class='impl'><span class='in-band'><code>impl&lt;'a,&nbsp;I,&nbsp;E&gt; <a class='trait' href='../nom/trait.GetOutput.html' title='nom::GetOutput'>GetOutput</a>&lt;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt; for <a class='enum' href='../nom/enum.IResult.html' title='nom::IResult'>IResult</a>&lt;I,&nbsp;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>,&nbsp;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1058' class='srclink' href='../src/nom/internal.rs.html#209-216' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.output-2' class='method'><code>fn <a href='../nom/trait.GetOutput.html#tymethod.output' class='fnname'>output</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "nom";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ErrorKind` enum in crate `nom`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ErrorKind">
+
+    <title>nom::ErrorKind - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>nom</a></p><script>window.sidebarCurrent = {name: 'ErrorKind', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>nom</a>::<wbr><a class='enum' href=''>ErrorKind</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-672' class='srclink' href='../src/nom/util.rs.html#590-646' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum ErrorKind&lt;E&nbsp;=&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt; {
+    Custom(E),
+    Tag,
+    MapRes,
+    MapOpt,
+    Alt,
+    IsNot,
+    IsA,
+    SeparatedList,
+    SeparatedNonEmptyList,
+    Many0,
+    Many1,
+    Count,
+    TakeUntilAndConsume,
+    TakeUntil,
+    TakeUntilEitherAndConsume,
+    TakeUntilEither,
+    LengthValue,
+    TagClosure,
+    Alpha,
+    Digit,
+    HexDigit,
+    OctDigit,
+    AlphaNumeric,
+    Space,
+    MultiSpace,
+    LengthValueFn,
+    Eof,
+    ExprOpt,
+    ExprRes,
+    CondReduce,
+    Switch,
+    TagBits,
+    OneOf,
+    NoneOf,
+    Char,
+    CrLf,
+    RegexpMatch,
+    RegexpMatches,
+    RegexpFind,
+    RegexpCapture,
+    RegexpCaptures,
+    TakeWhile1,
+    Complete,
+    Fix,
+    Escaped,
+    EscapedTransform,
+    TagStr,
+    IsNotStr,
+    IsAStr,
+    TakeWhile1Str,
+    NonEmpty,
+    ManyMN,
+    TakeUntilAndConsumeStr,
+    TakeUntilStr,
+    Not,
+}</pre><div class='docblock'><p>indicates which parser returned an error</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.Custom' class='variant'><code>Custom(E)</code></span><span id='variant.Tag' class='variant'><code>Tag</code></span><span id='variant.MapRes' class='variant'><code>MapRes</code></span><span id='variant.MapOpt' class='variant'><code>MapOpt</code></span><span id='variant.Alt' class='variant'><code>Alt</code></span><span id='variant.IsNot' class='variant'><code>IsNot</code></span><span id='variant.IsA' class='variant'><code>IsA</code></span><span id='variant.SeparatedList' class='variant'><code>SeparatedList</code></span><span id='variant.SeparatedNonEmptyList' class='variant'><code>SeparatedNonEmptyList</code></span><span id='variant.Many0' class='variant'><code>Many0</code></span><span id='variant.Many1' class='variant'><code>Many1</code></span><span id='variant.Count' class='variant'><code>Count</code></span><span id='variant.TakeUntilAndConsume' class='variant'><code>TakeUntilAndConsume</code></span><span id='variant.TakeUntil' class='variant'><code>TakeUntil</code></span><span id='variant.TakeUntilEitherAndConsume' class='variant'><code>TakeUntilEitherAndConsume</code></span><span id='variant.TakeUntilEither' class='variant'><code>TakeUntilEither</code></span><span id='variant.LengthValue' class='variant'><code>LengthValue</code></span><span id='variant.TagClosure' class='variant'><code>TagClosure</code></span><span id='variant.Alpha' class='variant'><code>Alpha</code></span><span id='variant.Digit' class='variant'><code>Digit</code></span><span id='variant.HexDigit' class='variant'><code>HexDigit</code></span><span id='variant.OctDigit' class='variant'><code>OctDigit</code></span><span id='variant.AlphaNumeric' class='variant'><code>AlphaNumeric</code></span><span id='variant.Space' class='variant'><code>Space</code></span><span id='variant.MultiSpace' class='variant'><code>MultiSpace</code></span><span id='variant.LengthValueFn' class='variant'><code>LengthValueFn</code></span><span id='variant.Eof' class='variant'><code>Eof</code></span><span id='variant.ExprOpt' class='variant'><code>ExprOpt</code></span><span id='variant.ExprRes' class='variant'><code>ExprRes</code></span><span id='variant.CondReduce' class='variant'><code>CondReduce</code></span><span id='variant.Switch' class='variant'><code>Switch</code></span><span id='variant.TagBits' class='variant'><code>TagBits</code></span><span id='variant.OneOf' class='variant'><code>OneOf</code></span><span id='variant.NoneOf' class='variant'><code>NoneOf</code></span><span id='variant.Char' class='variant'><code>Char</code></span><span id='variant.CrLf' class='variant'><code>CrLf</code></span><span id='variant.RegexpMatch' class='variant'><code>RegexpMatch</code></span><span id='variant.RegexpMatches' class='variant'><code>RegexpMatches</code></span><span id='variant.RegexpFind' class='variant'><code>RegexpFind</code></span><span id='variant.RegexpCapture' class='variant'><code>RegexpCapture</code></span><span id='variant.RegexpCaptures' class='variant'><code>RegexpCaptures</code></span><span id='variant.TakeWhile1' class='variant'><code>TakeWhile1</code></span><span id='variant.Complete' class='variant'><code>Complete</code></span><span id='variant.Fix' class='variant'><code>Fix</code></span><span id='variant.Escaped' class='variant'><code>Escaped</code></span><span id='variant.EscapedTransform' class='variant'><code>EscapedTransform</code></span><span id='variant.TagStr' class='variant'><code>TagStr</code></span><span id='variant.IsNotStr' class='variant'><code>IsNotStr</code></span><span id='variant.IsAStr' class='variant'><code>IsAStr</code></span><span id='variant.TakeWhile1Str' class='variant'><code>TakeWhile1Str</code></span><span id='variant.NonEmpty' class='variant'><code>NonEmpty</code></span><span id='variant.ManyMN' class='variant'><code>ManyMN</code></span><span id='variant.TakeUntilAndConsumeStr' class='variant'><code>TakeUntilAndConsumeStr</code></span><span id='variant.TakeUntilStr' class='variant'><code>TakeUntilStr</code></span><span id='variant.Not' class='variant'><code>Not</code></span><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;E&gt; <a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-733' class='srclink' href='../src/nom/util.rs.html#708-769' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.description' class='method'><code>fn <a href='#method.description' class='fnname'>description</a>(&amp;self) -&gt; &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-578' class='srclink' href='../src/nom/util.rs.html#589' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;</code></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> for <a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-583' class='srclink' href='../src/nom/util.rs.html#589' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.hash' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#tymethod.hash' class='fnname'>hash</a>&lt;__HE:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __HE)</code></h4>
+<div class='docblock'><p>Feeds this value into the state given, updating the hasher as necessary.</p>
+</div><h4 id='method.hash_slice' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code><div class='since' title='Stable since Rust version 1.3.0'>1.3.0</div></h4>
+<div class='docblock'><p>Feeds a slice of this type into the state provided.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-590' class='srclink' href='../src/nom/util.rs.html#589' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-595' class='srclink' href='../src/nom/util.rs.html#589' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;E:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../nom/enum.ErrorKind.html' title='nom::ErrorKind'>ErrorKind</a>&lt;E&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-611' class='srclink' href='../src/nom/util.rs.html#589' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "nom";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

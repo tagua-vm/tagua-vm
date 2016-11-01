@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `native_type` mod in crate `tagua_llvm`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, native_type">
+
+    <title>tagua_llvm::native_type - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>tagua_llvm</a></p><script>window.sidebarCurrent = {name: 'native_type', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>tagua_llvm</a>::<wbr><a class='mod' href=''>native_type</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-199' class='srclink' href='../../src/tagua_llvm/native_type.rs.html#32-236' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>LLVM types manipulation and bindings from Rust types.</p>
+</div><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.VMRepresentation.html'
+                                  title='tagua_llvm::native_type::VMRepresentation'>VMRepresentation</a></td>
+                           <td class='docblock short'>
+                                <p>Map a Rust type to a LLVM type.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.array_type.html'
+                                  title='tagua_llvm::native_type::array_type'>array_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>array</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.double_type.html'
+                                  title='tagua_llvm::native_type::double_type'>double_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>double</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.float_type.html'
+                                  title='tagua_llvm::native_type::float_type'>float_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>float</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.fp128_type.html'
+                                  title='tagua_llvm::native_type::fp128_type'>fp128_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>fp128</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.int16_type.html'
+                                  title='tagua_llvm::native_type::int16_type'>int16_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>int16</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.int1_type.html'
+                                  title='tagua_llvm::native_type::int1_type'>int1_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>int1</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.int32_type.html'
+                                  title='tagua_llvm::native_type::int32_type'>int32_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>int32</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.int64_type.html'
+                                  title='tagua_llvm::native_type::int64_type'>int64_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>int64</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.int8_type.html'
+                                  title='tagua_llvm::native_type::int8_type'>int8_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>int8</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.int_type.html'
+                                  title='tagua_llvm::native_type::int_type'>int_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>int</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.pointer_type.html'
+                                  title='tagua_llvm::native_type::pointer_type'>pointer_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>pointer</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.ppcfp128_type.html'
+                                  title='tagua_llvm::native_type::ppcfp128_type'>ppcfp128_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>ppcfp128</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.vector_type.html'
+                                  title='tagua_llvm::native_type::vector_type'>vector_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>vector</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.void_type.html'
+                                  title='tagua_llvm::native_type::void_type'>void_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>void</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.x86fp80_type.html'
+                                  title='tagua_llvm::native_type::x86fp80_type'>x86fp80_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>x86fp80</code> type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.x86mmx_type.html'
+                                  title='tagua_llvm::native_type::x86mmx_type'>x86mmx_type</a></td>
+                           <td class='docblock short'>
+                                <p>Create a LLVM <code>x86mmx</code> type.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "tagua_llvm";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

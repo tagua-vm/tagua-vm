@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `llvm_sys` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, llvm_sys">
+
+    <title>llvm_sys - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'llvm_sys', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>llvm_sys</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-0' class='srclink' href='../src/llvm_sys/lib.rs.html#1-342' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Bindings to LLVM&#39;s C API.</p>
+
+<p>Refer to the <a href="http://llvm.org/docs/">LLVM documentation</a> for more
+information.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='analysis/index.html'
+                                  title='llvm_sys::analysis'>analysis</a></td>
+                           <td class='docblock short'>
+                                <p>Various analyses of the LLVM IR.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='bit_reader/index.html'
+                                  title='llvm_sys::bit_reader'>bit_reader</a></td>
+                           <td class='docblock short'>
+                                <p>Input of the LLVM bitcode format.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='bit_writer/index.html'
+                                  title='llvm_sys::bit_writer'>bit_writer</a></td>
+                           <td class='docblock short'>
+                                <p>Output of the LLVM bitcode format.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='core/index.html'
+                                  title='llvm_sys::core'>core</a></td>
+                           <td class='docblock short'>
+                                <p>The LLVM intermediate representation.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='disassembler/index.html'
+                                  title='llvm_sys::disassembler'>disassembler</a></td>
+                           <td class='docblock short'>
+                                <p>A disassembler library.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='execution_engine/index.html'
+                                  title='llvm_sys::execution_engine'>execution_engine</a></td>
+                           <td class='docblock short'>
+                                <p>Runtime code generation and execution.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='initialization/index.html'
+                                  title='llvm_sys::initialization'>initialization</a></td>
+                           <td class='docblock short'>
+                                <p>Initialization routines which must be called before using library features.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='ir_reader/index.html'
+                                  title='llvm_sys::ir_reader'>ir_reader</a></td>
+                           <td class='docblock short'>
+                                <p>The IR reader</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='link_time_optimizer/index.html'
+                                  title='llvm_sys::link_time_optimizer'>link_time_optimizer</a></td>
+                           <td class='docblock short'>
+                                <p>Link-time-optimization</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='linker/index.html'
+                                  title='llvm_sys::linker'>linker</a></td>
+                           <td class='docblock short'>
+                                <p>The module/file/archive linker</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='lto/index.html'
+                                  title='llvm_sys::lto'>lto</a></td>
+                           <td class='docblock short'>
+                                <p>Abstract link time optimization.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='object/index.html'
+                                  title='llvm_sys::object'>object</a></td>
+                           <td class='docblock short'>
+                                <p>Object file reading and writing</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='prelude/index.html'
+                                  title='llvm_sys::prelude'>prelude</a></td>
+                           <td class='docblock short'>
+                                <p>Core types used throughout LLVM.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='support/index.html'
+                                  title='llvm_sys::support'>support</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='target/index.html'
+                                  title='llvm_sys::target'>target</a></td>
+                           <td class='docblock short'>
+                                <p>Target information</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='target_machine/index.html'
+                                  title='llvm_sys::target_machine'>target_machine</a></td>
+                           <td class='docblock short'>
+                                <p>Target machine information, to generate assembly or object files.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='transforms/index.html'
+                                  title='llvm_sys::transforms'>transforms</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.LLVMAttribute.html'
+                                  title='llvm_sys::LLVMAttribute'>LLVMAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMAtomicOrdering.html'
+                                  title='llvm_sys::LLVMAtomicOrdering'>LLVMAtomicOrdering</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMAtomicRMWBinOp.html'
+                                  title='llvm_sys::LLVMAtomicRMWBinOp'>LLVMAtomicRMWBinOp</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMBasicBlock.html'
+                                  title='llvm_sys::LLVMBasicBlock'>LLVMBasicBlock</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMBuilder.html'
+                                  title='llvm_sys::LLVMBuilder'>LLVMBuilder</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMCallConv.html'
+                                  title='llvm_sys::LLVMCallConv'>LLVMCallConv</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMContext.html'
+                                  title='llvm_sys::LLVMContext'>LLVMContext</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMDLLStorageClass.html'
+                                  title='llvm_sys::LLVMDLLStorageClass'>LLVMDLLStorageClass</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMDiagnosticInfo.html'
+                                  title='llvm_sys::LLVMDiagnosticInfo'>LLVMDiagnosticInfo</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMDiagnosticSeverity.html'
+                                  title='llvm_sys::LLVMDiagnosticSeverity'>LLVMDiagnosticSeverity</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMIntPredicate.html'
+                                  title='llvm_sys::LLVMIntPredicate'>LLVMIntPredicate</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMLandingPadClauseTy.html'
+                                  title='llvm_sys::LLVMLandingPadClauseTy'>LLVMLandingPadClauseTy</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMLinkage.html'
+                                  title='llvm_sys::LLVMLinkage'>LLVMLinkage</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMMemoryBuffer.html'
+                                  title='llvm_sys::LLVMMemoryBuffer'>LLVMMemoryBuffer</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMModule.html'
+                                  title='llvm_sys::LLVMModule'>LLVMModule</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMModuleProvider.html'
+                                  title='llvm_sys::LLVMModuleProvider'>LLVMModuleProvider</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMOpcode.html'
+                                  title='llvm_sys::LLVMOpcode'>LLVMOpcode</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMPassManager.html'
+                                  title='llvm_sys::LLVMPassManager'>LLVMPassManager</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMPassRegistry.html'
+                                  title='llvm_sys::LLVMPassRegistry'>LLVMPassRegistry</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMRealPredicate.html'
+                                  title='llvm_sys::LLVMRealPredicate'>LLVMRealPredicate</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMThreadLocalMode.html'
+                                  title='llvm_sys::LLVMThreadLocalMode'>LLVMThreadLocalMode</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMType.html'
+                                  title='llvm_sys::LLVMType'>LLVMType</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMTypeKind.html'
+                                  title='llvm_sys::LLVMTypeKind'>LLVMTypeKind</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMUse.html'
+                                  title='llvm_sys::LLVMUse'>LLVMUse</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMValue.html'
+                                  title='llvm_sys::LLVMValue'>LLVMValue</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.LLVMVisibility.html'
+                                  title='llvm_sys::LLVMVisibility'>LLVMVisibility</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMAlignment.html'
+                                  title='llvm_sys::LLVMAlignment'>LLVMAlignment</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMAlwaysInlineAttribute.html'
+                                  title='llvm_sys::LLVMAlwaysInlineAttribute'>LLVMAlwaysInlineAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMByValAttribute.html'
+                                  title='llvm_sys::LLVMByValAttribute'>LLVMByValAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMInRegAttribute.html'
+                                  title='llvm_sys::LLVMInRegAttribute'>LLVMInRegAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMInlineHintAttribute.html'
+                                  title='llvm_sys::LLVMInlineHintAttribute'>LLVMInlineHintAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNakedAttribute.html'
+                                  title='llvm_sys::LLVMNakedAttribute'>LLVMNakedAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNestAttribute.html'
+                                  title='llvm_sys::LLVMNestAttribute'>LLVMNestAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNoAliasAttribute.html'
+                                  title='llvm_sys::LLVMNoAliasAttribute'>LLVMNoAliasAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNoCaptureAttribute.html'
+                                  title='llvm_sys::LLVMNoCaptureAttribute'>LLVMNoCaptureAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNoImplicitFloatAttribute.html'
+                                  title='llvm_sys::LLVMNoImplicitFloatAttribute'>LLVMNoImplicitFloatAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNoInlineAttribute.html'
+                                  title='llvm_sys::LLVMNoInlineAttribute'>LLVMNoInlineAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNoRedZoneAttribute.html'
+                                  title='llvm_sys::LLVMNoRedZoneAttribute'>LLVMNoRedZoneAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNoReturnAttribute.html'
+                                  title='llvm_sys::LLVMNoReturnAttribute'>LLVMNoReturnAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNoUnwindAttribute.html'
+                                  title='llvm_sys::LLVMNoUnwindAttribute'>LLVMNoUnwindAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMNonLazyBind.html'
+                                  title='llvm_sys::LLVMNonLazyBind'>LLVMNonLazyBind</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMOptimizeForSizeAttribute.html'
+                                  title='llvm_sys::LLVMOptimizeForSizeAttribute'>LLVMOptimizeForSizeAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMReadNoneAttribute.html'
+                                  title='llvm_sys::LLVMReadNoneAttribute'>LLVMReadNoneAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMReadOnlyAttribute.html'
+                                  title='llvm_sys::LLVMReadOnlyAttribute'>LLVMReadOnlyAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMReturnsTwice.html'
+                                  title='llvm_sys::LLVMReturnsTwice'>LLVMReturnsTwice</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMSExtAttribute.html'
+                                  title='llvm_sys::LLVMSExtAttribute'>LLVMSExtAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMStackAlignment.html'
+                                  title='llvm_sys::LLVMStackAlignment'>LLVMStackAlignment</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMStackProtectAttribute.html'
+                                  title='llvm_sys::LLVMStackProtectAttribute'>LLVMStackProtectAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMStackProtectReqAttribute.html'
+                                  title='llvm_sys::LLVMStackProtectReqAttribute'>LLVMStackProtectReqAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMStructRetAttribute.html'
+                                  title='llvm_sys::LLVMStructRetAttribute'>LLVMStructRetAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMUWTable.html'
+                                  title='llvm_sys::LLVMUWTable'>LLVMUWTable</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='constant' href='constant.LLVMZExtAttribute.html'
+                                  title='llvm_sys::LLVMZExtAttribute'>LLVMZExtAttribute</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMDiagnosticHandler.html'
+                                  title='llvm_sys::LLVMDiagnosticHandler'>LLVMDiagnosticHandler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMFatalErrorHandler.html'
+                                  title='llvm_sys::LLVMFatalErrorHandler'>LLVMFatalErrorHandler</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='type' href='type.LLVMYieldCallback.html'
+                                  title='llvm_sys::LLVMYieldCallback'>LLVMYieldCallback</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "llvm_sys";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
