@@ -17,6 +17,11 @@ matrix:
       dist: trusty
     - rust: 1.11.0
       os: osx
+    - rust: 1.12.0
+      os: linux
+      dist: trusty
+    - rust: 1.12.0
+      os: osx
     - rust: stable
       os: linux
       dist: trusty
