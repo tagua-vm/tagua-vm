@@ -1,9 +1,12 @@
 FROM debian:jessie
 
 ENV ARCH=x86_64-unknown-linux-gnu
-ENV RUST_RELEASE=1.9.0
-ENV LLVM_RELEASE=3.9
+ENV RUST_RELEASE=1.13.0
+ENV LLVM_RELEASE=4.0
 ENV CARGO_RELEASE=nightly
+
+# see https://github.com/rust-lang/cargo/issues/598 & https://github.com/rust-lang/cargo/pull/3342
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 RUN echo "deb http://llvm.org/apt/jessie/ llvm-toolchain-jessie main" > /etc/apt/sources.list.d/llvm.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 15CF4D18AF4F7421 && \
